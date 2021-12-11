@@ -5,8 +5,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>fluxera;library;extensions;services;common</PackageTags>
-		<Description>The common services.</Description>
+		<PackageTags>library;extensions;validation</PackageTags>
+		<Description>The custom extensions for validation.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\README.md" Link="Properties\README.md">
+		<None Include="..\..\doc\Fluxera.Extensions.Validation\README.md" Link="Properties\README.md">
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
@@ -25,17 +25,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Guards" Version="6.0.5" />
 		<PackageReference Include="Fluxera.Utilities" Version="6.0.4" />
 		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-		<!--<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.1" />-->
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Fluxera.Extensions.Common.Abstractions\Fluxera.Extensions.Common.Abstractions.csproj" />
+		<ProjectReference Include="..\Fluxera.Extensions.Validation.Abstractions\Fluxera.Extensions.Validation.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

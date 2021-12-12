@@ -3,7 +3,7 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///     Service that generates random passwords.
+	///     A service that generates random passwords.
 	/// </summary>
 	[PublicAPI]
 	public interface IPasswordGenerator

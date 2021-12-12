@@ -4,8 +4,8 @@
 
 	/// <summary>
 	///     Can be used to simply encrypt/decrypt texts.
-	///     Use <see cref="StringEncryptionOptions" /> to configure default values.
 	/// </summary>
+	[PublicAPI]
 	public interface IStringEncryptionService
 	{
 		/// <summary>
@@ -15,8 +15,7 @@
 		/// <param name="passPhrase">A phrase to use as the encryption key (optional, uses default if not provided)</param>
 		/// <param name="salt">Salt value (optional, uses default if not provided)</param>
 		/// <returns>Encrypted text</returns>
-		[CanBeNull]
-		string Encrypt([CanBeNull] string plainText, string passPhrase = null, byte[] salt = null);
+		string? Encrypt(string? plainText, string? passPhrase = null, byte[]? salt = null);
 
 		/// <summary>
 		///     Decrypts a text that is encrypted by the <see cref="Encrypt" /> method.
@@ -25,7 +24,6 @@
 		/// <param name="passPhrase">A phrase to use as the encryption key (optional, uses default if not provided)</param>
 		/// <param name="salt">Salt value (optional, uses default if not provided)</param>
 		/// <returns>Decrypted text</returns>
-		[CanBeNull]
-		string Decrypt([CanBeNull] string cipherText, string passPhrase = null, byte[] salt = null);
+		string? Decrypt(string? cipherText, string? passPhrase = null, byte[]? salt = null);
 	}
 }

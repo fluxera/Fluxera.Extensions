@@ -5,9 +5,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>fluxera;library;extensions;validation</PackageTags>
-		<Description>The abstactions for the custom extensions for validation.</Description>
-		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".Abstractions",""))</RootNamespace>
+		<PackageTags>fluxera;library;extensions;data</PackageTags>
+		<Description>The extensions for data management.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,8 +25,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Guards" Version="6.0.5" />
 		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Fluxera.Extensions.DataManagement.Abstractions\Fluxera.Extensions.DataManagement.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

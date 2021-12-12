@@ -5,8 +5,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>fluxera;library;extensions;validation</PackageTags>
-		<Description>The custom extensions for validation.</Description>
+		<PackageTags>library;extensions;di;dependencyinjection</PackageTags>
+		<Description>The custom extensions for dependency injection.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\README.md" Link="Properties\README.md">
+		<None Include="..\..\doc\Fluxera.Extensions.DependencyInjection\README.md" Link="Properties\README.md">
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
@@ -25,13 +25,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Utilities" Version="6.0.4" />
+		<PackageReference Include="Fluxera.Guards" Version="6.0.5" />
 		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Fluxera.Extensions.Validation.Abstractions\Fluxera.Extensions.Validation.Abstractions.csproj" />
+	  <ProjectReference Include="..\Fluxera.Extensions.DependencyInjection.Abstractions\Fluxera.Extensions.DependencyInjection.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

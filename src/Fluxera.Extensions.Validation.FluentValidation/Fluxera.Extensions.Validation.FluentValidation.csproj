@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>library;extensions;validation;fluentvalidation</PackageTags>
+		<PackageTags>fluxera;library;extensions;validation;fluentvalidation</PackageTags>
 		<Description>The custom extensions for FluentValidation validation.</Description>
 	</PropertyGroup>
 
@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\doc\Fluxera.Extensions.Validation\README.md" Link="Properties\README.md">
+		<None Include="..\..\README.md" Link="Properties\README.md">
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>

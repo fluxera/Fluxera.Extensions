@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageTags>fluxera;library;extensions;validation</PackageTags>
+		<Description>The custom extensions for validation.</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Link="Properties\README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\..\icon.png" Link="Properties\icon.png">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Fluxera.Utilities" Version="6.0.4" />
+		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Fluxera.Extensions.Validation.Abstractions\Fluxera.Extensions.Validation.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>

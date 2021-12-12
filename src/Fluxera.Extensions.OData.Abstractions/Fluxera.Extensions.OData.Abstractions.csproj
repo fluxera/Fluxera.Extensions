@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageTags>fluxera;library;extensions;http;odata</PackageTags>
+		<Description>The abstactions for the custom extensions for odata client.</Description>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".Abstractions",""))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Link="Properties\README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\..\icon.png" Link="Properties\icon.png">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Fluxera.Extensions.Http.Abstractions\Fluxera.Extensions.Http.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>

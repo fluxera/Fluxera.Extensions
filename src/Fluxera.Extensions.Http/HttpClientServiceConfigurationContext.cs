@@ -1,13 +1,32 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System;
+	using Fluxera.Guards;
+	using JetBrains.Annotations;
 
-	internal sealed class HttpClientServiceConfigurationContext : IHttpClientServiceConfigurationContext
+	/// <summary>
+	///		The configuration context for a named HTTP client.
+	/// </summary>
+	[PublicAPI]
+	public class HttpClientServiceConfigurationContext
 	{
-		/// <inheritdoc />
-		public string RemoteServiceName { get; set; }
+		public HttpClientServiceConfigurationContext(string remoteServiceName, IServiceProvider serviceProvider)
+		{
+			Guard.Against.NullOrWhiteSpace(remoteServiceName, nameof(remoteServiceName));
+			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
-		/// <inheritdoc />
-		public IServiceProvider ServiceProvider { get; set; }
+			this.RemoteServiceName = remoteServiceName;
+			this.ServiceProvider = serviceProvider;
+		}
+
+		/// <summary>
+		///		The name of the remote service.
+		/// </summary>
+		public string RemoteServiceName { get; }
+
+		/// <summary>
+		///		The service provider instance.
+		/// </summary>
+		public IServiceProvider ServiceProvider { get; }
 	}
 }

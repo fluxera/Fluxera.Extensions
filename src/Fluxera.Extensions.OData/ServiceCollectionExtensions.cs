@@ -1,67 +1,66 @@
 ﻿namespace Fluxera.Extensions.OData
 {
+	using System;
+	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.DependencyInjection.Extensions;
+	using Microsoft.Extensions.Options;
 
 	[PublicAPI]
 	public static class ServiceCollectionExtensions
 	{
-		public static IServiceCollection AddODataClient(this IServiceCollection services)
+		public static IServiceCollection AddODataClientService(this IServiceCollection services)
 		{
 			// TODO
 
 			return services;
 		}
 
-		//public static IServiceCollection AddCrudApplicationService<TService>(this IServiceCollection services,
-		//	string remoteServiceName,
-		//	string collectionName,
-		//	Func<ICrudApplicationServiceConfigurationContext, TService> factory)
-		//	where TService : class, ICrudApplicationService
-		//{
-		//	Guard.AgainstNullOrEmpty(nameof(remoteServiceName), remoteServiceName);
-		//	Guard.AgainstNullOrEmpty(nameof(collectionName), collectionName);
-		//	Guard.AgainstNull(nameof(factory), factory);
+		public static IServiceCollection AddCrudApplicationService<TService>(this IServiceCollection services,
+			string remoteServiceName,
+			string collectionName,
+			Func<ODataServiceConfigurationContext, TService> factory)
+			where TService : class, IODataClientService
+		{
+			Guard.Against.NullOrEmpty(remoteServiceName, nameof(remoteServiceName));
+			Guard.Against.NullOrEmpty(collectionName, nameof(collectionName));
+			Guard.Against.Null(factory, nameof(factory));
 
-		//	services.TryAddCrudApplicationServiceTransient(remoteServiceName, collectionName, factory);
-		//	return services;
-		//}
+			services.TryAddCrudApplicationServiceTransient(remoteServiceName, collectionName, factory);
+			return services;
+		}
 
-		//public static IServiceCollection AddCrudApplicationService<TService>(this IServiceCollection services,
-		//	string collectionName,
-		//	Func<ICrudApplicationServiceConfigurationContext, TService> factory)
-		//	where TService : class, ICrudApplicationService
-		//{
-		//	Guard.AgainstNullOrEmpty(nameof(collectionName), collectionName);
-		//	Guard.AgainstNull(nameof(factory), factory);
+		public static IServiceCollection AddCrudApplicationService<TService>(this IServiceCollection services,
+			string collectionName,
+			Func<ODataServiceConfigurationContext, TService> factory)
+			where TService : class, IODataClientService
+		{
+			Guard.Against.NullOrEmpty(collectionName, nameof(collectionName));
+			Guard.Against.Null(factory, nameof(factory));
 
-		//	services.TryAddCrudApplicationServiceTransient(Options.DefaultName, collectionName, factory);
-		//	return services;
-		//}
+			services.TryAddCrudApplicationServiceTransient(Options.DefaultName, collectionName, factory);
+			return services;
+		}
 
-		//private static IServiceCollection TryAddCrudApplicationServiceTransient<TService>(
-		//	this IServiceCollection services,
-		//	string remoteServiceName,
-		//	string collectionName,
-		//	Func<ICrudApplicationServiceConfigurationContext, TService> factory)
-		//	where TService : class, ICrudApplicationService
-		//{
-		//	Guard.AgainstNullOrEmpty(nameof(collectionName), collectionName);
-		//	Guard.AgainstNull(nameof(factory), factory);
+		private static IServiceCollection TryAddCrudApplicationServiceTransient<TService>(
+			this IServiceCollection services,
+			string remoteServiceName,
+			string collectionName,
+			Func<ODataServiceConfigurationContext, TService> factory)
+			where TService : class, IODataClientService
+		{
+			Guard.Against.NullOrEmpty(remoteServiceName, nameof(remoteServiceName));
+			Guard.Against.NullOrEmpty(collectionName, nameof(collectionName));
+			Guard.Against.Null(factory, nameof(factory));
 
-		//	services.TryAddTransient(serviceProvider =>
-		//	{
-		//		ICrudApplicationServiceConfigurationContext context = new ApplicationServiceConfigurationContext
-		//		{
-		//			RemoteServiceName = remoteServiceName,
-		//			CollectionName = collectionName,
-		//			ServiceProvider = serviceProvider,
-		//		};
+			services.TryAddTransient(serviceProvider =>
+			{
+				ODataServiceConfigurationContext context = new ODataServiceConfigurationContext(remoteServiceName, collectionName, serviceProvider);
+				return factory.Invoke(context);
+			});
 
-		//		return factory.Invoke(context);
-		//	});
-
-		//	return services;
-		//}
+			return services;
+		}
 	}
 }

@@ -14,9 +14,9 @@
 		/// <summary>
 		///		Adds the required services for the http client.
 		/// </summary>
-		/// <param name="services"></param>
-		/// <returns></returns>
-		public static IServiceCollection AddHttp(this IServiceCollection services)
+		/// <param name="services">The service collection.</param>
+		/// <returns>The service collection.</returns>
+		public static IServiceCollection AddHttpClientService(this IServiceCollection services)
 		{
 			services.AddOptions();
 			services.AddHashCalculator();
@@ -35,41 +35,36 @@
 
 		public static IServiceCollection AddHttpClientService<TService>(this IServiceCollection services,
 			string remoteServiceName,
-			Func<IHttpClientServiceConfigurationContext, TService> factory)
+			Func<HttpClientServiceConfigurationContext, TService> factory)
 			where TService : class, IHttpClientService
 		{
 			Guard.Against.NullOrEmpty(remoteServiceName, nameof(remoteServiceName));
 			Guard.Against.Null(factory, nameof(factory));
 
-			services.TryAddApplicationServiceTransient(null, factory);
+			services.TryAddHttpClientService(remoteServiceName, factory);
 			return services;
 		}
 
-		public static IServiceCollection AddApplicationService<TService>(this IServiceCollection services,
-			Func<IHttpClientServiceConfigurationContext, TService> factory)
+		public static IServiceCollection AddHttpClientService<TService>(this IServiceCollection services,
+			Func<HttpClientServiceConfigurationContext, TService> factory)
 			where TService : class, IHttpClientService
 		{
 			Guard.Against.Null(factory, nameof(factory));
 
-			services.TryAddApplicationServiceTransient(Options.DefaultName, factory);
+			services.TryAddHttpClientService(Options.DefaultName, factory);
 			return services;
 		}
 
-		private static IServiceCollection TryAddApplicationServiceTransient<TService>(this IServiceCollection services,
+		private static IServiceCollection TryAddHttpClientService<TService>(this IServiceCollection services,
 			string remoteServiceName,
-			Func<IHttpClientServiceConfigurationContext, TService> factory)
+			Func<HttpClientServiceConfigurationContext, TService> factory)
 			where TService : class, IHttpClientService
 		{
 			Guard.Against.Null(factory, nameof(factory));
 
 			services.TryAddTransient(serviceProvider =>
 			{
-				IHttpClientServiceConfigurationContext context = new HttpClientServiceConfigurationContext
-				{
-					RemoteServiceName = remoteServiceName,
-					ServiceProvider = serviceProvider,
-				};
-
+				HttpClientServiceConfigurationContext context = new HttpClientServiceConfigurationContext(remoteServiceName, serviceProvider);
 				return factory.Invoke(context);
 			});
 

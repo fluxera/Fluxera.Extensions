@@ -12,8 +12,7 @@
 	[PublicAPI]
 	public static class HttpContentExtensions
 	{
-		public static async Task<T?> ReadAsAsync<T>(this HttpContent content)
-			where T : class
+		public static async Task<T?> ReadAsAsync<T>(this HttpContent content) where T : class
 		{
 			T? obj = null;
 
@@ -42,8 +41,7 @@
 			return obj;
 		}
 
-		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj)
-			where T : class
+		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj) where T : class
 		{
 			// https://johnthiriet.com/efficient-post-calls/
 			MemoryStream memoryStream = new MemoryStream();

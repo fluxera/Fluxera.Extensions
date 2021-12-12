@@ -2,6 +2,9 @@
 {
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///		A contract for a named HTTP client.
+	/// </summary>
 	[PublicAPI]
 	public interface IHttpClientService
 	{

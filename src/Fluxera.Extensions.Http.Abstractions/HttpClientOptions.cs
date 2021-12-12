@@ -2,6 +2,9 @@
 {
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///		Provides the HTTP client options.
+	/// </summary>
 	[PublicAPI]
 	public sealed class HttpClientOptions
 	{

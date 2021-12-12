@@ -5,6 +5,7 @@
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Logging;
 	using Microsoft.Extensions.Options;
+	using Simple.OData.Client;
 
 	[UsedImplicitly]
 	internal sealed class ODataClientSettingsFactory : IODataClientSettingsFactory
@@ -23,30 +24,30 @@
 			this.loggerFactory = loggerFactory;
 		}
 
-		///// <inheritdoc />
-		//public ODataClientSettings CreateSettings(string name)
-		//{
-		//	HttpClient httpClient = this.httpClientFactory.CreateClient(name);
-		//	httpClient.BaseAddress = new Uri(httpClient.BaseAddress, "odata");
+		/// <inheritdoc />
+		public ODataClientSettings CreateSettings(string name)
+		{
+			HttpClient httpClient = this.httpClientFactory.CreateClient(name);
+			httpClient.BaseAddress = new Uri(httpClient.BaseAddress, "odata");
 
-		//	ILogger logger = this.loggerFactory.CreateLogger<ODataClientSettings>();
+			ILogger logger = this.loggerFactory.CreateLogger<ODataClientSettings>();
 
-		//	return new ODataClientSettings(httpClient)
-		//	{
-		//		IncludeAnnotationsInResults = true,
-		//		RenewHttpConnection = false,
-		//		OnTrace = (message, parameters) =>
-		//		{
-		//			if (parameters != null && parameters.Length > 0)
-		//			{
-		//				logger.LogTrace(string.Format(message, parameters));
-		//			}
-		//			else
-		//			{
-		//				logger.LogTrace(message);
-		//			}
-		//		},
-		//	};
-		//}
+			return new ODataClientSettings(httpClient)
+			{
+				IncludeAnnotationsInResults = true,
+				RenewHttpConnection = false,
+				OnTrace = (message, parameters) =>
+				{
+					if (parameters != null && parameters.Length > 0)
+					{
+						logger.LogTrace(string.Format(message, parameters));
+					}
+					else
+					{
+						logger.LogTrace(message);
+					}
+				},
+			};
+		}
 	}
 }

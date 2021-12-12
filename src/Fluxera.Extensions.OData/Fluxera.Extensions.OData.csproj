@@ -29,6 +29,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Simple.OData.Client" Version="5.26.0" />
 	</ItemGroup>
 
 	<ItemGroup>

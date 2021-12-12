@@ -4,23 +4,21 @@
 	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///		Provides the remote service configurations.
+	/// </summary>
 	[PublicAPI]
 	public sealed class RemoteServiceConfigurationDictionary : Dictionary<string, RemoteServiceConfiguration>
 	{
 		public const string DefaultRemoteServiceName = "Default";
 
+		/// <summary>
+		///		Gets or sets the default remote service configuration.
+		/// </summary>
 		public RemoteServiceConfiguration? Default
 		{
 			get => this.GetOrDefault(DefaultRemoteServiceName);
 			set => this[DefaultRemoteServiceName] = value!;
 		}
-
-		//public RemoteServiceConfiguration GetConfigurationOrDefault(string name)
-		//{
-		//	return this.GetOrDefault(name)
-		//		   ?? this.Default
-		//		   ?? throw new Exception(
-		//			   $"Remote service '{name}' was not found and there is no default configuration.");
-		//}
 	}
 }

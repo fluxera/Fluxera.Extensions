@@ -3,9 +3,15 @@
 	using System;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///		A contract for a service that provides the base URL for HTP clients.
+	/// </summary>
 	[PublicAPI]
 	public interface IBaseAddressProvider
 	{
+		/// <summary>
+		///		The base address.
+		/// </summary>
 		Uri BaseAddress { get; }
 	}
 }

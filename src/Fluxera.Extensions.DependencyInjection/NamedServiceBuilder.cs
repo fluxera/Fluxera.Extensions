@@ -9,7 +9,7 @@
 	[PublicAPI]
 	public abstract class NamedServiceBuilder<TService> where TService : class
 	{
-		private readonly IDictionary<string, Type> implementationTypeMap = new ConcurrentDictionary<string, Type>();
+		private readonly IDictionary<string, IList<Type>> implementationTypeMap = new ConcurrentDictionary<string, IList<Type>>();
 
 		internal NamedServiceBuilder(IServiceCollection services)
 		{
@@ -34,7 +34,12 @@
 
 		protected internal void AddTypeMap<TImplementation>(string name) where TImplementation : class, TService
 		{
-			this.implementationTypeMap.Add(name, typeof(TImplementation));
+			if(!this.implementationTypeMap.ContainsKey(name))
+			{
+				this.implementationTypeMap.Add(name, new List<Type>());
+			}
+
+			this.implementationTypeMap[name].Add(typeof(TImplementation));
 		}
 	}
 }

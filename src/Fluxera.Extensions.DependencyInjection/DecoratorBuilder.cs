@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using System.Reflection;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
@@ -30,13 +29,13 @@
 		{
 			Guard.Against.Null(decoratorType, nameof(decoratorType));
 
-			if(this.serviceType.GetTypeInfo().IsGenericTypeDefinition && decoratorType.GetTypeInfo().IsGenericTypeDefinition)
+			if (serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
 			{
 				this.services.DecorateOpenGeneric(this.serviceType, decoratorType);
+				return this;
 			}
 
 			this.services.DecorateDescriptors(this.serviceType, descriptor => descriptor.Decorate(decoratorType));
-
 			return this;
 		}
 
@@ -50,7 +49,6 @@
 			Guard.Against.Null(decorator, nameof(decorator));
 
 			this.services.DecorateDescriptors(this.serviceType, descriptor => descriptor.Decorate(decorator));
-
 			return this;
 		}
 
@@ -59,12 +57,11 @@
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>The builder.</returns>
-		public DecoratorBuilder Wit(Func<object, object> decorator)
+		public DecoratorBuilder With(Func<object, object> decorator)
 		{
 			Guard.Against.Null(decorator, nameof(decorator));
 
 			this.services.DecorateDescriptors(this.serviceType, descriptor => descriptor.Decorate(decorator));
-
 			return this;
 		}
 	}
@@ -89,7 +86,6 @@
 		public DecoratorBuilder<TService> With<TDecorator>() where TDecorator : TService
 		{
 			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(typeof(TDecorator)));
-
 			return this;
 		}
 
@@ -102,7 +98,6 @@
 			Guard.Against.Null(decorator, nameof(decorator));
 
 			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(decorator));
-
 			return this;
 		}
 
@@ -110,10 +105,11 @@
 		///		Decorates the <see cref="TService"/> type with the given decorator function.
 		/// </summary>
 		/// <returns>The builder.</returns>
-		public DecoratorBuilder<TService> Wit(Func<TService, TService> decorator)
+		public DecoratorBuilder<TService> With(Func<TService, TService> decorator)
 		{
-			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(decorator));
+			Guard.Against.Null(decorator, nameof(decorator));
 
+			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(decorator));
 			return this;
 		}
 	}

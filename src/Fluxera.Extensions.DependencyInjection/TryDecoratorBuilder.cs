@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using System.Reflection;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +29,7 @@
 		{
 			Guard.Against.Null(decoratorType, nameof(decoratorType));
 
-			if(this.serviceType.GetTypeInfo().IsGenericTypeDefinition && decoratorType.GetTypeInfo().IsGenericTypeDefinition)
+			if (serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
 			{
 				return this.services.TryDecorateOpenGeneric(this.serviceType, decoratorType, out _);
 			}
@@ -82,8 +81,6 @@
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
 		public bool With<TDecorator>() where TDecorator : TService
 		{
-			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(typeof(TDecorator)));
-
 			return this.services.TryDecorateDescriptors(typeof(TService), out _, descriptor => descriptor.Decorate(typeof(TDecorator)));
 		}
 

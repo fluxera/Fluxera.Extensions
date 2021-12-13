@@ -27,7 +27,8 @@
 		public IEnumerable<Type> GetImplementationTypes(string name)
 		{
 			this.implementationTypeMap.TryGetValue(name, out IList<Type> result);
-			foreach(Type type in result)
+
+			foreach(Type type in result ?? Enumerable.Empty<Type>())
 			{
 				yield return type;
 			}
@@ -42,7 +43,10 @@
 					this.implementationTypeMap.Add(keyValuePair);
 				}
 
-				this.implementationTypeMap[keyValuePair.Key].AddRange(keyValuePair.Value);
+				foreach(Type type in keyValuePair.Value.ToList())
+				{
+					this.implementationTypeMap[keyValuePair.Key].Add(type);	
+				}
 			}
 		}
 	}

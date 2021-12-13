@@ -3,6 +3,7 @@
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.DependencyInjection.Extensions;
 
 	[PublicAPI]
 	public sealed class NamedTransientServiceBuilder<TService> : NamedServiceBuilder<TService>
@@ -18,8 +19,8 @@
 		{
 			Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-			this.Services.AddTransient<TService, TImplementation>();
-			this.Services.AddTransient<TImplementation>();
+			this.Services.TryAddTransient<TService, TImplementation>();
+			this.Services.TryAddTransient<TImplementation>();
 			this.AddTypeMap<TImplementation>(name);
 
 			return this;

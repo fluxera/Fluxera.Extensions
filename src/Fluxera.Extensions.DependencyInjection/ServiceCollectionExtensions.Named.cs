@@ -19,9 +19,10 @@
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.Null(configure, nameof(configure));
 
+			NamedServiceMapper<TService>? serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedTransientServiceBuilder<TService> builder = new NamedTransientServiceBuilder<TService>(services);
 			configure.Invoke(builder);
-			services.AddSingleton(builder.BuildMapper());
+			services.ReplaceSingleton(builder.BuildMapper(serviceMapper));
 
 			return services;
 		}
@@ -33,15 +34,16 @@
 		/// <param name="services">The service collection.</param>
 		/// <param name="configure">The name-type mapping configuration function.</param>
 		/// <returns>The service collection.</returns>
-		public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services, Action<NamedTransientServiceBuilder<TService>> configure)
+		public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services, Action<NamedSingletonServiceBuilder<TService>> configure)
 			where TService : class
 		{
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.Null(configure, nameof(configure));
 
-			NamedTransientServiceBuilder<TService> builder = new NamedTransientServiceBuilder<TService>(services);
+			NamedServiceMapper<TService>? serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
+			NamedSingletonServiceBuilder<TService> builder = new NamedSingletonServiceBuilder<TService>(services);
 			configure.Invoke(builder);
-			services.AddSingleton(builder.BuildMapper());
+			services.ReplaceSingleton(builder.BuildMapper(serviceMapper));
 
 			return services;
 		}
@@ -59,9 +61,10 @@
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.Null(configure, nameof(configure));
 
+			NamedServiceMapper<TService>? serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedScopedServiceBuilder<TService> builder = new NamedScopedServiceBuilder<TService>(services);
 			configure.Invoke(builder);
-			services.AddSingleton(builder.BuildMapper());
+			services.ReplaceSingleton(builder.BuildMapper(serviceMapper));
 
 			return services;
 		}

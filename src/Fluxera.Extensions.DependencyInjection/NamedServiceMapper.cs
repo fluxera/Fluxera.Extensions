@@ -7,7 +7,7 @@
 
 	internal sealed class NamedServiceMapper<TService>
 	{
-		private readonly IReadOnlyDictionary<string, Type> implementationTypeMap;
+		private readonly IDictionary<string, Type> implementationTypeMap;
 
 		public NamedServiceMapper(IDictionary<string, Type> implementationTypeMap)
 		{
@@ -20,6 +20,14 @@
 		{
 			this.implementationTypeMap.TryGetValue(name, out Type result);
 			return result!;
+		}
+
+		public void Add(IDictionary<string, Type> implementationTypeMap)
+		{
+			foreach(KeyValuePair<string, Type> keyValuePair in implementationTypeMap)
+			{
+				this.implementationTypeMap.Add(keyValuePair);
+			}
 		}
 	}
 }

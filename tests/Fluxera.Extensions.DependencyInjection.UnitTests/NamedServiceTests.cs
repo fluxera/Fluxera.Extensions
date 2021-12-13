@@ -17,13 +17,54 @@
 				{
 					builder
 						.AddNameFor<TestService>("One")
+						.AddNameFor<AnotherTestService>("Two")
+						.AddNameFor<TestService>("Three");
+				});
+			});
+
+			ITestService? service1 = serviceProvider.GetNamedService<ITestService>("One");
+			service1.Should().NotBeNull();
+			service1.Should().BeOfType<TestService>();
+
+			ITestService? service2 = serviceProvider.GetNamedService<ITestService>("Two");
+			service2.Should().NotBeNull();
+			service2.Should().BeOfType<AnotherTestService>();
+
+			ITestService? service3 = serviceProvider.GetNamedService<ITestService>("Three");
+			service3.Should().NotBeNull();
+			service3.Should().BeOfType<TestService>();
+		}
+
+		[Test]
+		public void ShouldMergeRegistrations()
+		{
+			IServiceProvider serviceProvider = BuildServiceProvider(services =>
+			{
+				services.AddNamedTransient<ITestService>(builder =>
+				{
+					builder
+						.AddNameFor<TestService>("One")
+						.AddNameFor<TestService>("Three");
+				});
+
+				services.AddNamedTransient<ITestService>(builder =>
+				{
+					builder
 						.AddNameFor<AnotherTestService>("Two");
 				});
 			});
 
-			ITestService? service = serviceProvider.GetService<ITestService>("One");
-			service.Should().NotBeNull();
-			service.Should().BeOfType<TestService>();
+			ITestService? service1 = serviceProvider.GetNamedService<ITestService>("One");
+			service1.Should().NotBeNull();
+			service1.Should().BeOfType<TestService>();
+
+			ITestService? service2 = serviceProvider.GetNamedService<ITestService>("Two");
+			service2.Should().NotBeNull();
+			service2.Should().BeOfType<AnotherTestService>();
+
+			ITestService? service3 = serviceProvider.GetNamedService<ITestService>("Three");
+			service3.Should().NotBeNull();
+			service3.Should().BeOfType<TestService>();
 		}
 	}
 }

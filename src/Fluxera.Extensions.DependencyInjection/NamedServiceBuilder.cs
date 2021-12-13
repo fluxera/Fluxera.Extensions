@@ -18,9 +18,17 @@
 
 		protected IServiceCollection Services { get; }
 
-		internal NamedServiceMapper<TService> BuildMapper()
+		internal NamedServiceMapper<TService> BuildMapper(NamedServiceMapper<TService>? namedServiceMapper = null)
 		{
-			NamedServiceMapper<TService> namedServiceMapper = new NamedServiceMapper<TService>(this.implementationTypeMap);
+			if(namedServiceMapper == null)
+			{
+				namedServiceMapper = new NamedServiceMapper<TService>(this.implementationTypeMap);
+			}
+			else
+			{
+				namedServiceMapper.Add(this.implementationTypeMap);
+			}
+
 			return namedServiceMapper;
 		}
 

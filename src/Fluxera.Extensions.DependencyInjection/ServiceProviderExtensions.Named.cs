@@ -13,7 +13,7 @@
 		/// <param name="serviceProvider">The service provider.</param>
 		/// <param name="name">The name of the service.</param>
 		/// <returns>The service instance.</returns>
-		public static TService? GetService<TService>(this IServiceProvider serviceProvider, string name)
+		public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
 		{
 			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
@@ -30,7 +30,7 @@
 		/// <param name="name">The name of the service.</param>
 		/// <returns>The service instance.</returns>
 		/// <exception cref="InvalidOperationException">Thrown when there is no service of type <typeparamref name="TService"/> with the given name.</exception>
-		public static TService GetRequiredService<TService>(this IServiceProvider serviceProvider, string name) 
+		public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name) 
 			where TService : notnull
 		{
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();

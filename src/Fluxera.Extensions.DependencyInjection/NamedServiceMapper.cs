@@ -5,6 +5,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using Fluxera.Guards;
+	using Fluxera.Utilities.Extensions;
 
 	internal sealed class NamedServiceMapper<TService>
 	{

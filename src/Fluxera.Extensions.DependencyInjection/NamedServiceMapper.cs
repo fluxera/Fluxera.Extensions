@@ -5,6 +5,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using Fluxera.Guards;
+	using Fluxera.Utilities.Extensions;
 
 	internal sealed class NamedServiceMapper<TService>
 	{
@@ -36,7 +37,12 @@
 		{
 			foreach (KeyValuePair<string, IList<Type>> keyValuePair in typeMap)
 			{
-				this.implementationTypeMap.Add(keyValuePair);
+				if(!this.implementationTypeMap.ContainsKey(keyValuePair.Key))
+				{
+					this.implementationTypeMap.Add(keyValuePair);
+				}
+
+				this.implementationTypeMap[keyValuePair.Key].AddRange(keyValuePair.Value);
 			}
 		}
 	}

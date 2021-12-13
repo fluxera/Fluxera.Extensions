@@ -110,7 +110,7 @@
 		///		Decorates the <see cref="TService"/> type with the given decorator function.
 		/// </summary>
 		/// <returns>The builder.</returns>
-		public DecoratorBuilder<TService> Wit(Func<TService, TService> decorator)
+		public DecoratorBuilder<TService> With(Func<TService, TService> decorator)
 		{
 			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(decorator));
 

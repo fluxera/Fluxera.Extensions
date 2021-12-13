@@ -16,5 +16,18 @@
 
 			return builder;
 		}
+
+		///  <summary>
+		/// 		Add the <see cref="IValidatorFactory"/> for data annotations.
+		///  </summary>
+		///  <param name="builder">The builder.</param>
+		///  <param name="name">The name of the validator factory.</param>
+		///  <returns>The builder.</returns>
+		public static ValidationBuilder AddDataAnnotations(this ValidationBuilder builder, string name)
+		{
+			builder.AddValidatorFactoryNamed<DataAnnotationsValidationValidatorFactory>(name);
+
+			return builder;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿namespace Fluxera.Extensions.Validation
 {
+	using Fluxera.Extensions.DependencyInjection;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,16 @@
 		{
 			this.Services.TryAddTransient<T>();
 			this.Services.AddTransient<IValidatorFactory, T>();
+
+			return this;
+		}
+
+		public ValidationBuilder AddValidatorFactoryNamed<T>(string name) where T : class, IValidatorFactory
+		{
+			this.Services.AddNamedTransient<IValidatorFactory>(builder =>
+			{
+				builder.AddNameFor<T>(name);
+			});
 
 			return this;
 		}

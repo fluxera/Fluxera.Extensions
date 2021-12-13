@@ -3,6 +3,7 @@
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.DependencyInjection.Extensions;
 
 	[PublicAPI]
 	public sealed class NamedScopedServiceBuilder<TService> : NamedServiceBuilder<TService>
@@ -18,8 +19,8 @@
 		{
 			Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-			this.Services.AddScoped<TService, TImplementation>();
-			this.Services.AddScoped<TImplementation>();
+			this.Services.TryAddScoped<TService, TImplementation>();
+			this.Services.TryAddScoped<TImplementation>();
 			this.AddTypeMap<TImplementation>(name);
 
 			return this;

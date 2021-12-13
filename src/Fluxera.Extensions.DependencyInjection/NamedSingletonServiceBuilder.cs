@@ -3,6 +3,7 @@
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.DependencyInjection.Extensions;
 
 	[PublicAPI]
 	public sealed class NamedSingletonServiceBuilder<TService> : NamedServiceBuilder<TService>
@@ -18,8 +19,8 @@
 		{
 			Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-			this.Services.AddSingleton<TService, TImplementation>();
-			this.Services.AddSingleton<TImplementation>();
+			this.Services.TryAddSingleton<TService, TImplementation>();
+			this.Services.TryAddSingleton<TImplementation>();
 			this.AddTypeMap<TImplementation>(name);
 
 			return this;

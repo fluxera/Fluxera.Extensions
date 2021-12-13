@@ -31,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Fluxera.Extensions.DependencyInjection\Fluxera.Extensions.DependencyInjection.csproj" />
 		<ProjectReference Include="..\Fluxera.Extensions.Validation.Abstractions\Fluxera.Extensions.Validation.Abstractions.csproj" />
 	</ItemGroup>
 

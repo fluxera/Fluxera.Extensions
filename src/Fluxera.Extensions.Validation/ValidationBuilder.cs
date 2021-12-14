@@ -7,7 +7,7 @@
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
 	[PublicAPI]
-	public sealed class ValidationBuilder
+	internal sealed class ValidationBuilder : IValidationBuilder
 	{
 		public ValidationBuilder(IServiceCollection services)
 		{
@@ -16,9 +16,7 @@
 			this.Services = services;
 		}
 
-		public IServiceCollection Services { get; }
-
-		public ValidationBuilder AddValidatorFactory<T>() where T : class, IValidatorFactory
+		public IValidationBuilder AddValidatorFactory<T>() where T : class, IValidatorFactory
 		{
 			this.Services.TryAddTransient<T>();
 			this.Services.AddTransient<IValidatorFactory, T>();
@@ -26,7 +24,7 @@
 			return this;
 		}
 
-		public ValidationBuilder AddValidatorFactoryNamed<T>(string name) where T : class, IValidatorFactory
+		public IValidationBuilder AddValidatorFactoryNamed<T>(string name) where T : class, IValidatorFactory
 		{
 			this.Services.AddNamedTransient<IValidatorFactory>(builder =>
 			{
@@ -35,5 +33,8 @@
 
 			return this;
 		}
+
+		/// <inheritdoc />
+		public IServiceCollection Services { get; }
 	}
 }

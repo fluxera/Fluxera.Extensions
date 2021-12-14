@@ -28,6 +28,7 @@
 	<ItemGroup>
 		<PackageReference Include="Fluxera.Guards" Version="6.0.5" />
 		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
 	</ItemGroup>
 
 </Project>

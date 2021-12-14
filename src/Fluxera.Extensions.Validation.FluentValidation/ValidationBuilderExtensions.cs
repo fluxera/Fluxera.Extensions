@@ -13,7 +13,7 @@
 		///  <param name="builder">The builder.</param>
 		///  <param name="configure">Action to configure the registered validators.</param>
 		///  <returns>The builder.</returns>
-		public static ValidationBuilder AddFluentValidation(this ValidationBuilder builder, Action<ValidatorRegistration> configure)
+		public static IValidationBuilder AddFluentValidation(this IValidationBuilder builder, Action<ValidatorRegistration> configure)
 		{
 			Guard.Against.Null(builder, nameof(builder));
 			Guard.Against.Null(configure, nameof(configure));
@@ -32,7 +32,7 @@
 		///  <param name="name">The name of the validator factory.</param>
 		///  <param name="configure">Action to configure the registered validators.</param>
 		///  <returns>The builder.</returns>
-		public static ValidationBuilder AddFluentValidation(this ValidationBuilder builder, string name, Action<ValidatorRegistration> configure)
+		public static IValidationBuilder AddFluentValidation(this IValidationBuilder builder, string name, Action<ValidatorRegistration> configure)
 		{
 			Guard.Against.Null(builder, nameof(builder));
 			Guard.Against.Null(configure, nameof(configure));

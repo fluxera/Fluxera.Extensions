@@ -10,7 +10,7 @@
 		/// </summary>
 		/// <param name="builder">The builder.</param>
 		/// <returns>The builder.</returns>
-		public static ValidationBuilder AddDataAnnotations(this ValidationBuilder builder)
+		public static IValidationBuilder AddDataAnnotations(this IValidationBuilder builder)
 		{
 			builder.AddValidatorFactory<DataAnnotationsValidationValidatorFactory>();
 
@@ -23,7 +23,7 @@
 		///  <param name="builder">The builder.</param>
 		///  <param name="name">The name of the validator factory.</param>
 		///  <returns>The builder.</returns>
-		public static ValidationBuilder AddDataAnnotations(this ValidationBuilder builder, string name)
+		public static IValidationBuilder AddDataAnnotations(this IValidationBuilder builder, string name)
 		{
 			builder.AddValidatorFactoryNamed<DataAnnotationsValidationValidatorFactory>(name);
 

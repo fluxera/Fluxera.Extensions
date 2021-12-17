@@ -5,13 +5,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>fluxera;library;extensions;validation;dataannotation</PackageTags>
+		<Title>Fluxera.Extensions.Validation.DataAnnotations</Title>
 		<Description>The custom extensions for DataAnnotations validation.</Description>
+		<PackageTags>fluxera;library;extensions;validation;dataannotation</PackageTags>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Include="..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\..\README.md" Link="Properties\README.md">
@@ -25,6 +22,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 

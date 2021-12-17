@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{75AC41
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		azure-pipelines.yml = azure-pipelines.yml
-		Directory.Build.props = Directory.Build.props
 		GitVersion.yml = GitVersion.yml
 		global.json = global.json
 		icon.png = icon.png
@@ -16,8 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{75AC41
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DF28D730-99B3-4811-AAC7-725A73B3F668}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F18D2D58-282C-4D93-8D9A-3A76CF98F018}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Common.Abstractions", "src\Fluxera.Extensions.Common.Abstractions\Fluxera.Extensions.Common.Abstractions.csproj", "{C4F333DA-F84F-408D-A3F5-C539AC841D21}"
 EndProject
@@ -63,13 +68,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Http.Abs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Http", "src\Fluxera.Extensions.Http\Fluxera.Extensions.Http.csproj", "{B1334FCB-46E8-4349-94AE-4B2F4C094052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluxera.Extensions.Http.UnitTests", "tests\Fluxera.Extensions.Http.UnitTests\Fluxera.Extensions.Http.UnitTests.csproj", "{C7973DF8-8570-4982-B209-D406894E2E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Http.UnitTests", "tests\Fluxera.Extensions.Http.UnitTests\Fluxera.Extensions.Http.UnitTests.csproj", "{C7973DF8-8570-4982-B209-D406894E2E8B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.OData.Abstractions", "src\Fluxera.Extensions.OData.Abstractions\Fluxera.Extensions.OData.Abstractions.csproj", "{A3664A26-82FB-46E8-9DA0-11E84E5133F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.OData", "src\Fluxera.Extensions.OData\Fluxera.Extensions.OData.csproj", "{EE64DD6B-E401-4502-BF22-FF33DB0BBBBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluxera.Extensions.OData.UnitTests", "tests\Fluxera.Extensions.OData.UnitTests\Fluxera.Extensions.OData.UnitTests.csproj", "{41A6CC4C-80AB-45EF-9E55-B719E9B87F6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.OData.UnitTests", "tests\Fluxera.Extensions.OData.UnitTests\Fluxera.Extensions.OData.UnitTests.csproj", "{41A6CC4C-80AB-45EF-9E55-B719E9B87F6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

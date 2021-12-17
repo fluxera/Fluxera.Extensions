@@ -5,13 +5,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>fluxera;library;extensions;services;common</PackageTags>
+		<Title>Fluxera.Extensions.Common</Title>
 		<Description>The common services.</Description>
+		<PackageTags>fluxera;library;extensions;services;common</PackageTags>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Include="..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\..\README.md" Link="Properties\README.md">
@@ -25,8 +22,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Guards" Version="6.0.5" />
-		<PackageReference Include="Fluxera.Utilities" Version="6.0.4" />
+		<PackageReference Include="Fluxera.Guards" Version="6.0.7" />
+		<PackageReference Include="Fluxera.Utilities" Version="6.0.8" />
+		<PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />

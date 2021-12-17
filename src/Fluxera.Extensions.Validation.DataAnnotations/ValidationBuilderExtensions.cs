@@ -2,11 +2,14 @@
 {
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     Extensions methods for the <see cref="IValidationBuilder" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class ValidationBuilderExtensions
 	{
 		/// <summary>
-		///		Add the <see cref="IValidatorFactory"/> for data annotations.
+		///     Add the <see cref="IValidatorFactory" /> for data annotations.
 		/// </summary>
 		/// <param name="builder">The builder.</param>
 		/// <returns>The builder.</returns>
@@ -17,12 +20,12 @@
 			return builder;
 		}
 
-		///  <summary>
-		/// 		Add the <see cref="IValidatorFactory"/> for data annotations.
-		///  </summary>
-		///  <param name="builder">The builder.</param>
-		///  <param name="name">The name of the validator factory.</param>
-		///  <returns>The builder.</returns>
+		/// <summary>
+		///     Add the <see cref="IValidatorFactory" /> for data annotations.
+		/// </summary>
+		/// <param name="builder">The builder.</param>
+		/// <param name="name">The name of the validator factory.</param>
+		/// <returns>The builder.</returns>
 		public static IValidationBuilder AddDataAnnotations(this IValidationBuilder builder, string name)
 		{
 			builder.AddValidatorFactoryNamed<DataAnnotationsValidationValidatorFactory>(name);

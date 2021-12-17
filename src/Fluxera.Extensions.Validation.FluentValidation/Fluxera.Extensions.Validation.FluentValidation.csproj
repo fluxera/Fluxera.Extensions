@@ -5,13 +5,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageTags>fluxera;library;extensions;validation;fluentvalidation</PackageTags>
+		<Title>Fluxera.Extensions.Validation.FluentValidation</Title>
 		<Description>The custom extensions for FluentValidation validation.</Description>
+		<PackageTags>fluxera;library;extensions;validation;fluentvalidation</PackageTags>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Include="..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\..\README.md" Link="Properties\README.md">
@@ -25,7 +22,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FluentValidation" Version="10.3.5" />
+	  <PackageReference Include="FluentValidation" Version="10.3.6" />
+	  <PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>

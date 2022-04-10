@@ -4,26 +4,42 @@
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Options;
 
+	/// <summary>
+	///     A default implementation of the <see cref="IConnectionStringResolver" /> contract
+	///     that resolves the connection strings from the configuration.
+	/// </summary>
 	[PublicAPI]
 	public class DefaultConnectionStringResolver : IConnectionStringResolver
 	{
-		public DefaultConnectionStringResolver(IOptions<DatabaseConnectionOptions> options)
+		/// <summary>
+		///     Creates a new instance of the <see cref="DefaultConnectionStringResolver" /> type.
+		/// </summary>
+		/// <param name="optionsWrapper"></param>
+		public DefaultConnectionStringResolver(IOptions<ConnectionStrings> optionsWrapper)
 		{
-			this.Options = options.Value;
+			this.Options = optionsWrapper.Value;
 		}
 
-		protected DatabaseConnectionOptions Options { get; }
+		/// <summary>
+		///     Gets the options of the module.
+		/// </summary>
+		protected ConnectionStrings Options { get; }
 
-		public string? ResolveConnectionString(string? connectionStringName = null)
+		/// <inheritdoc />
+		public string ResolveConnectionString(string name)
 		{
-			// Get default value if no connection string name was given.
-			connectionStringName ??= ConnectionStrings.DefaultConnectionStringName;
-
 			// Get module specific value if provided.
-			string? connectionString = this.Options.ConnectionStrings.GetOrDefault(connectionStringName);
-			return !string.IsNullOrWhiteSpace(connectionString) 
-				? connectionString 
-				: this.Options.ConnectionStrings.Default; // Get default value.
+			if(!name.IsNullOrEmpty())
+			{
+				string connectionString = this.Options.GetOrDefault(name);
+				if(!string.IsNullOrWhiteSpace(connectionString))
+				{
+					return connectionString;
+				}
+			}
+
+			// Get default value.
+			return this.Options.Default;
 		}
 	}
 }

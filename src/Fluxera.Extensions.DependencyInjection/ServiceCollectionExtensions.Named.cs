@@ -7,7 +7,7 @@
 	public static partial class ServiceCollectionExtensions
 	{
 		/// <summary>
-		///		Adds the service implementations configured in the configure action for the <see cref="TService"/> type transient.
+		///     Adds the service implementations configured in the configure action for the <see cref="TService" /> type transient.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>
@@ -19,7 +19,7 @@
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.Null(configure, nameof(configure));
 
-			NamedServiceMapper<TService>? serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
+			NamedServiceMapper<TService> serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedTransientServiceBuilder<TService> builder = new NamedTransientServiceBuilder<TService>(services);
 			configure.Invoke(builder);
 			services.ReplaceSingleton(builder.BuildMapper(serviceMapper));
@@ -28,7 +28,7 @@
 		}
 
 		/// <summary>
-		///		Adds the service implementations configured in the configure action for the <see cref="TService"/> type singleton.
+		///     Adds the service implementations configured in the configure action for the <see cref="TService" /> type singleton.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>
@@ -40,7 +40,7 @@
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.Null(configure, nameof(configure));
 
-			NamedServiceMapper<TService>? serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
+			NamedServiceMapper<TService> serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedSingletonServiceBuilder<TService> builder = new NamedSingletonServiceBuilder<TService>(services);
 			configure.Invoke(builder);
 			services.ReplaceSingleton(builder.BuildMapper(serviceMapper));
@@ -49,7 +49,7 @@
 		}
 
 		/// <summary>
-		///		Adds the service implementations configured in the configure action for the <see cref="TService"/> type scoped.
+		///     Adds the service implementations configured in the configure action for the <see cref="TService" /> type scoped.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>
@@ -61,7 +61,7 @@
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.Null(configure, nameof(configure));
 
-			NamedServiceMapper<TService>? serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
+			NamedServiceMapper<TService> serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedScopedServiceBuilder<TService> builder = new NamedScopedServiceBuilder<TService>(services);
 			configure.Invoke(builder);
 			services.ReplaceSingleton(builder.BuildMapper(serviceMapper));

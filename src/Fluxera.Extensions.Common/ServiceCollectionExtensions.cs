@@ -168,7 +168,7 @@
 		/// <param name="configureOptions">The optional options for the sequential guid generator.</param>
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddGuidGenerator(this IServiceCollection services,
-			Action<SequentialGuidGeneratorOptions>? configureOptions)
+			Action<SequentialGuidGeneratorOptions> configureOptions)
 		{
 			Guard.Against.Null(services, nameof(services));
 
@@ -178,7 +178,7 @@
 			// Add options infrastructure.
 			services.AddOptions();
 
-			if (configureOptions is null)
+			if(configureOptions is null)
 			{
 				services.TryAddTransient<IGuidGenerator, SimpleGuidGenerator>();
 			}

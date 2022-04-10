@@ -5,9 +5,9 @@
 	using System.Runtime.CompilerServices;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using Fluxera.Extensions.Http;
 	using Fluxera.Guards;
 	using Fluxera.Utilities.Extensions;
-	using Http;
 	using JetBrains.Annotations;
 	using Simple.OData.Client;
 
@@ -15,7 +15,7 @@
 	public abstract class ODataClientServiceBase<T, TKey> : HttpClientServiceBase, IODataClientService
 		where T : class, IODataEntity<TKey>
 	{
-		protected ODataClientServiceBase(string name, string collectionName, IODataClientFactory clientFactory) 
+		protected ODataClientServiceBase(string name, string collectionName, IODataClientFactory clientFactory)
 			: base(name, clientFactory.HttpClientFactory)
 		{
 			Guard.Against.Null(name, nameof(name));
@@ -33,16 +33,16 @@
 		protected IODataClient ODataClient { get; }
 
 		protected async Task<TResult> ExecuteFunctionScalarAsync<TResult>(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? functionName = null)
+			[CallerMemberName] string functionName = null)
 			where TResult : struct, IConvertible
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Function(functionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}
@@ -51,15 +51,15 @@
 		}
 
 		protected async Task<T> ExecuteFunctionSingleAsync(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? functionName = null)
+			[CallerMemberName] string functionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Function(functionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}
@@ -68,15 +68,15 @@
 		}
 
 		protected async Task<IReadOnlyCollection<T>> ExecuteFunctionEnumerableAsync(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? functionName = null)
+			[CallerMemberName] string functionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Function(functionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}
@@ -86,15 +86,15 @@
 		}
 
 		protected async Task ExecuteActionAsync(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? actionName = null)
+			[CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}
@@ -104,7 +104,7 @@
 
 		protected async Task ExecuteActionAsync(T instance,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? actionName = null)
+			[CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
@@ -116,7 +116,7 @@
 
 		protected async Task<T> ExecuteActionSingleAsync(T instance,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? actionName = null)
+			[CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
@@ -127,16 +127,16 @@
 		}
 
 		protected async Task<TResult> ExecuteActionScalar<TResult>(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? actionName = null)
+			[CallerMemberName] string actionName = null)
 			where TResult : struct, IConvertible
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}
@@ -145,15 +145,15 @@
 		}
 
 		protected async Task<T> ExecuteActionSingleAsync(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? actionName = null)
+			[CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}
@@ -162,15 +162,15 @@
 		}
 
 		protected async Task<IReadOnlyCollection<T>> ExecuteActionEnumerableAsync(
-			object? parameters = null,
+			object parameters = null,
 			CancellationToken cancellationToken = default,
-			[CallerMemberName] string? actionName = null)
+			[CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
 
-			if (parameters != null)
+			if(parameters != null)
 			{
 				boundClient.Set(parameters);
 			}

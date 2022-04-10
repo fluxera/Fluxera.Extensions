@@ -6,36 +6,36 @@
 	{
 		private bool isDisposed;
 
-		private T? value;
+		private T value;
 
-		public ObjectAccessor(ObjectAccessorContext? context = null)
+		public ObjectAccessor(ObjectAccessorContext context = null)
 		{
-			Context = context ?? ObjectAccessorContext.Default;
+			this.Context = context ?? ObjectAccessorContext.Default;
 		}
 
-		public ObjectAccessor(T? value, ObjectAccessorContext? context = null)
+		public ObjectAccessor(T value, ObjectAccessorContext context = null)
 			: this(context)
 		{
-			Value = value;
+			this.Value = value;
 		}
 
 		public ObjectAccessorContext Context { get; }
 
-		object? IObjectAccessor.Value
+		object IObjectAccessor.Value
 		{
-			set => Value = value as T;
+			set => this.Value = value as T;
 		}
 
-		public T? Value
+		public T Value
 		{
 			get
 			{
-				AssureNotDisposed();
-				return value;
+				this.AssureNotDisposed();
+				return this.value;
 			}
 			set
 			{
-				AssureNotDisposed();
+				this.AssureNotDisposed();
 				this.value = value;
 			}
 		}
@@ -43,15 +43,15 @@
 		/// <inheritdoc />
 		public void Dispose()
 		{
-			value = null;
-			isDisposed = true;
+			this.value = null;
+			this.isDisposed = true;
 		}
 
 		private void AssureNotDisposed()
 		{
-			if (isDisposed)
+			if(this.isDisposed)
 			{
-				throw new ObjectDisposedException($"The object accessor was already disposed. (Context={Context})");
+				throw new ObjectDisposedException($"The object accessor was already disposed. (Context={this.Context})");
 			}
 		}
 	}

@@ -3,22 +3,22 @@
 	using System.IO;
 	using System.Net.Http;
 	using System.Net.Http.Headers;
-	using System.Threading.Tasks;
-	using JetBrains.Annotations;
 	using System.Text.Json;
 	using System.Text.Json.Serialization;
+	using System.Threading.Tasks;
 	using Fluxera.Utilities.Extensions;
+	using JetBrains.Annotations;
 
 	[PublicAPI]
 	public static class HttpContentExtensions
 	{
-		public static async Task<T?> ReadAsAsync<T>(this HttpContent content) where T : class
+		public static async Task<T> ReadAsAsync<T>(this HttpContent content) where T : class
 		{
-			T? obj = null;
+			T obj = null;
 
 			try
 			{
-				await using (Stream contentStream = await content.ReadAsStreamAsync())
+				await using(Stream contentStream = await content.ReadAsStreamAsync())
 				{
 					JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
 					{

@@ -15,18 +15,18 @@ namespace Fluxera.Extensions.Validation.FluentValidation
 
 		public IValidator<T> GetValidator<T>()
 		{
-			return (IValidator<T>) this.GetValidator(typeof(T));
+			return (IValidator<T>)this.GetValidator(typeof(T));
 		}
 
 		public IValidator GetValidator(Type type)
 		{
-			IValidator? validator = this.CreateInstance(typeof(IValidator<>).MakeGenericType(type));
+			IValidator validator = this.CreateInstance(typeof(IValidator<>).MakeGenericType(type));
 
-			if (validator is null)
+			if(validator is null)
 			{
 				// Get base type and try to find validator for base type (used for polymorphic classes).
 				Type baseType = type.GetTypeInfo().BaseType;
-				if (baseType == null)
+				if(baseType == null)
 				{
 					// Return no validator if no base type was found, i.e. we reached object.
 					return null!;
@@ -39,7 +39,7 @@ namespace Fluxera.Extensions.Validation.FluentValidation
 			return validator;
 		}
 
-		private IValidator? CreateInstance(Type validatorType)
+		private IValidator CreateInstance(Type validatorType)
 		{
 			return this.serviceProvider.GetService(validatorType) as IValidator;
 		}

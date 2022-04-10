@@ -3,16 +3,16 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///		A contract for a connection string resolver.
+	///     A contract that resolves a named connection string.
 	/// </summary>
 	[PublicAPI]
 	public interface IConnectionStringResolver
 	{
 		/// <summary>
-		///		Provides the connection string for the given name.
+		///     Resolves the connection string for the given connection string name.
 		/// </summary>
-		/// <param name="connectionStringName">The name of the connection string.</param>
+		/// <param name="name">The name of the connection string.</param>
 		/// <returns>The connection string.</returns>
-		string? ResolveConnectionString(string? connectionStringName = null);
+		string ResolveConnectionString(string name = ConnectionStrings.DefaultConnectionStringName);
 	}
 }

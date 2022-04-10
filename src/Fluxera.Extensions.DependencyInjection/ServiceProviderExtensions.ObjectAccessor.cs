@@ -10,7 +10,6 @@
 	public static partial class ServiceProviderExtensions
 	{
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="serviceProvider"></param>
@@ -20,17 +19,16 @@
 		{
 			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
-			return serviceProvider.GetObjectOrDefault<T>() 
+			return serviceProvider.GetObjectOrDefault<T>()
 				?? throw new InvalidOperationException($"Could not find an object of {typeof(T).AssemblyQualifiedName} in services. Be sure that you have used AddObjectAccessor before.");
 		}
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="serviceProvider"></param>
 		/// <returns></returns>
-		public static T? GetObjectOrDefault<T>(this IServiceProvider serviceProvider) where T : class
+		public static T GetObjectOrDefault<T>(this IServiceProvider serviceProvider) where T : class
 		{
 			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
@@ -39,7 +37,6 @@
 		}
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="serviceProvider"></param>
 		/// <returns></returns>

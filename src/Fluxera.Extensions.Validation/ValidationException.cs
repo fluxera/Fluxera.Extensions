@@ -21,7 +21,7 @@
 		{
 		}
 
-		public ValidationException(string message, Exception? innerException) : base(message, innerException)
+		public ValidationException(string message, Exception innerException) : base(message, innerException)
 		{
 		}
 

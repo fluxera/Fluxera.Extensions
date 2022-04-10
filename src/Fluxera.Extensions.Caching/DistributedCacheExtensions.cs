@@ -29,12 +29,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadBoolean();
@@ -55,12 +55,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadChar();
@@ -81,12 +81,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadDecimal();
@@ -107,12 +107,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadDouble();
@@ -133,12 +133,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadInt16();
@@ -159,12 +159,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadInt32();
@@ -185,12 +185,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadInt64();
@@ -211,12 +211,12 @@
 			Guard.Against.Null(key, nameof(key));
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
-			if (bytes == null)
+			if(bytes == null)
 			{
 				return null;
 			}
 
-			await using (MemoryStream memoryStream = new MemoryStream(bytes))
+			await using(MemoryStream memoryStream = new MemoryStream(bytes))
 			{
 				BinaryReader binaryReader = new BinaryReader(memoryStream);
 				return binaryReader.ReadSingle();
@@ -232,7 +232,7 @@
 		/// <param name="encoding">The encoding of the <see cref="string" /> value or <c>null</c> to use UTF-8.</param>
 		/// <returns>The <see cref="string" /> value or <c>null</c> if the key was not found.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static async Task<string?> GetStringAsync(this IDistributedCache cache, string key, Encoding? encoding = null)
+		public static async Task<string> GetStringAsync(this IDistributedCache cache, string key, Encoding encoding = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -253,14 +253,14 @@
 		/// <param name="encoding">The encoding of the JSON or <c>null</c> to use UTF-8.</param>
 		/// <returns>The value of type <typeparamref name="T" /> or <c>null</c> if the key was not found.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static async Task<T?> GetAsJsonAsync<T>(this IDistributedCache cache, string key, Encoding? encoding = null)
+		public static async Task<T> GetAsJsonAsync<T>(this IDistributedCache cache, string key, Encoding encoding = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
 
 			encoding ??= Encoding.UTF8;
 
-			string? json = await cache.GetStringAsync(key, encoding).ConfigureAwait(false);
+			string json = await cache.GetStringAsync(key, encoding).ConfigureAwait(false);
 			return json == null ? default : JsonSerializer.Deserialize<T>(json);
 		}
 
@@ -273,7 +273,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, bool value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, bool value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -281,7 +281,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -300,7 +300,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, char value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, char value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -308,7 +308,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -327,7 +327,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, decimal value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, decimal value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -335,7 +335,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -354,7 +354,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, double value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, double value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -362,7 +362,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -381,7 +381,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, short value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, short value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -389,7 +389,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -408,7 +408,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, int value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, int value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -416,7 +416,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -435,7 +435,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, long value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, long value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -443,7 +443,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -462,7 +462,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, float value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, float value, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -470,7 +470,7 @@
 			options ??= new DistributedCacheEntryOptions();
 
 			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
+			using(MemoryStream memoryStream = new MemoryStream())
 			{
 				BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 				binaryWriter.Write(value);
@@ -489,7 +489,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, string value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, string value, DistributedCacheEntryOptions options = null)
 		{
 			return cache.SetAsync(key, value, null, options);
 		}
@@ -504,7 +504,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>A task representing this action.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsync(this IDistributedCache cache, string key, string value, Encoding? encoding = null, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsync(this IDistributedCache cache, string key, string value, Encoding encoding = null, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));
@@ -528,7 +528,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>The value of type <typeparamref name="T" /> or <c>null</c> if the key was not found.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsJsonAsync<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsJsonAsync<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options = null)
 		{
 			return cache.SetAsJsonAsync(key, value, null, options);
 		}
@@ -545,7 +545,7 @@
 		/// <param name="options">The cache options or <c>null</c> to use the default cache options.</param>
 		/// <returns>The value of type <typeparamref name="T" /> or <c>null</c> if the key was not found.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
-		public static Task SetAsJsonAsync<T>(this IDistributedCache cache, string key, T value, Encoding? encoding = null, DistributedCacheEntryOptions? options = null)
+		public static Task SetAsJsonAsync<T>(this IDistributedCache cache, string key, T value, Encoding encoding = null, DistributedCacheEntryOptions options = null)
 		{
 			Guard.Against.Null(cache, nameof(cache));
 			Guard.Against.Null(key, nameof(key));

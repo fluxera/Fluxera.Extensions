@@ -6,15 +6,21 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///		Provides the connection strings.
+	///     The connection strings options.
 	/// </summary>
 	[PublicAPI]
 	[Serializable]
 	public sealed class ConnectionStrings : Dictionary<string, string>
 	{
+		/// <summary>
+		///     The name of the default connection string.
+		/// </summary>
 		public const string DefaultConnectionStringName = "Default";
 
-		public string? Default
+		/// <summary>
+		///     Gets or sets the default connection string.
+		/// </summary>
+		public string Default
 		{
 			get => this.GetOrDefault(DefaultConnectionStringName);
 			set => this[DefaultConnectionStringName] = value!;

@@ -1,17 +1,20 @@
 ﻿namespace Fluxera.Extensions.OData
 {
-	using System;
-	using System.Net.Http;
 	using JetBrains.Annotations;
 	using Simple.OData.Client;
 
+	/// <summary>
+	///     A contract for a factory that creates instances of <see cref="IODataClient" />.
+	/// </summary>
 	[PublicAPI]
-	public interface IODataClientFactory //: IHttpClientFactory
+	public interface IODataClientFactory
 	{
-		IODataClient CreateClient(string name);
-		
-		IODataClient CreateClient(string name, Action<ODataClientSettings> configureSettings);
-		
-		IHttpClientFactory HttpClientFactory { get; }
+		/// <summary>
+		///     Creates a new <see cref="IODataClient" /> for the given name.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="oDataClientSettings"></param>
+		/// <returns></returns>
+		IODataClient CreateClient(string name, ODataClientSettings oDataClientSettings);
 	}
 }

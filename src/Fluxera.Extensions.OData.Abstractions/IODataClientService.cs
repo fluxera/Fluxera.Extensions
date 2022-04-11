@@ -1,13 +1,16 @@
 ﻿namespace Fluxera.Extensions.OData
 {
-	using Fluxera.Extensions.Http;
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///		A contract for a named OData client.
+	///     A contract for a named OData client.
 	/// </summary>
 	[PublicAPI]
-	public interface IODataClientService : IHttpClientService
+	public interface IODataClientService
 	{
+		/// <summary>
+		///     Gets the name of the OData client service.
+		/// </summary>
+		string Name { get; }
 	}
 }

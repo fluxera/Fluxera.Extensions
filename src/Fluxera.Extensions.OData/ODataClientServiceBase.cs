@@ -9,34 +9,33 @@
 	using Fluxera.Guards;
 	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
-	using Microsoft.Extensions.Options;
 	using Simple.OData.Client;
 
 	/// <summary>
-	///     A base class for OData feed client services.
+	///     An abstract base class for named OData clients.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <typeparam name="TKey"></typeparam>
 	[PublicAPI]
-	public abstract class ODataClientServiceBase<T, TKey> : HttpClientServiceBase, IODataClientService
+	public abstract class ODataClientServiceBase<T, TKey> : IODataClientService
 		where T : class, IODataEntity<TKey>
 	{
 		/// <summary>
-		///     Creates a new instance of the <see cref="ODataClientServiceBase{T,TKey}" /> type.
+		///     Creates a new instance of the <see cref="ODataClientServiceBase{T, TKey}" /> type.
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="collectionName"></param>
-		/// <param name="clientFactory"></param>
-		/// <param name="optionsWrapper"></param>
-		protected ODataClientServiceBase(string name, string collectionName, IODataClientFactory clientFactory, IOptions<RemoteServiceOptions> optionsWrapper)
-			: base(name, clientFactory.HttpClientFactory.CreateClient(name), optionsWrapper.Value.RemoteServices[name])
+		/// <param name="oDataClient"></param>
+		/// <param name="options"></param>
+		protected ODataClientServiceBase(string name, string collectionName, IODataClient oDataClient, RemoteService options)
 		{
 			Guard.Against.Null(name, nameof(name));
 			Guard.Against.NullOrWhiteSpace(collectionName, nameof(collectionName));
-			Guard.Against.Null(clientFactory, nameof(clientFactory));
+			Guard.Against.Null(oDataClient, nameof(oDataClient));
+			Guard.Against.Null(options, nameof(options));
 
+			this.Name = name;
 			this.CollectionName = collectionName;
-			this.ODataClient = clientFactory.CreateClient(name);
+			this.ODataClient = oDataClient;
+			this.Options = options;
 
 			V4Adapter.Reference();
 		}
@@ -50,6 +49,14 @@
 		///     Gets the OData client.
 		/// </summary>
 		protected IODataClient ODataClient { get; }
+
+		/// <summary>
+		///     Gets the remote service options.
+		/// </summary>
+		protected RemoteService Options { get; }
+
+		/// <inheritdoc />
+		public string Name { get; }
 
 		protected async Task<TResult> ExecuteFunctionScalarAsync<TResult>(
 			object parameters = null,

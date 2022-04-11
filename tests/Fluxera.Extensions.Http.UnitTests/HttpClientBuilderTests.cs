@@ -1,14 +1,14 @@
 namespace Fluxera.Extensions.Http.UnitTests
 {
 	using System;
-	using System.Threading.Tasks;
+	using FluentAssertions;
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
 
 	public class Tests
 	{
 		[Test]
-		public async Task ShouldCreateNamedHttpClientService()
+		public void ShouldCreateNamedHttpClientService()
 		{
 			IServiceCollection services = new ServiceCollection();
 
@@ -23,8 +23,7 @@ namespace Fluxera.Extensions.Http.UnitTests
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 
 			ITestHttpClientService service = serviceProvider.GetRequiredService<ITestHttpClientService>();
-			string result = await service.GetSomethingAsync();
-			Console.WriteLine(result);
+			service.Should().NotBeNull();
 		}
 	}
 }

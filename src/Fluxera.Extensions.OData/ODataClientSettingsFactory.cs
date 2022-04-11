@@ -1,6 +1,5 @@
 ﻿namespace Fluxera.Extensions.OData
 {
-	using System;
 	using System.Net.Http;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Logging;
@@ -19,8 +18,6 @@
 		/// <inheritdoc />
 		public ODataClientSettings CreateSettings(string name, HttpClient httpClient)
 		{
-			httpClient.BaseAddress = new Uri(httpClient.BaseAddress, "odata");
-
 			return new ODataClientSettings(httpClient)
 			{
 				IncludeAnnotationsInResults = true,

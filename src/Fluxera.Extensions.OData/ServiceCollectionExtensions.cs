@@ -28,7 +28,7 @@
 		public static IHttpClientBuilder AddODataClientService<TService, TImplementation>(this IServiceCollection services,
 			string remoteServiceName,
 			string collectionName,
-			Func<string, string, IODataClient, RemoteService, TImplementation> factory)
+			Func<ODataClientServiceConfigurationContext, TImplementation> factory)
 			where TService : class, IODataClientService
 			where TImplementation : class, TService
 		{
@@ -58,7 +58,8 @@
 					IODataClientFactory oDataClientFactory = serviceProvider.GetRequiredService<IODataClientFactory>();
 					IODataClient oDataClient = oDataClientFactory.CreateClient(remoteServiceName, oDataClientSettings);
 
-					return factory.Invoke(remoteServiceName, collectionName, oDataClient, options);
+					ODataClientServiceConfigurationContext context = new ODataClientServiceConfigurationContext(remoteServiceName, collectionName, oDataClient, options);
+					return factory.Invoke(context);
 				});
 		}
 
@@ -73,7 +74,7 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddODataClientService<TService, TImplementation>(this IServiceCollection services,
 			string collectionName,
-			Func<string, string, IODataClient, RemoteService, TImplementation> factory)
+			Func<ODataClientServiceConfigurationContext, TImplementation> factory)
 			where TService : class, IODataClientService
 			where TImplementation : class, TService
 		{

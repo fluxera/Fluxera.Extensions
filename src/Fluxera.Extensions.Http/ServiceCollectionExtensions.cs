@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System;
-	using System.Net.Http;
 	using Fluxera.Extensions.Common;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
@@ -54,7 +53,7 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services,
 			string remoteServiceName,
-			Func<string, HttpClient, RemoteService, TImplementation> factory)
+			Func<HttpClientServiceConfigurationContext, TImplementation> factory)
 			where TService : class, IHttpClientService
 			where TImplementation : class, TService
 		{
@@ -75,7 +74,8 @@
 
 					httpClient.BaseAddress = new Uri(options.BaseAddress);
 
-					return factory.Invoke(remoteServiceName, httpClient, options);
+					HttpClientServiceConfigurationContext context = new HttpClientServiceConfigurationContext(remoteServiceName, httpClient, options);
+					return factory.Invoke(context);
 				});
 		}
 
@@ -88,7 +88,7 @@
 		/// <param name="factory">The factory function that creates a service client instance.</param>
 		/// <returns></returns>
 		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services,
-			Func<string, HttpClient, RemoteService, TImplementation> factory)
+			Func<HttpClientServiceConfigurationContext, TImplementation> factory)
 			where TService : class, IHttpClientService
 			where TImplementation : class, TService
 		{

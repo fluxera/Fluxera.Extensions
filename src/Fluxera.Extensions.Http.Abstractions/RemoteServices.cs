@@ -5,17 +5,20 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///     Provides the remote service configurations.
+	///     The remote services options.
 	/// </summary>
 	[PublicAPI]
-	public sealed class RemoteServiceConfigurationDictionary : Dictionary<string, RemoteServiceConfiguration>
+	public sealed class RemoteServices : Dictionary<string, RemoteService>
 	{
+		/// <summary>
+		///     The name of the default remote service.
+		/// </summary>
 		public const string DefaultRemoteServiceName = "Default";
 
 		/// <summary>
 		///     Gets or sets the default remote service configuration.
 		/// </summary>
-		public RemoteServiceConfiguration Default
+		public RemoteService Default
 		{
 			get => this.GetOrDefault(DefaultRemoteServiceName);
 			set => this[DefaultRemoteServiceName] = value!;

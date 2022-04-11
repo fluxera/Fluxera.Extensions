@@ -3,19 +3,22 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///		Provides the remote service options.
+	///     The remote service options.
 	/// </summary>
 	[PublicAPI]
 	public sealed class RemoteServiceOptions
 	{
+		/// <summary>
+		///     Creates a new instance of the <see cref="RemoteServiceOptions" /> type.
+		/// </summary>
 		public RemoteServiceOptions()
 		{
-			this.RemoteServices = new RemoteServiceConfigurationDictionary();
+			this.RemoteServices = new RemoteServices();
 		}
 
 		/// <summary>
-		///		Provides the remote service configurations.
+		///     Gets or sets the remote services.
 		/// </summary>
-		public RemoteServiceConfigurationDictionary RemoteServices { get; set; }
+		public RemoteServices RemoteServices { get; set; }
 	}
 }

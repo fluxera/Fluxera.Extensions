@@ -9,14 +9,27 @@
 	using Fluxera.Guards;
 	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
+	using Microsoft.Extensions.Options;
 	using Simple.OData.Client;
 
+	/// <summary>
+	///     A base class for OData feed client services.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="TKey"></typeparam>
 	[PublicAPI]
 	public abstract class ODataClientServiceBase<T, TKey> : HttpClientServiceBase, IODataClientService
 		where T : class, IODataEntity<TKey>
 	{
-		protected ODataClientServiceBase(string name, string collectionName, IODataClientFactory clientFactory)
-			: base(name, clientFactory.HttpClientFactory)
+		/// <summary>
+		///     Creates a new instance of the <see cref="ODataClientServiceBase{T,TKey}" /> type.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="collectionName"></param>
+		/// <param name="clientFactory"></param>
+		/// <param name="optionsWrapper"></param>
+		protected ODataClientServiceBase(string name, string collectionName, IODataClientFactory clientFactory, IOptions<RemoteServiceOptions> optionsWrapper)
+			: base(name, clientFactory.HttpClientFactory, optionsWrapper)
 		{
 			Guard.Against.Null(name, nameof(name));
 			Guard.Against.NullOrWhiteSpace(collectionName, nameof(collectionName));
@@ -28,8 +41,14 @@
 			V4Adapter.Reference();
 		}
 
+		/// <summary>
+		///     Gets the collection name.
+		/// </summary>
 		protected string CollectionName { get; }
 
+		/// <summary>
+		///     Gets the OData client.
+		/// </summary>
 		protected IODataClient ODataClient { get; }
 
 		protected async Task<TResult> ExecuteFunctionScalarAsync<TResult>(

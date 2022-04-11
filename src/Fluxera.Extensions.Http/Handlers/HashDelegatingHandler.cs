@@ -1,8 +1,9 @@
 ﻿namespace Fluxera.Extensions.Http.Handlers
 {
 	using System.Net.Http;
+	using System.Security.Cryptography;
 	using System.Threading.Tasks;
-	using Common;
+	using Fluxera.Extensions.Common;
 
 	internal abstract class HashDelegatingHandler : DelegatingHandler
 	{
@@ -16,7 +17,7 @@
 		protected async Task ApplyHash(HttpContent content)
 		{
 			byte[] inputBytes = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
-			byte[] hash = this.hashCalculator.ComputeHash(inputBytes, new MD5Managed()/*, MD5.Create()*/);
+			byte[] hash = this.hashCalculator.ComputeHash(inputBytes, MD5.Create());
 
 			content.Headers.ContentMD5 = hash;
 		}

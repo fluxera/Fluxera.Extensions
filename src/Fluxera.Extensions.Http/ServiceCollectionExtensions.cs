@@ -1,74 +1,97 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System;
-	using Common;
+	using System.Net.Http;
+	using Fluxera.Extensions.Common;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 	using Microsoft.Extensions.Options;
 
+	/// <summary>
+	///     Extensions methods for the <see cref="IServiceCollection" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		///		Adds the required services for the http client.
+		///     Adds the <see cref="IBaseAddressProvider" /> to be used.
 		/// </summary>
+		/// <typeparam name="TProvider"></typeparam>
 		/// <param name="services">The service collection.</param>
-		/// <returns>The service collection.</returns>
-		public static IServiceCollection AddHttpClientService(this IServiceCollection services)
+		/// <returns></returns>
+		public static IServiceCollection AddBaseAddressProvider<TProvider>(this IServiceCollection services)
+			where TProvider : class, IBaseAddressProvider
 		{
-			services.AddOptions();
-			services.AddHashCalculator();
-			services.AddHttpClient();
+			services.TryAddSingleton<IBaseAddressProvider, TProvider>();
 
 			return services;
 		}
 
-		public static IServiceCollection AddBaseAddressProvider<T>(this IServiceCollection services)
-			where T : class, IBaseAddressProvider
+		/// <summary>
+		///     Adds the <see cref="IAccessTokenProvider" /> to be used.
+		/// </summary>
+		/// <typeparam name="TProvider"></typeparam>
+		/// <param name="services">The service collection.</param>
+		/// <returns></returns>
+		public static IServiceCollection AddAccessTokenProvider<TProvider>(this IServiceCollection services)
+			where TProvider : class, IAccessTokenProvider
 		{
-			services.TryAddSingleton<IBaseAddressProvider, T>();
+			services.TryAddSingleton<IAccessTokenProvider, TProvider>();
 
 			return services;
 		}
 
-		public static IServiceCollection AddHttpClientService<TService>(this IServiceCollection services,
-			string remoteServiceName,
-			Func<HttpClientServiceConfigurationContext, TService> factory)
+		/// <summary>
+		///     Adds a named HTTP client <see cref="TService" /> to the services.
+		/// </summary>
+		/// <typeparam name="TService"></typeparam>
+		/// <typeparam name="TImplementation"></typeparam>
+		/// <param name="services">The service collection.</param>
+		/// <param name="remoteServiceName">The name of the remote service.</param>
+		/// <param name="factory">The factory function that creates a service client instance.</param>
+		/// <returns></returns>
+		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services, string remoteServiceName,
+			Func<string, HttpClient, RemoteService, TImplementation> factory)
 			where TService : class, IHttpClientService
+			where TImplementation : class, TService
 		{
+			Guard.Against.Null(services, nameof(services));
 			Guard.Against.NullOrEmpty(remoteServiceName, nameof(remoteServiceName));
 			Guard.Against.Null(factory, nameof(factory));
 
-			services.TryAddHttpClientService(remoteServiceName, factory);
-			return services;
+			services.AddOptions();
+			services.AddHttpClient();
+			services.AddHashCalculator();
+
+			return services
+				.AddHttpClient<TService>(remoteServiceName)
+				.AddTypedClient<TService>((httpClient, serviceProvider) =>
+				{
+					IOptions<RemoteServiceOptions> optionsWrapper = serviceProvider.GetRequiredService<IOptions<RemoteServiceOptions>>();
+					RemoteService options = optionsWrapper.Value.RemoteServices[remoteServiceName];
+
+					httpClient.BaseAddress = new Uri(options.BaseAddress);
+
+					return factory.Invoke(remoteServiceName, httpClient, options);
+				});
 		}
 
-		public static IServiceCollection AddHttpClientService<TService>(this IServiceCollection services,
-			Func<HttpClientServiceConfigurationContext, TService> factory)
+		/// <summary>
+		///     Adds HTTP client <see cref="TService" /> to the services.
+		/// </summary>
+		/// <typeparam name="TService"></typeparam>
+		/// <typeparam name="TImplementation"></typeparam>
+		/// <param name="services">The service collection.</param>
+		/// <param name="factory">The factory function that creates a service client instance.</param>
+		/// <returns></returns>
+		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services,
+			Func<string, HttpClient, RemoteService, TImplementation> factory)
 			where TService : class, IHttpClientService
+			where TImplementation : class, TService
 		{
-			Guard.Against.Null(factory, nameof(factory));
-
-			services.TryAddHttpClientService(Options.DefaultName, factory);
-			return services;
-		}
-
-		private static IServiceCollection TryAddHttpClientService<TService>(this IServiceCollection services,
-			string remoteServiceName,
-			Func<HttpClientServiceConfigurationContext, TService> factory)
-			where TService : class, IHttpClientService
-		{
-			Guard.Against.Null(factory, nameof(factory));
-
-			services.TryAddTransient(serviceProvider =>
-			{
-				HttpClientServiceConfigurationContext context = new HttpClientServiceConfigurationContext(remoteServiceName, serviceProvider);
-				return factory.Invoke(context);
-			});
-
-			return services;
+			return services.AddHttpClientService<TService, TImplementation>(RemoteServices.DefaultRemoteServiceName, factory);
 		}
 	}
 }

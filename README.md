@@ -5,7 +5,7 @@ A library that extends the Microsoft.Extensions.* libraries with custom function
 
 ### ```Fluxera.Extensions.Caching```
 
-This extension contains ```Option``` classes for configuring a remodee distributed cache server and
+This extension contains ```Option``` classes for configuring a remote distributed cache server and
 several useful extension methods for the ```IDistributedCache``` service.
 
 ### ```Fluxera.Extensions.Common```

@@ -3,11 +3,11 @@
 	using System.Net.Http;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using Common;
+	using Fluxera.Extensions.Common;
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///     Handler to assign the MD5 hash value if content is present.
+	///     A delegating handler that assigns a MD5 hash value if content is present.
 	/// </summary>
 	[UsedImplicitly]
 	internal sealed class ContentHashResponseHandler : HashDelegatingHandler
@@ -17,11 +17,10 @@
 		{
 		}
 
-		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-			CancellationToken cancellationToken)
+		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 		{
 			HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
-			if (!response.IsSuccessStatusCode || response.Content == null)
+			if(!response.IsSuccessStatusCode || (response.Content == null))
 			{
 				return response;
 			}

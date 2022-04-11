@@ -5,22 +5,39 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///		An abstract base class for named HTTP clients.
+	///     An abstract base class for named HTTP clients.
 	/// </summary>
 	[PublicAPI]
 	public abstract class HttpClientServiceBase : IHttpClientService
 	{
-		protected HttpClientServiceBase(string name, IHttpClientFactory httpClientFactory)
+		/// <summary>
+		///     Creates a new instance of the <see cref="HttpClientServiceBase" /> type.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="httpClient"></param>
+		/// <param name="options"></param>
+		protected HttpClientServiceBase(string name, HttpClient httpClient, RemoteService options)
 		{
 			Guard.Against.Null(name, nameof(name));
-			Guard.Against.Null(httpClientFactory, nameof(httpClientFactory));
+			Guard.Against.Null(httpClient, nameof(httpClient));
+			Guard.Against.Null(options, nameof(options));
 
 			this.Name = name;
-			this.HttpClient = httpClientFactory.CreateClient(name);
+			this.HttpClient = httpClient;
+			this.Options = options;
 		}
 
-		public string Name { get; }
+		/// <summary>
+		///     Gets the remote service options.
+		/// </summary>
+		public RemoteService Options { get; }
 
+		/// <summary>
+		///     Gets the underlying http client instance.
+		/// </summary>
 		protected HttpClient HttpClient { get; }
+
+		/// <inheritdoc />
+		public string Name { get; }
 	}
 }

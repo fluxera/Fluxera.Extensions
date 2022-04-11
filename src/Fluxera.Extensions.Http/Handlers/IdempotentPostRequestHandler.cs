@@ -9,10 +9,9 @@
 	[UsedImplicitly]
 	internal sealed class IdempotentPostRequestHandler : DelegatingHandler
 	{
-		protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-			CancellationToken cancellationToken)
+		protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 		{
-			if (request.Method == HttpMethod.Post)
+			if(request.Method == HttpMethod.Post)
 			{
 				request.Headers.Add("X-Idempotent-Token", Guid.NewGuid().ToString("N"));
 			}

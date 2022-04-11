@@ -9,9 +9,19 @@
 	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     Extensions methods for the <see cref="HttpContent" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class HttpContentExtensions
 	{
+		/// <summary>
+		///     Reads the <see cref="HttpContent" /> as <see cref="T" /> by deserializing it using the
+		///     <see cref="JsonSerializer" />.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="content"></param>
+		/// <returns></returns>
 		public static async Task<T> ReadAsAsync<T>(this HttpContent content) where T : class
 		{
 			T obj = null;
@@ -41,6 +51,12 @@
 			return obj;
 		}
 
+		/// <summary>
+		///     Creates a JSON <see cref="HttpContent" /> instance from the given object using the <see cref="JsonSerializer" />.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj"></param>
+		/// <returns></returns>
 		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj) where T : class
 		{
 			// https://johnthiriet.com/efficient-post-calls/

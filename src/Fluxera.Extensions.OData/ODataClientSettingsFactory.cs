@@ -4,33 +4,22 @@
 	using System.Net.Http;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Logging;
-	using Microsoft.Extensions.Options;
 	using Simple.OData.Client;
 
 	[UsedImplicitly]
 	internal sealed class ODataClientSettingsFactory : IODataClientSettingsFactory
 	{
-		private readonly IHttpClientFactory httpClientFactory;
-		private readonly ILoggerFactory loggerFactory;
-		private readonly ODataClientOptions options;
+		private readonly ILogger logger;
 
-		public ODataClientSettingsFactory(
-			IHttpClientFactory httpClientFactory,
-			IOptions<ODataClientOptions> options,
-			ILoggerFactory loggerFactory)
+		public ODataClientSettingsFactory(ILoggerFactory loggerFactory)
 		{
-			this.httpClientFactory = httpClientFactory;
-			this.options = options.Value;
-			this.loggerFactory = loggerFactory;
+			this.logger = loggerFactory.CreateLogger<ODataClientSettings>();
 		}
 
 		/// <inheritdoc />
-		public ODataClientSettings CreateSettings(string name)
+		public ODataClientSettings CreateSettings(string name, HttpClient httpClient)
 		{
-			HttpClient httpClient = this.httpClientFactory.CreateClient(name);
 			httpClient.BaseAddress = new Uri(httpClient.BaseAddress, "odata");
-
-			ILogger logger = this.loggerFactory.CreateLogger<ODataClientSettings>();
 
 			return new ODataClientSettings(httpClient)
 			{
@@ -38,13 +27,13 @@
 				RenewHttpConnection = false,
 				OnTrace = (message, parameters) =>
 				{
-					if (parameters != null && parameters.Length > 0)
+					if((parameters != null) && (parameters.Length > 0))
 					{
-						logger.LogTrace(string.Format(message, parameters));
+						this.logger.LogTrace(string.Format(message, parameters));
 					}
 					else
 					{
-						logger.LogTrace(message);
+						this.logger.LogTrace(message);
 					}
 				},
 			};

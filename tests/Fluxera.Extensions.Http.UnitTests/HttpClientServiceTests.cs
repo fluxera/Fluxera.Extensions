@@ -5,7 +5,8 @@ namespace Fluxera.Extensions.Http.UnitTests
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
 
-	public class Tests
+	[TestFixture]
+	public class HttpClientServiceTests
 	{
 		[Test]
 		public void ShouldCreateNamedHttpClientService()
@@ -18,7 +19,7 @@ namespace Fluxera.Extensions.Http.UnitTests
 			});
 
 			services.AddHttpClientService<ITestHttpClientService, TestHttpClientService>(
-				(name, httpClient, options) => new TestHttpClientService(name, httpClient, options));
+				(remoteServiceName, httpClient, options) => new TestHttpClientService(remoteServiceName, httpClient, options));
 
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 

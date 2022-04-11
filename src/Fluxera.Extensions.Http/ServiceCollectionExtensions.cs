@@ -52,13 +52,14 @@
 		/// <param name="remoteServiceName">The name of the remote service.</param>
 		/// <param name="factory">The factory function that creates a service client instance.</param>
 		/// <returns></returns>
-		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services, string remoteServiceName,
+		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services,
+			string remoteServiceName,
 			Func<string, HttpClient, RemoteService, TImplementation> factory)
 			where TService : class, IHttpClientService
 			where TImplementation : class, TService
 		{
 			Guard.Against.Null(services, nameof(services));
-			Guard.Against.NullOrEmpty(remoteServiceName, nameof(remoteServiceName));
+			Guard.Against.NullOrWhiteSpace(remoteServiceName, nameof(remoteServiceName));
 			Guard.Against.Null(factory, nameof(factory));
 
 			services.AddOptions();

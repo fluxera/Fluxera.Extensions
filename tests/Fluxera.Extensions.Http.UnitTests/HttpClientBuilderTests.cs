@@ -17,8 +17,8 @@ namespace Fluxera.Extensions.Http.UnitTests
 				options.RemoteServices.Default = new RemoteService("http://www.fluxera.de");
 			});
 
-			services.AddHttpClientService<ITestHttpClientService>(
-				context => new TestHttpClientService(context.RemoteServiceName, context.HttpClientFactory, context.OptionsWrapper));
+			services.AddHttpClientService<ITestHttpClientService, TestHttpClientService>(
+				(name, httpClient, options) => new TestHttpClientService(name, httpClient, options));
 
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 

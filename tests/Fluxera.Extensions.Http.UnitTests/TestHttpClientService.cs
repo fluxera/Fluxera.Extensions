@@ -2,13 +2,12 @@ namespace Fluxera.Extensions.Http.UnitTests
 {
 	using System.Net.Http;
 	using System.Threading.Tasks;
-	using Microsoft.Extensions.Options;
 
 	public class TestHttpClientService : HttpClientServiceBase, ITestHttpClientService
 	{
 		/// <inheritdoc />
-		public TestHttpClientService(string name, IHttpClientFactory httpClientFactory, IOptions<RemoteServiceOptions> optionsWrapper)
-			: base(name, httpClientFactory, optionsWrapper)
+		public TestHttpClientService(string name, HttpClient httpClient, RemoteService options)
+			: base(name, httpClient, options)
 		{
 		}
 

@@ -29,7 +29,7 @@
 		/// <param name="clientFactory"></param>
 		/// <param name="optionsWrapper"></param>
 		protected ODataClientServiceBase(string name, string collectionName, IODataClientFactory clientFactory, IOptions<RemoteServiceOptions> optionsWrapper)
-			: base(name, clientFactory.HttpClientFactory, optionsWrapper)
+			: base(name, clientFactory.HttpClientFactory.CreateClient(name), optionsWrapper.Value.RemoteServices[name])
 		{
 			Guard.Against.Null(name, nameof(name));
 			Guard.Against.NullOrWhiteSpace(collectionName, nameof(collectionName));

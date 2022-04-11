@@ -1,10 +1,8 @@
 ﻿namespace Fluxera.Extensions.Http
 {
-	using System;
 	using System.Net.Http;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
-	using Microsoft.Extensions.Options;
 
 	/// <summary>
 	///     An abstract base class for named HTTP clients.
@@ -16,20 +14,23 @@
 		///     Creates a new instance of the <see cref="HttpClientServiceBase" /> type.
 		/// </summary>
 		/// <param name="name"></param>
-		/// <param name="httpClientFactory"></param>
-		/// <param name="optionsWrapper"></param>
-		protected HttpClientServiceBase(string name, IHttpClientFactory httpClientFactory, IOptions<RemoteServiceOptions> optionsWrapper)
+		/// <param name="httpClient"></param>
+		/// <param name="options"></param>
+		protected HttpClientServiceBase(string name, HttpClient httpClient, RemoteService options)
 		{
 			Guard.Against.Null(name, nameof(name));
-			Guard.Against.Null(httpClientFactory, nameof(httpClientFactory));
-			Guard.Against.Null(optionsWrapper, nameof(optionsWrapper));
+			Guard.Against.Null(httpClient, nameof(httpClient));
+			Guard.Against.Null(options, nameof(options));
 
 			this.Name = name;
-			this.HttpClient = httpClientFactory.CreateClient(name);
-
-			string baseAddress = optionsWrapper.Value.RemoteServices[name].BaseAddress;
-			this.HttpClient.BaseAddress = new Uri(baseAddress);
+			this.HttpClient = httpClient;
+			this.Options = options;
 		}
+
+		/// <summary>
+		///     Gets the remote service options.
+		/// </summary>
+		public RemoteService Options { get; }
 
 		/// <summary>
 		///     Gets the underlying http client instance.

@@ -2,6 +2,9 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
+	using System.Linq.Expressions;
+	using System.Net;
 	using System.Runtime.CompilerServices;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -57,6 +60,360 @@
 
 		/// <inheritdoc />
 		public string Name { get; }
+
+		public async Task AddAsync(T instance, CancellationToken cancellationToken)
+		{
+			Guard.Against.Null(instance, nameof(instance));
+			if(!instance.IsTransient())
+			{
+				throw Errors.CanNotAddExistingItem();
+			}
+
+			T result = await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Set(instance)
+				.InsertEntryAsync(cancellationToken)
+				.ConfigureAwait(false);
+
+			instance.ID = result.ID;
+			//this.TransferAuditValues(result, instance);
+		}
+
+		public async Task AddAsync(IEnumerable<T> instances, CancellationToken cancellationToken = default)
+		{
+			Guard.Against.Null(instances, nameof(instances));
+			IList<T> instanceList = instances.ToList();
+			if(instanceList.Any(x => !x.IsTransient()))
+			{
+				throw Errors.CanNotAddExistingItem();
+			}
+
+			ODataBatch batch = new ODataBatch(this.ODataClient);
+
+			foreach(T dto in instanceList)
+			{
+				batch += async client =>
+				{
+					T result = await client
+						.For<T>(this.CollectionName)
+						.Set(dto)
+						.InsertEntryAsync(cancellationToken)
+						.ConfigureAwait(false);
+
+					if(result != null)
+					{
+						dto.ID = result.ID;
+						//this.TransferAuditValues(result, dto);
+					}
+				};
+			}
+
+			await batch.ExecuteAsync(cancellationToken).ConfigureAwait(false);
+		}
+
+		public async Task UpdateAsync(T instance, CancellationToken cancellationToken)
+		{
+			Guard.Against.Null(instance, nameof(instance));
+			if(instance.IsTransient())
+			{
+				throw Errors.CanNotUpdateTransientItem();
+			}
+
+			object data = instance;
+			//if(instance is IPatchableEntityDto patchableEntityDto)
+			//{
+			//	data = patchableEntityDto.ChangeTracker.GetChangesObject();
+			//}
+
+			T result = await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Key(instance.ID)
+				.Set(data)
+				.UpdateEntryAsync(cancellationToken)
+				.ConfigureAwait(false);
+
+			//this.TransferAuditValues(result, instance);
+		}
+
+		public async Task UpdateAsync(IEnumerable<T> instances, CancellationToken cancellationToken = default)
+		{
+			Guard.Against.Null(instances, nameof(instances));
+			IList<T> instanceList = instances.ToList();
+			if(instanceList.Any(x => x.IsTransient()))
+			{
+				throw Errors.CanNotUpdateTransientItem();
+			}
+
+			ODataBatch batch = new ODataBatch(this.ODataClient);
+
+			foreach(T dto in instanceList)
+			{
+				object data = dto;
+				//if(dto is IPatchableEntityDto patchableEntityDto)
+				//{
+				//	data = patchableEntityDto.ChangeTracker.GetChangesObject();
+				//}
+
+				batch += async client =>
+				{
+					T result = await client
+						.For<T>(this.CollectionName)
+						.Key(dto.ID)
+						.Set(data)
+						.UpdateEntryAsync(cancellationToken)
+						.ConfigureAwait(false);
+
+					//this.TransferAuditValues(result, dto);
+				};
+			}
+
+			await batch.ExecuteAsync(cancellationToken).ConfigureAwait(false);
+		}
+
+		public async Task DeleteAsync(T instance, CancellationToken cancellationToken = default)
+		{
+			Guard.Against.Null(instance, nameof(instance));
+			if(instance.IsTransient())
+			{
+				throw Errors.CanNotDeleteTransientItem();
+			}
+
+			await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Key(instance.ID)
+				.DeleteEntryAsync(cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		public async Task DeleteAsync(TKey id, CancellationToken cancellationToken)
+		{
+			Guard.Against.Default(id, nameof(id)); // TODO
+
+			await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Key(id)
+				.DeleteEntryAsync(cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		public async Task DeleteAsync(IEnumerable<T> instances, CancellationToken cancellationToken = default)
+		{
+			Guard.Against.Null(instances, nameof(instances));
+
+			IList<T> instanceList = instances.ToList();
+			if(instanceList.Any(x => x.IsTransient()))
+			{
+				throw Errors.CanNotDeleteTransientItem();
+			}
+
+			ODataBatch batch = new ODataBatch(this.ODataClient);
+
+			foreach(T dto in instanceList)
+			{
+				batch += async client => await client
+					.For<T>(this.CollectionName)
+					.Key(dto.ID)
+					.DeleteEntryAsync(cancellationToken)
+					.ConfigureAwait(false);
+			}
+
+			await batch.ExecuteAsync(cancellationToken).ConfigureAwait(false);
+		}
+
+		public async Task DeleteAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+		{
+			Guard.Against.Null(predicate, nameof(predicate));
+
+			await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Filter(predicate)
+				.DeleteEntryAsync(cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		//private void TransferAuditValues(T source, T target)
+		//{
+		//	if((source != null) && (target != null))
+		//	{
+		//		if(target is IAuditedObject targetAuditedObject)
+		//		{
+		//			IAuditedObject sourceAuditedObject = source as IAuditedObject;
+
+		//			targetAuditedObject.CreatedAt = sourceAuditedObject?.CreatedAt;
+		//			targetAuditedObject.LastModifiedAt = sourceAuditedObject?.LastModifiedAt;
+		//			targetAuditedObject.DeletedAt = sourceAuditedObject?.DeletedAt;
+
+		//			targetAuditedObject.CreatedBy = sourceAuditedObject?.CreatedBy;
+		//			targetAuditedObject.LastModifiedBy = sourceAuditedObject?.LastModifiedBy;
+		//			targetAuditedObject.DeletedBy = sourceAuditedObject?.DeletedBy;
+		//		}
+		//	}
+		//}
+
+		protected async Task<T> GetAsync(TKey id, CancellationToken cancellationToken)
+		{
+			try
+			{
+				return await this.ODataClient
+					.For<T>(this.CollectionName)
+					.Key(id)
+					.FindEntryAsync(cancellationToken)
+					.ConfigureAwait(false);
+			}
+			catch(WebRequestException ex) when(ex.Code == HttpStatusCode.NotFound)
+			{
+				return null;
+			}
+		}
+
+		protected async Task<TResult> GetAsync<TResult>(TKey id, Expression<Func<T, TResult>> selector,
+			CancellationToken cancellationToken = default)
+		{
+			try
+			{
+				T item = await this.ODataClient
+					.For<T>(this.CollectionName)
+					.Key(id)
+					.Select(selector.ConvertSelector())
+					.FindEntryAsync(cancellationToken)
+					.ConfigureAwait(false);
+
+				// HACK: The OData client should return a dict, object or dynamic instead of the entity.
+				return selector.Compile().Invoke(item);
+			}
+			catch(WebRequestException ex) when(ex.Code == HttpStatusCode.NotFound)
+			{
+				return default;
+			}
+		}
+
+		protected async Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken)
+		{
+			T result = await this.GetAsync(id, cancellationToken).ConfigureAwait(false);
+			return result != null;
+		}
+
+		protected async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate,
+			CancellationToken cancellationToken = default)
+		{
+			long count = await this.CountAsync(predicate, cancellationToken).ConfigureAwait(false);
+			return count > 0;
+		}
+
+		protected async Task<long> CountAsync(CancellationToken cancellationToken = default)
+		{
+			return await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Count()
+				.FindScalarAsync<long>(cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		protected async Task<long> CountAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+		{
+			return await this.ODataClient
+				.For<T>(this.CollectionName)
+				.Filter(predicate)
+				.Count()
+				.FindScalarAsync<long>(cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		protected async Task<T> FindOneAsync(Expression<Func<T, bool>> predicate,
+			//IQueryOptions<T> queryOptions = null, 
+			CancellationToken cancellationToken = default)
+		{
+			try
+			{
+				return await this.ODataClient
+					.For<T>(this.CollectionName)
+					.Filter(predicate)
+					//.ApplyOptions(queryOptions)
+					.FindEntryAsync(cancellationToken)
+					.ConfigureAwait(false);
+			}
+			catch(WebRequestException ex) when(ex.Code == HttpStatusCode.NotFound)
+			{
+				return null;
+			}
+		}
+
+		protected async Task<TResult> FindOneAsync<TResult>(Expression<Func<T, bool>> predicate,
+			Expression<Func<T, TResult>> selector,
+			//IQueryOptions<T> queryOptions = null,
+			CancellationToken cancellationToken = default)
+		{
+			try
+			{
+				T result = await this.ODataClient
+					.For<T>(this.CollectionName)
+					.Filter(predicate)
+					//.ApplyOptions(queryOptions)
+					.Select(selector.ConvertSelector())
+					.FindEntryAsync(cancellationToken)
+					.ConfigureAwait(false);
+
+				// HACK: The OData client should return a dict, object or dynamic instead of the entity.
+				return selector.Compile().Invoke(result);
+			}
+			catch(WebRequestException ex) when(ex.Code == HttpStatusCode.NotFound)
+			{
+				return default;
+			}
+		}
+
+		protected async Task<IReadOnlyCollection<T>> FindManyAsync(Expression<Func<T, bool>> predicate,
+			//IQueryOptions<T> queryOptions = null, 
+			CancellationToken cancellationToken = default)
+		{
+			try
+			{
+				IEnumerable<T> results = await this.ODataClient
+					.For<T>(this.CollectionName)
+					.Filter(predicate)
+					//.ApplyOptions(queryOptions)
+					.FindEntriesAsync(cancellationToken)
+					.ConfigureAwait(false);
+
+				return results.AsReadOnly();
+			}
+			catch(WebRequestException ex) when(ex.Code == HttpStatusCode.NotFound)
+			{
+				return Enumerable.Empty<T>().AsReadOnly();
+			}
+		}
+
+		protected async Task<IReadOnlyCollection<TResult>> FindManyAsync<TResult>(Expression<Func<T, bool>> predicate,
+			Expression<Func<T, TResult>> selector,
+			//IQueryOptions<T> queryOptions = null,
+			CancellationToken cancellationToken = default)
+		{
+			try
+			{
+				IEnumerable<T> results = await this.ODataClient
+					.For<T>(this.CollectionName)
+					.Filter(predicate)
+					//.ApplyOptions(queryOptions)
+					.Select(selector.ConvertSelector())
+					.FindEntriesAsync(cancellationToken)
+					.ConfigureAwait(false);
+
+				// HACK: The OData client should return a dict, object or dynamic instead of the entity.
+				Func<T, TResult> selectorFunc = selector.Compile();
+
+				IList<TResult> result = new List<TResult>();
+				foreach(T item in results)
+				{
+					result.Add(selectorFunc.Invoke(item));
+				}
+
+				return result.AsReadOnly();
+			}
+			catch(WebRequestException ex) when(ex.Code == HttpStatusCode.NotFound)
+			{
+				return Enumerable.Empty<TResult>().AsReadOnly();
+			}
+		}
 
 		protected async Task<TResult> ExecuteFunctionScalarAsync<TResult>(
 			object parameters = null,

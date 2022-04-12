@@ -72,7 +72,10 @@
 					IOptions<RemoteServiceOptions> optionsWrapper = serviceProvider.GetRequiredService<IOptions<RemoteServiceOptions>>();
 					RemoteService options = optionsWrapper.Value.RemoteServices[remoteServiceName];
 
-					httpClient.BaseAddress = new Uri(options.BaseAddress);
+					if(!string.IsNullOrWhiteSpace(options.BaseAddress))
+					{
+						httpClient.BaseAddress = new Uri(options.BaseAddress);
+					}
 
 					HttpClientServiceConfigurationContext context = new HttpClientServiceConfigurationContext(remoteServiceName, httpClient, options);
 					return factory.Invoke(context);

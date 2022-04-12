@@ -73,7 +73,10 @@ services.AddValidation(builder =>
 ```
 
 
-## Resources
+## References
 
-https://stevetalkscode.co.uk/named-dependencies-part-1
-https://stevetalkscode.co.uk/named-dependencies-part-2
+[Steve Collins](https://stevetalkscode.co.uk/)
+
+- [Named Dependencies Part 1](https://stevetalkscode.co.uk/named-dependencies-part-1)
+- [Named Dependencies Part 1](https://stevetalkscode.co.uk/named-dependencies-part-2)
+

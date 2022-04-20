@@ -175,8 +175,8 @@
 		{
 			Guard.Against.Null(services, nameof(services));
 
-			IObjectAccessor<T> objectAccessor = services.GetObjectAccessor<T>();
-			return objectAccessor.Value;
+			services.TryGetObjectAccessor(out IObjectAccessor<T> objectAccessor);
+			return objectAccessor?.Value;
 		}
 
 		/// <summary>

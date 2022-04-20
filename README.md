@@ -40,7 +40,32 @@ This extension contains several additions to the dependency injection extension.
 
 ### ```Fluxera.Extensions.Http```
 
-TODO
+This extension provides a way to register named ```HttpClient``` services and several custom ```DelegatingHandler``` implementations.
+
+```C#
+public interface ITestHttpClientService : IHttpClientService
+{
+    Task<string> GetSomethingAsync();
+}
+
+public class TestHttpClientService : HttpClientServiceBase, ITestHttpClientService
+{
+    /// <inheritdoc />
+    public TestHttpClientService(string name, HttpClient httpClient, RemoteService options)
+        : base(name, httpClient, options)
+    {
+    }
+
+    public async Task<string> GetSomethingAsync()
+    {
+        HttpResponseMessage response = await this.HttpClient.GetAsync("/");
+        return await response.Content.ReadAsStringAsync();
+    }
+}
+
+services.AddHttpClientService<ITestHttpClientService, TestHttpClientService>(
+	context => new TestHttpClientService(context.Name, context.HttpClient, context.Options));
+```
 
 ### ```Fluxera.Extensions.Localization```
 
@@ -48,7 +73,25 @@ This extension contains several extension methods ```IStringLocalizer``` service
 
 ### ```Fluxera.Extensions.OData```
 
-TODO
+This extension provides a way to register named ```ODataClient``` services using ```Simple.OData.Client```.
+
+```C#
+public interface ITestODataClientService : IODataClientService
+{
+}
+
+public class TestODataClientService : ODataClientServiceBase<Person, string>, ITestODataClientService
+{
+    /// <inheritdoc />
+    public TestODataClientService(string name, string collectionName, IODataClient oDataClient, RemoteService options)
+        : base(name, collectionName, oDataClient, options)
+    {
+    }
+}
+
+services.AddODataClientService<ITestODataClientService, TestODataClientService>("People",
+    context => new TestODataClientService(context.Name, context.CollectionName, context.ODataClient, context.Options));
+```
 
 ### ```Fluxera.Extensions.Validation```
 

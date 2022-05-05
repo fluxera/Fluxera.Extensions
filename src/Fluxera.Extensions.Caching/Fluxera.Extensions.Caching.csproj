@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Guards" Version="6.0.13" />
+		<PackageReference Include="Fluxera.Guards" Version="6.0.22" />
 		<PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

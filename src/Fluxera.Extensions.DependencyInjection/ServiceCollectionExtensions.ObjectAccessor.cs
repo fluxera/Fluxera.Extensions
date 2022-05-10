@@ -219,8 +219,7 @@
 		{
 			if(services.Any(s => s.ServiceType == typeof(IObjectAccessor<T>)))
 			{
-				throw new InvalidOperationException(
-					$"An object accessor is already registered for type {typeof(T).Name}");
+				throw new InvalidOperationException($"An object accessor is already registered for type {typeof(T).Name}");
 			}
 
 			// Add to the beginning for fast retrieve.

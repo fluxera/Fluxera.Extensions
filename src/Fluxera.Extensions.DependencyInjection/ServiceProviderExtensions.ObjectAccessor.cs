@@ -20,7 +20,7 @@
 			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
 			return serviceProvider.GetObjectOrDefault<T>()
-				?? throw new InvalidOperationException($"Could not find an object of {typeof(T).AssemblyQualifiedName} in services. Be sure that you have used AddObjectAccessor before.");
+				?? throw new InvalidOperationException($"Could not find an object of {typeof(T)} in services. Be sure that you have used AddObjectAccessor before.");
 		}
 
 		/// <summary>
@@ -32,8 +32,8 @@
 		{
 			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
-			IObjectAccessor<T> objectAccessor = serviceProvider.GetRequiredService<IObjectAccessor<T>>();
-			return objectAccessor.Value ?? null;
+			IObjectAccessor<T> objectAccessor = serviceProvider.GetService<IObjectAccessor<T>>();
+			return objectAccessor?.Value;
 		}
 
 		/// <summary>

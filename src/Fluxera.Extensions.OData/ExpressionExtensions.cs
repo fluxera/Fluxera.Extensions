@@ -4,11 +4,22 @@
 	using System.Linq.Expressions;
 	using System.Reflection;
 	using Fluxera.Guards;
+	using JetBrains.Annotations;
 
-	internal static class ExpressionExtensions
+	/// <summary>
+	///     Extensions for the <see cref="Expression" /> type.
+	/// </summary>
+	[PublicAPI]
+	public static class ExpressionExtensions
 	{
-		public static Expression<Func<T, object>> ConvertSelector<T, TResult>(
-			this Expression<Func<T, TResult>> selector)
+		/// <summary>
+		///     Converts the given expression to a more general expression.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TResult"></typeparam>
+		/// <param name="selector"></param>
+		/// <returns></returns>
+		public static Expression<Func<T, object>> ConvertSelector<T, TResult>(this Expression<Func<T, TResult>> selector)
 			where T : class
 		{
 			Expression expression = selector.GetMemberInfo();

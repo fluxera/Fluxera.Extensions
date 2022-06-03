@@ -9,6 +9,9 @@ namespace Fluxera.Extensions.Validation
 	[PublicAPI]
 	public sealed class ValidationError
 	{
+		/// <summary>
+		/// </summary>
+		/// <param name="propertyName"></param>
 		public ValidationError(string propertyName)
 		{
 			this.PropertyName = propertyName ?? string.Empty;

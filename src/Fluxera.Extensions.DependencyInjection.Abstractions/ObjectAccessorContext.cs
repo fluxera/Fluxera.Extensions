@@ -1,5 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
+	using Fluxera.Guards;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -8,11 +9,18 @@
 	[PublicAPI]
 	public sealed class ObjectAccessorContext
 	{
-		public static ObjectAccessorContext Default = new ObjectAccessorContext(null);
+		/// <summary>
+		///     The default context.
+		/// </summary>
+		public static ObjectAccessorContext Default = new ObjectAccessorContext("Default");
 
+		/// <summary>
+		///     Initializes a new instance of the <see cref="ObjectAccessorContext" /> type.
+		/// </summary>
+		/// <param name="name"></param>
 		public ObjectAccessorContext(string name)
 		{
-			this.Name = name;
+			this.Name = Guard.Against.NullOrWhiteSpace(name);
 		}
 
 		/// <summary>
@@ -20,9 +28,10 @@
 		/// </summary>
 		public string Name { get; }
 
+		/// <inheritdoc />
 		public override string ToString()
 		{
-			return this.Name ?? "Default";
+			return this.Name;
 		}
 	}
 }

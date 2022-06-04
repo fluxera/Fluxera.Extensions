@@ -9,12 +9,15 @@
 	[PublicAPI]
 	public sealed class StringEncryptionOptions
 	{
+		/// <summary>
+		///     Initializes a new instance of the <see cref="StringEncryptionOptions" />.
+		/// </summary>
 		public StringEncryptionOptions()
 		{
-			KeySize = 256;
-			DefaultPassPhrase = "gsKnGZ041HLL4IM8";
-			InitVectorBytes = Encoding.ASCII.GetBytes("jkE49230Tf093b42");
-			DefaultSalt = Encoding.ASCII.GetBytes("hgt!16kl");
+			this.KeySize = 256;
+			this.DefaultPassPhrase = "gsKnGZ041HLL4IM8";
+			this.InitVectorBytes = Encoding.ASCII.GetBytes("jkE49230Tf093b42");
+			this.DefaultSalt = Encoding.ASCII.GetBytes("hgt!16kl");
 		}
 
 		/// <summary>

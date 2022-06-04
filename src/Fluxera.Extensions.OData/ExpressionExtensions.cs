@@ -40,7 +40,8 @@
 				body = newExpression;
 			}
 
-			Guard.Against.Null(body, nameof(body));
+			// TODO: Use post-condition methods in the future.
+			body = Guard.Against.Null(body);
 
 			Expression<Func<T, object>> orderExpression = Expression.Lambda<Func<T, object>>(body, param);
 			return (Expression<Func<T, object>>)orderExpression.Unquote();
@@ -49,7 +50,7 @@
 		private static Expression GetMemberInfo(this Expression method)
 		{
 			LambdaExpression lambda = method as LambdaExpression;
-			Guard.Against.Null(lambda, nameof(lambda));
+			lambda = Guard.Against.Null(lambda);
 
 			Expression expression = null;
 

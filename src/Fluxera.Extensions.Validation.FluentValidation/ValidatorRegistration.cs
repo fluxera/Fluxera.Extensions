@@ -11,6 +11,9 @@
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
+	/// <summary>
+	///     A registrar for validators.
+	/// </summary>
 	[PublicAPI]
 	public sealed class ValidatorRegistration
 	{
@@ -83,7 +86,7 @@
 		{
 			Guard.Against.Null(validatorType, nameof(validatorType));
 
-			foreach(Type interfaceType in validatorType.GetInterfaces().Where(x => x.IsGenericType && (x.GetGenericTypeDefinition() == typeof(IValidator<>))))
+			foreach(Type interfaceType in validatorType.GetInterfaces().Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IValidator<>)))
 			{
 				this.services.TryAddTransient(interfaceType, validatorType);
 				this.services.TryAddTransient(validatorType);

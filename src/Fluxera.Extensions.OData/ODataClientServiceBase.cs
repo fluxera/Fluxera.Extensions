@@ -1,6 +1,4 @@
-﻿// ReSharper disable UnusedTypeParameter
-
-namespace Fluxera.Extensions.OData
+﻿namespace Fluxera.Extensions.OData
 {
 	using System;
 	using System.Collections.Generic;
@@ -60,6 +58,14 @@ namespace Fluxera.Extensions.OData
 		/// <inheritdoc />
 		public string Name { get; }
 
+		/// <summary>
+		///     Execute a scalar function.
+		/// </summary>
+		/// <typeparam name="TResult"></typeparam>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="functionName"></param>
+		/// <returns></returns>
 		protected async Task<TResult> ExecuteFunctionScalarAsync<TResult>(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string functionName = null)
 			where TResult : struct, IConvertible
 		{
@@ -75,6 +81,13 @@ namespace Fluxera.Extensions.OData
 			return await boundClient.ExecuteAsScalarAsync<TResult>(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute a single function.
+		/// </summary>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="functionName"></param>
+		/// <returns></returns>
 		protected async Task<T> ExecuteFunctionSingleAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string functionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
@@ -89,6 +102,13 @@ namespace Fluxera.Extensions.OData
 			return await boundClient.ExecuteAsSingleAsync(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute an enumerable function.
+		/// </summary>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="functionName"></param>
+		/// <returns></returns>
 		protected async Task<IReadOnlyCollection<T>> ExecuteFunctionEnumerableAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string functionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
@@ -104,6 +124,13 @@ namespace Fluxera.Extensions.OData
 			return results.AsReadOnly();
 		}
 
+		/// <summary>
+		///     Execute an action.
+		/// </summary>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="actionName"></param>
+		/// <returns></returns>
 		protected async Task ExecuteActionAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
@@ -118,6 +145,13 @@ namespace Fluxera.Extensions.OData
 			await boundClient.ExecuteAsync(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute an action.
+		/// </summary>
+		/// <param name="instance"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="actionName"></param>
+		/// <returns></returns>
 		protected async Task ExecuteActionAsync(T instance, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
@@ -128,6 +162,13 @@ namespace Fluxera.Extensions.OData
 			await boundClient.ExecuteAsync(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute a single action.
+		/// </summary>
+		/// <param name="instance"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="actionName"></param>
+		/// <returns></returns>
 		protected async Task<T> ExecuteActionSingleAsync(T instance, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
@@ -138,6 +179,14 @@ namespace Fluxera.Extensions.OData
 			return await boundClient.ExecuteAsSingleAsync(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute a scalar action.
+		/// </summary>
+		/// <typeparam name="TResult"></typeparam>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="actionName"></param>
+		/// <returns></returns>
 		protected async Task<TResult> ExecuteActionScalar<TResult>(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 			where TResult : struct, IConvertible
 		{
@@ -153,6 +202,13 @@ namespace Fluxera.Extensions.OData
 			return await boundClient.ExecuteAsScalarAsync<TResult>(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute a single action.
+		/// </summary>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="actionName"></param>
+		/// <returns></returns>
 		protected async Task<T> ExecuteActionSingleAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient
@@ -167,6 +223,13 @@ namespace Fluxera.Extensions.OData
 			return await boundClient.ExecuteAsSingleAsync(cancellationToken).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		///     Execute an enumerable action.
+		/// </summary>
+		/// <param name="parameters"></param>
+		/// <param name="cancellationToken"></param>
+		/// <param name="actionName"></param>
+		/// <returns></returns>
 		protected async Task<IReadOnlyCollection<T>> ExecuteActionEnumerableAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
 			IBoundClient<T> boundClient = this.ODataClient

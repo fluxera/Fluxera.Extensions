@@ -9,29 +9,26 @@
 	[UsedImplicitly]
 	internal sealed class PasswordGenerator : IPasswordGenerator
 	{
-		// ReSharper disable StringLiteralTypo
-		private static readonly char[] pwdCharArray =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!$+-".ToCharArray();
-		// ReSharper restore StringLiteralTypo
+		private static readonly char[] PwdCharArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!$+-".ToCharArray();
 
 		private readonly RNGCryptoServiceProvider rng;
 
 		public PasswordGenerator()
 		{
-			ConsecutiveCharacters = false;
-			RepeatCharacters = true;
-			rng = new RNGCryptoServiceProvider();
+			this.ConsecutiveCharacters = false;
+			this.RepeatCharacters = true;
+			this.rng = new RNGCryptoServiceProvider();
 		}
 
-		public bool RepeatCharacters { get; set; }
+		private bool RepeatCharacters { get; }
 
-		public bool ConsecutiveCharacters { get; set; }
+		private bool ConsecutiveCharacters { get; }
 
 		/// <inheritdoc />
 		public string GeneratePassword(int length)
 		{
 			// Pick random length between minimum and maximum   
-			int pwdLength = GetCryptographicRandomNumber(length, length);
+			int pwdLength = this.GetCryptographicRandomNumber(length, length);
 
 			StringBuilder pwdBuffer = new StringBuilder
 			{
@@ -44,25 +41,25 @@
 			// Initial dummy character flag
 			char lastCharacter = nextCharacter;
 
-			for (int i = 0; i < pwdLength; i++)
+			for(int i = 0; i < pwdLength; i++)
 			{
-				nextCharacter = GetRandomCharacter();
+				nextCharacter = this.GetRandomCharacter();
 
-				if (!ConsecutiveCharacters)
+				if(!this.ConsecutiveCharacters)
 				{
-					while (lastCharacter == nextCharacter)
+					while(lastCharacter == nextCharacter)
 					{
-						nextCharacter = GetRandomCharacter();
+						nextCharacter = this.GetRandomCharacter();
 					}
 				}
 
-				if (!RepeatCharacters)
+				if(!this.RepeatCharacters)
 				{
 					string temp = pwdBuffer.ToString();
 					int duplicateIndex = temp.IndexOf(nextCharacter);
-					while (-1 != duplicateIndex)
+					while(-1 != duplicateIndex)
 					{
-						nextCharacter = GetRandomCharacter();
+						nextCharacter = this.GetRandomCharacter();
 						duplicateIndex = temp.IndexOf(nextCharacter);
 					}
 				}
@@ -78,7 +75,7 @@
 		{
 			byte[] randomNumber = new byte[1];
 
-			rng.GetBytes(randomNumber);
+			this.rng.GetBytes(randomNumber);
 
 			double asciiValueOfRandomCharacter = Convert.ToDouble(randomNumber[0]);
 
@@ -96,9 +93,9 @@
 
 		private char GetRandomCharacter()
 		{
-			int randomCharPosition = GetCryptographicRandomNumber(0, pwdCharArray.Length - 1);
+			int randomCharPosition = this.GetCryptographicRandomNumber(0, PwdCharArray.Length - 1);
 
-			char randomChar = pwdCharArray[randomCharPosition];
+			char randomChar = PwdCharArray[randomCharPosition];
 
 			return randomChar;
 		}

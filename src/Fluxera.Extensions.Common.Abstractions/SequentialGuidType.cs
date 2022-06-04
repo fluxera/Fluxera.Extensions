@@ -23,6 +23,6 @@
 		///     The sequential portion of the GUID should be located at the end of the Data4 block.
 		///     Used by SqlServer.
 		/// </summary>
-		SequentialAtEnd,
+		SequentialAtEnd
 	}
 }

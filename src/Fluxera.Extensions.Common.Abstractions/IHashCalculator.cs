@@ -4,6 +4,9 @@
 	using System.Text;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A contract for services that compute hashes.
+	/// </summary>
 	[PublicAPI]
 	public interface IHashCalculator
 	{

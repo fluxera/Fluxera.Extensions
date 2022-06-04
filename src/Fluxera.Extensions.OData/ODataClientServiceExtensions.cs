@@ -1,6 +1,5 @@
 ﻿namespace Fluxera.Extensions.OData
 {
-	using System;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -16,7 +15,6 @@
 		/// <param name="entity"></param>
 		/// <returns></returns>
 		public static bool IsTransient<TKey>(this IODataEntity<TKey> entity)
-			where TKey : notnull, IComparable
 		{
 			return entity.ID.Equals(default);
 		}

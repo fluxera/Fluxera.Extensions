@@ -21,7 +21,7 @@
 		public RemoteService Default
 		{
 			get => this.GetOrDefault(DefaultRemoteServiceName);
-			set => this[DefaultRemoteServiceName] = value!;
+			set => this[DefaultRemoteServiceName] = value;
 		}
 	}
 }

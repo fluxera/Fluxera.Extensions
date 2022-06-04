@@ -6,6 +6,10 @@
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
+	/// <summary>
+	///     A base-class for builders that help configure named services.
+	/// </summary>
+	/// <typeparam name="TService"></typeparam>
 	[PublicAPI]
 	public abstract class NamedServiceBuilder<TService> where TService : class
 	{
@@ -16,6 +20,9 @@
 			this.Services = services;
 		}
 
+		/// <summary>
+		///     Gets the service collection.
+		/// </summary>
 		protected IServiceCollection Services { get; }
 
 		internal NamedServiceMapper<TService> BuildMapper(NamedServiceMapper<TService> namedServiceMapper = null)
@@ -32,6 +39,11 @@
 			return namedServiceMapper;
 		}
 
+		/// <summary>
+		///     Adds a named type map.
+		/// </summary>
+		/// <typeparam name="TImplementation"></typeparam>
+		/// <param name="name"></param>
 		protected internal void AddTypeMap<TImplementation>(string name) where TImplementation : class, TService
 		{
 			if(!this.implementationTypeMap.ContainsKey(name))

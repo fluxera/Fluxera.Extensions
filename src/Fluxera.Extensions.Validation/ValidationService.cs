@@ -14,7 +14,7 @@
 		{
 			validatorFactories ??= Enumerable.Empty<IValidatorFactory>();
 
-			foreach (IValidatorFactory validatorFactory in validatorFactories)
+			foreach(IValidatorFactory validatorFactory in validatorFactories)
 			{
 				IValidator validator = validatorFactory.CreateValidator();
 				this.validators.Add(validator);
@@ -26,6 +26,16 @@
 		{
 			ValidationResult validationResult = await this.validators.ValidateAsync(item);
 			return validationResult;
+		}
+
+		/// <inheritdoc />
+		public async Task ThrowOnValidateAsync<T>(T item) where T : class
+		{
+			ValidationResult validationResult = await this.ValidateAsync(item);
+			if(!validationResult.IsValid)
+			{
+				throw new ValidationException(validationResult.ValidationErrors);
+			}
 		}
 	}
 }

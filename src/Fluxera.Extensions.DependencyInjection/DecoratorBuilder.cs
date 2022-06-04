@@ -5,6 +5,9 @@
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
+	/// <summary>
+	///     A builder to help configure decorators.
+	/// </summary>
 	[PublicAPI]
 	public sealed class DecoratorBuilder
 	{
@@ -21,7 +24,7 @@
 		}
 
 		/// <summary>
-		///		Decorates the <see cref="serviceType"/> with the given decorator type.
+		///     Decorates the <see cref="serviceType" /> with the given decorator type.
 		/// </summary>
 		/// <param name="decoratorType">The decorator type.</param>
 		/// <returns>The builder.</returns>
@@ -29,7 +32,7 @@
 		{
 			Guard.Against.Null(decoratorType, nameof(decoratorType));
 
-			if (serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
+			if(this.serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
 			{
 				this.services.DecorateOpenGeneric(this.serviceType, decoratorType);
 				return this;
@@ -40,7 +43,7 @@
 		}
 
 		/// <summary>
-		///		Decorates the <see cref="serviceType"/> with the given decorator function.
+		///     Decorates the <see cref="serviceType" /> with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>The builder.</returns>
@@ -53,7 +56,7 @@
 		}
 
 		/// <summary>
-		///		Decorates the <see cref="serviceType"/> with the given decorator function.
+		///     Decorates the <see cref="serviceType" /> with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>The builder.</returns>
@@ -66,6 +69,9 @@
 		}
 	}
 
+	/// <summary>
+	///     A builder to help configure decorators.
+	/// </summary>
 	[PublicAPI]
 	public sealed class DecoratorBuilder<TService>
 	{
@@ -79,7 +85,7 @@
 		}
 
 		/// <summary>
-		///		Decorates the <see cref="TService"/> type with the given <see cref="TDecorator"/> type.
+		///     Decorates the <see cref="TService" /> type with the given <see cref="TDecorator" /> type.
 		/// </summary>
 		/// <typeparam name="TDecorator">The decorator type</typeparam>
 		/// <returns>The builder.</returns>
@@ -90,7 +96,7 @@
 		}
 
 		/// <summary>
-		///		Decorates the <see cref="TService"/> type with the given decorator function.
+		///     Decorates the <see cref="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder<TService> With(Func<TService, IServiceProvider, TService> decorator)
@@ -102,7 +108,7 @@
 		}
 
 		/// <summary>
-		///		Decorates the <see cref="TService"/> type with the given decorator function.
+		///     Decorates the <see cref="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder<TService> With(Func<TService, TService> decorator)

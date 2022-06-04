@@ -143,7 +143,7 @@
 		{
 			return descriptor.WithFactory(provider =>
 			{
-				TService instance = (TService)provider.GetInstance(descriptor)!;
+				TService instance = (TService)provider.GetInstance(descriptor);
 				return decorator(instance, provider);
 			});
 		}
@@ -152,7 +152,7 @@
 		{
 			return descriptor.WithFactory(provider =>
 			{
-				TService instance = (TService)provider.GetInstance(descriptor)!;
+				TService instance = (TService)provider.GetInstance(descriptor);
 				return decorator(instance);
 			});
 		}
@@ -162,13 +162,13 @@
 			return descriptor.WithFactory(provider =>
 			{
 				object instance = provider.GetInstance(descriptor);
-				return provider.CreateInstance(decoratorType, instance!);
+				return provider.CreateInstance(decoratorType, instance);
 			});
 		}
 
 		private static bool HasSameTypeDefinition(Type firstType, Type secondType)
 		{
-			return firstType.IsGenericType && secondType.IsGenericType && (firstType.GetGenericTypeDefinition() == secondType.GetGenericTypeDefinition());
+			return firstType.IsGenericType && secondType.IsGenericType && firstType.GetGenericTypeDefinition() == secondType.GetGenericTypeDefinition();
 		}
 
 		private static bool TryGetDescriptors(this IServiceCollection services, Type serviceType, out ICollection<ServiceDescriptor> descriptors)
@@ -182,7 +182,7 @@
 
 		private static ServiceDescriptor WithFactory(this ServiceDescriptor descriptor, Func<IServiceProvider, object> factory)
 		{
-			return ServiceDescriptor.Describe(descriptor.ServiceType, factory!, descriptor.Lifetime);
+			return ServiceDescriptor.Describe(descriptor.ServiceType, factory, descriptor.Lifetime);
 		}
 
 		private static object GetInstance(this IServiceProvider provider, ServiceDescriptor descriptor)

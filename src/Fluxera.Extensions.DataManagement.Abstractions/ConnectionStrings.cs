@@ -23,7 +23,7 @@
 		public string Default
 		{
 			get => this.GetOrDefault(DefaultConnectionStringName);
-			set => this[DefaultConnectionStringName] = value!;
+			set => this[DefaultConnectionStringName] = value;
 		}
 	}
 }

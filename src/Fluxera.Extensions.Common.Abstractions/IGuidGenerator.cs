@@ -3,6 +3,9 @@
 	using System;
 	using JetBrains.Annotations;
 
+	/// <summary>
+	///     A context for services that generate <see cref="Guid" /> values.
+	/// </summary>
 	[PublicAPI]
 	public interface IGuidGenerator
 	{

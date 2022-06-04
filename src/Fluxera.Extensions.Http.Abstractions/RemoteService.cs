@@ -34,7 +34,7 @@
 		public string BaseAddress
 		{
 			get => this.GetOrDefault(nameof(this.BaseAddress));
-			set => this[nameof(this.BaseAddress)] = value!;
+			set => this[nameof(this.BaseAddress)] = value;
 		}
 
 		/// <summary>

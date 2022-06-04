@@ -29,7 +29,7 @@ namespace Fluxera.Extensions.Validation.FluentValidation
 				if(baseType == null)
 				{
 					// Return no validator if no base type was found, i.e. we reached object.
-					return null!;
+					return null;
 				}
 
 				// Find a validator base-type-recursive.

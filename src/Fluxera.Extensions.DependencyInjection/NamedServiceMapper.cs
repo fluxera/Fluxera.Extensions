@@ -5,8 +5,8 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using Fluxera.Guards;
-	using Fluxera.Utilities.Extensions;
 
+	// ReSharper disable once UnusedTypeParameter
 	internal sealed class NamedServiceMapper<TService>
 	{
 		private readonly IDictionary<string, IList<Type>> implementationTypeMap;
@@ -21,7 +21,7 @@
 		public Type GetImplementationType(string name)
 		{
 			this.implementationTypeMap.TryGetValue(name, out IList<Type> result);
-			return result.FirstOrDefault();
+			return result?.FirstOrDefault();
 		}
 
 		public IEnumerable<Type> GetImplementationTypes(string name)
@@ -36,7 +36,7 @@
 
 		public void Add(IDictionary<string, IList<Type>> typeMap)
 		{
-			foreach (KeyValuePair<string, IList<Type>> keyValuePair in typeMap)
+			foreach(KeyValuePair<string, IList<Type>> keyValuePair in typeMap)
 			{
 				if(!this.implementationTypeMap.ContainsKey(keyValuePair.Key))
 				{
@@ -45,7 +45,7 @@
 
 				foreach(Type type in keyValuePair.Value.ToList())
 				{
-					this.implementationTypeMap[keyValuePair.Key].Add(type);	
+					this.implementationTypeMap[keyValuePair.Key].Add(type);
 				}
 			}
 		}

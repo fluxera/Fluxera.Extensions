@@ -16,7 +16,7 @@
 	[UsedImplicitly]
 	internal sealed class SequentialGuidGenerator : IGuidGenerator
 	{
-		private static readonly RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
+		private static readonly RandomNumberGenerator RandomNumberGenerator = RandomNumberGenerator.Create();
 		private readonly SequentialGuidGeneratorOptions options;
 
 		public SequentialGuidGenerator(IOptions<SequentialGuidGeneratorOptions> options)
@@ -26,14 +26,14 @@
 
 		public Guid Create()
 		{
-			return Create(options.DefaultSequentialGuidType);
+			return Create(this.options.DefaultSequentialGuidType);
 		}
 
-		private Guid Create(SequentialGuidType guidType)
+		private static Guid Create(SequentialGuidType guidType)
 		{
 			// We start with 16 bytes of cryptographically strong random data.
 			byte[] randomBytes = new byte[10];
-			randomNumberGenerator.Locking(r => r.GetBytes(randomBytes));
+			RandomNumberGenerator.Locking(r => r.GetBytes(randomBytes));
 
 			// An alternate method: use a normally-created GUID to get our initial
 			// random data:
@@ -61,14 +61,14 @@
 
 			// Since we're converting from an Int64, we have to reverse on
 			// little-endian systems.
-			if (BitConverter.IsLittleEndian)
+			if(BitConverter.IsLittleEndian)
 			{
 				Array.Reverse(timestampBytes);
 			}
 
 			byte[] guidBytes = new byte[16];
 
-			switch (guidType)
+			switch(guidType)
 			{
 				case SequentialGuidType.SequentialAsString:
 				case SequentialGuidType.SequentialAsBinary:
@@ -82,7 +82,7 @@
 					// that .NET regards the Data1 and Data2 block as an Int32 and an Int16,
 					// respectively.  That means that it switches the order on little-endian
 					// systems.  So again, we have to reverse.
-					if (guidType == SequentialGuidType.SequentialAsString && BitConverter.IsLittleEndian)
+					if(guidType == SequentialGuidType.SequentialAsString && BitConverter.IsLittleEndian)
 					{
 						Array.Reverse(guidBytes, 0, 4);
 						Array.Reverse(guidBytes, 4, 2);

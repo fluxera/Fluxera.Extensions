@@ -6,32 +6,12 @@
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
+	/// <summary>
+	///     Extension methods for the <see cref="IServiceCollection" /> type.
+	/// </summary>
 	[PublicAPI]
 	public static class ServiceCollectionExtensions
 	{
-		/////  <summary>
-		///// 	Adds the principal factory service.
-		/////  </summary>
-		/////  <param name="services">The service collection.</param>
-		/////  <param name="configureOptions"></param>
-		/////  <returns>The service collection.</returns>
-		//public static IServiceCollection AddPrincipalFactory(this IServiceCollection services, Action<PrincipalFactoryOptions> configureOptions)
-		//{
-		//	Guard.Against.Null(services, nameof(services));
-
-		//	// Add logging infrastructure.
-		//	services.AddLogging();
-
-		//	// Add options infrastructure.
-		//	services.AddOptions();
-
-		//	services.Configure(configureOptions);
-
-		//	services.TryAddTransient<IPrincipalFactory, PrincipalFactory>();
-
-		//	return services;
-		//}
-
 		/// <summary>
 		///     Adds the date-time provider service.
 		/// </summary>
@@ -39,7 +19,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddDateTimeProvider(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -59,7 +39,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddDateTimeOffsetProvider(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -79,7 +59,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddPasswordGenerator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -99,7 +79,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddHashCalculator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -119,7 +99,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddJitterCalculator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -139,7 +119,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddRetryDelayCalculator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			services.AddJitterCalculator();
 
@@ -148,29 +128,16 @@
 			return services;
 		}
 
-
 		/// <summary>
 		///     Adds the guid generator service.
 		/// </summary>
 		/// <param name="services">The service collection.</param>
-		/// <returns>The service collection.</returns>
-		public static IServiceCollection AddGuidGenerator(this IServiceCollection services)
-		{
-			Guard.Against.Null(services, nameof(services));
-
-			return services.AddGuidGenerator(null);
-		}
-
-		/// <summary>
-		///     Adds the guid generator service.
-		/// </summary>
-		/// <param name="services">The service collection.</param>
-		/// <param name="configureOptions">The optional options for the sequential guid generator.</param>
+		/// <param name="configureOptions">The (optional )options for a sequential guid generator.</param>
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddGuidGenerator(this IServiceCollection services,
-			Action<SequentialGuidGeneratorOptions> configureOptions)
+			Action<SequentialGuidGeneratorOptions> configureOptions = null)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -198,7 +165,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddStringEncryptionService(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -220,7 +187,7 @@
 		public static IServiceCollection AddStringEncryptionService(this IServiceCollection services,
 			Action<StringEncryptionOptions> configureOptions)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.Against.Null(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();

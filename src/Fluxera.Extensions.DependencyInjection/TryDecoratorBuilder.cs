@@ -5,6 +5,9 @@
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
+	/// <summary>
+	///     A safe decorator builder.
+	/// </summary>
 	[PublicAPI]
 	public sealed class TryDecoratorBuilder
 	{
@@ -21,7 +24,7 @@
 		}
 
 		/// <summary>
-		///		Try to decorate the <see cref="serviceType"/> with the given decorator type.
+		///     Try to decorate the <see cref="serviceType" /> with the given decorator type.
 		/// </summary>
 		/// <param name="decoratorType">The decorator type.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -29,7 +32,7 @@
 		{
 			Guard.Against.Null(decoratorType, nameof(decoratorType));
 
-			if (serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
+			if(this.serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
 			{
 				return this.services.TryDecorateOpenGeneric(this.serviceType, decoratorType, out _);
 			}
@@ -38,7 +41,7 @@
 		}
 
 		/// <summary>
-		///		Try to decorate the <see cref="serviceType"/> with the given decorator function.
+		///     Try to decorate the <see cref="serviceType" /> with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -50,7 +53,7 @@
 		}
 
 		/// <summary>
-		///		Try to decorate the <see cref="serviceType"/> with the given decorator function.
+		///     Try to decorate the <see cref="serviceType" /> with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -62,6 +65,10 @@
 		}
 	}
 
+	/// <summary>
+	///     A safe decorator builder.
+	/// </summary>
+	/// <typeparam name="TService"></typeparam>
 	[PublicAPI]
 	public sealed class TryDecoratorBuilder<TService>
 	{
@@ -75,7 +82,7 @@
 		}
 
 		/// <summary>
-		///		Try to decorate the <see cref="TService"/> type with the given <see cref="TDecorator"/> type.
+		///     Try to decorate the <see cref="TService" /> type with the given <see cref="TDecorator" /> type.
 		/// </summary>
 		/// <typeparam name="TDecorator">The decorator type</typeparam>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -85,7 +92,7 @@
 		}
 
 		/// <summary>
-		///		Try to decorate the <see cref="TService"/> type with the given decorator function.
+		///     Try to decorate the <see cref="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -97,7 +104,7 @@
 		}
 
 		/// <summary>
-		///		Try to decorate the <see cref="TService"/> type with the given decorator function.
+		///     Try to decorate the <see cref="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>

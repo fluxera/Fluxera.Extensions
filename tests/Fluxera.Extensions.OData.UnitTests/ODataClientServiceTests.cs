@@ -20,7 +20,7 @@ namespace Fluxera.Extensions.OData.UnitTests
 			});
 
 			services.AddODataClientService<ITestODataClientService, TestODataClientService>("People",
-				context => new TestODataClientService(context.Name, context.CollectionName, context.ODataClient, context.Options));
+				(context, serviceProvider) => new TestODataClientService(context.Name, context.CollectionName, context.ODataClient, context.Options));
 
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 

@@ -53,9 +53,9 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services,
 			string remoteServiceName,
-			Func<HttpClientServiceConfigurationContext, TImplementation> factory)
-			where TService : class, IHttpClientService
-			where TImplementation : class, TService
+			Func<HttpClientServiceConfigurationContext, IServiceProvider, TImplementation> factory)
+			where TService : class
+			where TImplementation : class, TService, IHttpClientService
 		{
 			Guard.Against.Null(services, nameof(services));
 			Guard.Against.NullOrWhiteSpace(remoteServiceName, nameof(remoteServiceName));
@@ -78,7 +78,7 @@
 					}
 
 					HttpClientServiceConfigurationContext context = new HttpClientServiceConfigurationContext(remoteServiceName, httpClient, options);
-					return factory.Invoke(context);
+					return factory.Invoke(context, serviceProvider);
 				});
 		}
 
@@ -91,9 +91,9 @@
 		/// <param name="factory">The factory function that creates a service client instance.</param>
 		/// <returns></returns>
 		public static IHttpClientBuilder AddHttpClientService<TService, TImplementation>(this IServiceCollection services,
-			Func<HttpClientServiceConfigurationContext, TImplementation> factory)
-			where TService : class, IHttpClientService
-			where TImplementation : class, TService
+			Func<HttpClientServiceConfigurationContext, IServiceProvider, TImplementation> factory)
+			where TService : class
+			where TImplementation : class, TService, IHttpClientService
 		{
 			return services.AddHttpClientService<TService, TImplementation>(RemoteServices.DefaultRemoteServiceName, factory);
 		}

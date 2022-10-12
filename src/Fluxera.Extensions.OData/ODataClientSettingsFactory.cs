@@ -24,7 +24,7 @@
 				RenewHttpConnection = false,
 				OnTrace = (message, parameters) =>
 				{
-					if((parameters != null) && (parameters.Length > 0))
+					if(parameters != null && parameters.Length > 0)
 					{
 						this.logger.LogTrace(string.Format(message, parameters));
 					}

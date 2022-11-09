@@ -18,15 +18,10 @@
 		{
 			Guard.Against.Null(configuration, nameof(configuration));
 
-			ConnectionStrings connectionStrings = null;
-
 			IConfigurationSection connectionStringsSection = configuration.GetSection("ConnectionStrings");
-			if(connectionStringsSection != null)
-			{
-				connectionStrings = connectionStringsSection.Get<ConnectionStrings>();
-			}
+			ConnectionStrings connectionStrings = connectionStringsSection.Get<ConnectionStrings>();
 
-			return connectionStrings ?? new ConnectionStrings();
+			return connectionStrings;
 		}
 	}
 }

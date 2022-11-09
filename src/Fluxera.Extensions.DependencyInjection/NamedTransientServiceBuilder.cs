@@ -19,7 +19,7 @@
 		}
 
 		/// <summary>
-		///     Adds an implementation of the <see cref="TService" /> service as transient named service.
+		///     Adds an implementation of the <typeparamref name="TService" /> service as transient named service.
 		/// </summary>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <param name="name"></param>

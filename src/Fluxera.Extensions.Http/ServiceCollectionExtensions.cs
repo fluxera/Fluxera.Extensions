@@ -43,7 +43,7 @@
 		}
 
 		/// <summary>
-		///     Adds a named HTTP client <see cref="TService" /> to the services.
+		///     Adds a named HTTP client <typeparamref name="TService" /> to the services.
 		/// </summary>
 		/// <typeparam name="TService"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>
@@ -83,7 +83,7 @@
 		}
 
 		/// <summary>
-		///     Adds HTTP client <see cref="TService" /> to the services.
+		///     Adds HTTP client <typeparamref name="TService" /> to the services.
 		/// </summary>
 		/// <typeparam name="TService"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>

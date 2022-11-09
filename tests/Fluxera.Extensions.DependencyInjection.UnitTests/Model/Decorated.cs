@@ -2,11 +2,11 @@
 {
 	public class Decorated : IDecoratedService
 	{
-		public Decorated(ITestService? injectedService = null)
+		public Decorated(ITestService injectedService = null)
 		{
 			this.InjectedService = injectedService;
 		}
 
-		public ITestService? InjectedService { get; }
+		public ITestService InjectedService { get; }
 	}
 }

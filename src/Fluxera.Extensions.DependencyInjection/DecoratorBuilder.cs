@@ -85,7 +85,7 @@
 		}
 
 		/// <summary>
-		///     Decorates the <see cref="TService" /> type with the given <see cref="TDecorator" /> type.
+		///     Decorates the <typeparamref name="TService" /> type with the given <typeparamref name="TDecorator" /> type.
 		/// </summary>
 		/// <typeparam name="TDecorator">The decorator type</typeparam>
 		/// <returns>The builder.</returns>
@@ -96,7 +96,7 @@
 		}
 
 		/// <summary>
-		///     Decorates the <see cref="TService" /> type with the given decorator function.
+		///     Decorates the <typeparamref name="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder<TService> With(Func<TService, IServiceProvider, TService> decorator)
@@ -108,7 +108,7 @@
 		}
 
 		/// <summary>
-		///     Decorates the <see cref="TService" /> type with the given decorator function.
+		///     Decorates the <typeparamref name="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder<TService> With(Func<TService, TService> decorator)

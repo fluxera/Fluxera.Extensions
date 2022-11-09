@@ -3,7 +3,6 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using System.Threading.Tasks;
 	using FluentAssertions;
 	using Fluxera.Extensions.DependencyInjection;
 	using Fluxera.Extensions.Validation.DataAnnotations;
@@ -14,9 +13,8 @@
 	[TestFixture]
 	public class NamedValidationTests
 	{
-
 		[Test]
-		public async Task ShouldGetNamedValidatorFactories()
+		public void ShouldGetNamedValidatorFactories()
 		{
 			IServiceCollection services = new ServiceCollection();
 

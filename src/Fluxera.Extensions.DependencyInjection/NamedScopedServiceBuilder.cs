@@ -19,7 +19,7 @@
 		}
 
 		/// <summary>
-		///     A the named implementation of the <see cref="TService" /> type.
+		///     A the named implementation of the <typeparamref name="TService" /> type.
 		/// </summary>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <param name="name"></param>

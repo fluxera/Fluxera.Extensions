@@ -82,7 +82,7 @@
 		}
 
 		/// <summary>
-		///     Try to decorate the <see cref="TService" /> type with the given <see cref="TDecorator" /> type.
+		///     Try to decorate the <typeparamref name="TService" /> type with the given <typeparamref name="TDecorator" /> type.
 		/// </summary>
 		/// <typeparam name="TDecorator">The decorator type</typeparam>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -92,7 +92,7 @@
 		}
 
 		/// <summary>
-		///     Try to decorate the <see cref="TService" /> type with the given decorator function.
+		///     Try to decorate the <typeparamref name="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
@@ -104,7 +104,7 @@
 		}
 
 		/// <summary>
-		///     Try to decorate the <see cref="TService" /> type with the given decorator function.
+		///     Try to decorate the <typeparamref name="TService" /> type with the given decorator function.
 		/// </summary>
 		/// <param name="decorator">The decorator function.</param>
 		/// <returns>True, if the decorator was added; false otherwise.</returns>

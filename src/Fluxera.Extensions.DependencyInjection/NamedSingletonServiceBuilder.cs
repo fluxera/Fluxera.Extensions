@@ -19,7 +19,7 @@
 		}
 
 		/// <summary>
-		///     Adds an implementation of the <see cref="TService" /> service as named singleton.
+		///     Adds an implementation of the <typeparamref name="TService" /> service as named singleton.
 		/// </summary>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <param name="name"></param>

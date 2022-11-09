@@ -7,7 +7,9 @@
 	public static partial class ServiceCollectionExtensions
 	{
 		/// <summary>
-		///     Adds the service implementations configured in the configure action for the <see cref="TService" /> type transient.
+		///     Adds the service implementations configured in the configure action for the <typeparamref name="TService" />.
+		///     type
+		///     transient.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>
@@ -28,7 +30,8 @@
 		}
 
 		/// <summary>
-		///     Adds the service implementations configured in the configure action for the <see cref="TService" /> type singleton.
+		///     Adds the service implementations configured in the configure action for the <typeparamref name="TService" /> type
+		///     singleton.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>
@@ -49,7 +52,8 @@
 		}
 
 		/// <summary>
-		///     Adds the service implementations configured in the configure action for the <see cref="TService" /> type scoped.
+		///     Adds the service implementations configured in the configure action for the <typeparamref name="TService" /> type
+		///     scoped.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>

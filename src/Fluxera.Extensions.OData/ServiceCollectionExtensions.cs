@@ -16,7 +16,7 @@
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		///     Adds a named OData client <see cref="TService" /> to the services.
+		///     Adds a named OData client <typeparamref name="TService" /> to the services.
 		/// </summary>
 		/// <typeparam name="TService"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>
@@ -64,7 +64,7 @@
 		}
 
 		/// <summary>
-		///     Adds a named OData client <see cref="TService" /> to the services.
+		///     Adds a named OData client <typeparamref name="TService" /> to the services.
 		/// </summary>
 		/// <typeparam name="TService"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>

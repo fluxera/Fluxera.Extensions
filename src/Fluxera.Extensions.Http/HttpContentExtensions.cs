@@ -16,7 +16,7 @@
 	public static class HttpContentExtensions
 	{
 		/// <summary>
-		///     Reads the <see cref="HttpContent" /> as <see cref="T" /> by deserializing it using the
+		///     Reads the <see cref="HttpContent" /> as <typeparamref name="T" /> by deserializing it using the
 		///     <see cref="JsonSerializer" />.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>

@@ -51,7 +51,7 @@
 		public void ShouldGetDefaultFromServiceProvider()
 		{
 			// Act
-			IAnotherTestService? testService = this.serviceProvider.GetObjectOrDefault<IAnotherTestService>();
+			IAnotherTestService testService = this.serviceProvider.GetObjectOrDefault<IAnotherTestService>();
 
 			// Assert
 			testService.Should().BeNull();
@@ -61,7 +61,7 @@
 		public void ShouldGetDefaultFromServices()
 		{
 			// Act
-			IAnotherTestService? testService = this.services.GetObjectOrDefault<IAnotherTestService>();
+			IAnotherTestService testService = this.services.GetObjectOrDefault<IAnotherTestService>();
 
 			// Assert
 			testService.Should().BeNull();
@@ -71,7 +71,7 @@
 		public void ShouldGetDefaultObjectFromServiceProvider()
 		{
 			// Act
-			ITestService? testService = this.serviceProvider.GetObjectOrDefault<ITestService>();
+			ITestService testService = this.serviceProvider.GetObjectOrDefault<ITestService>();
 
 			// Assert
 			testService.Should().NotBeNull();
@@ -82,7 +82,7 @@
 		public void ShouldGetDefaultObjectFromServices()
 		{
 			// Act
-			ITestService? testService = this.services.GetObjectOrDefault<ITestService>();
+			ITestService testService = this.services.GetObjectOrDefault<ITestService>();
 
 			// Assert
 			testService.Should().NotBeNull();
@@ -93,7 +93,7 @@
 		public void ShouldGetDefaultObjectFromServicesNotAvailable()
 		{
 			// Act
-			IDisposableService? testService = this.services.GetObjectOrDefault<IDisposableService>();
+			IDisposableService testService = this.services.GetObjectOrDefault<IDisposableService>();
 
 			// Assert
 			testService.Should().BeNull();

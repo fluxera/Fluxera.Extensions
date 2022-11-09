@@ -23,10 +23,7 @@
 			Guard.Against.Null(configuration, nameof(configuration));
 
 			IConfigurationSection connectionStringsSection = configuration.GetSection("ConnectionStrings");
-			if(connectionStringsSection != null)
-			{
-				services.Configure<ConnectionStrings>(connectionStringsSection);
-			}
+			services.Configure<ConnectionStrings>(connectionStringsSection);
 		}
 	}
 }

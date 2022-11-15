@@ -4,6 +4,9 @@
 	using System.IO;
 	using System.Security.Cryptography;
 	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Fluxera.Utilities;
 	using Microsoft.Extensions.Options;
 
 	/// <summary>
@@ -20,38 +23,35 @@
 
 		public string Encrypt(string plainText, string passPhrase = null, byte[] salt = null)
 		{
-			if (plainText == null)
+			return AsyncHelper.RunSync(() => this.EncryptAsync(plainText, passPhrase, salt, CancellationToken.None));
+		}
+
+		/// <inheritdoc />
+		public async Task<string> EncryptAsync(string plainText, string passPhrase = null, byte[] salt = null, CancellationToken cancellationToken = default)
+		{
+			if(plainText == null)
 			{
 				return null;
 			}
 
-			if (passPhrase == null)
-			{
-				passPhrase = options.DefaultPassPhrase;
-			}
-
-			if (salt == null)
-			{
-				salt = options.DefaultSalt;
-			}
+			passPhrase ??= this.options.DefaultPassPhrase;
+			salt ??= this.options.DefaultSalt;
 
 			byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-			using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, salt))
+			using(Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, salt, 1000, HashAlgorithmName.SHA256))
 			{
-				byte[] keyBytes = password.GetBytes(options.KeySize / 8);
-				using (Aes symmetricKey = Aes.Create())
+				byte[] keyBytes = password.GetBytes(this.options.KeySize / 8);
+				using(Aes symmetricKey = Aes.Create())
 				{
 					symmetricKey.Mode = CipherMode.CBC;
-					using (ICryptoTransform cryptoTransform =
-						symmetricKey.CreateEncryptor(keyBytes, options.InitVectorBytes))
+					using(ICryptoTransform cryptoTransform = symmetricKey.CreateEncryptor(keyBytes, this.options.InitVectorBytes))
 					{
-						using (MemoryStream memoryStream = new MemoryStream())
+						using(MemoryStream memoryStream = new MemoryStream())
 						{
-							using (CryptoStream cryptoStream =
-								new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write))
+							await using(CryptoStream cryptoStream = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write))
 							{
-								cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
-								cryptoStream.FlushFinalBlock();
+								await cryptoStream.WriteAsync(plainTextBytes, 0, plainTextBytes.Length, cancellationToken);
+								await cryptoStream.FlushFinalBlockAsync(cancellationToken);
 								byte[] cipherTextBytes = memoryStream.ToArray();
 								return Convert.ToBase64String(cipherTextBytes);
 							}
@@ -63,38 +63,35 @@
 
 		public string Decrypt(string cipherText, string passPhrase = null, byte[] salt = null)
 		{
-			if (string.IsNullOrEmpty(cipherText))
+			return AsyncHelper.RunSync(() => this.DecryptAsync(cipherText, passPhrase, salt, CancellationToken.None));
+		}
+
+		/// <inheritdoc />
+		public async Task<string> DecryptAsync(string cipherText, string passPhrase = null, byte[] salt = null, CancellationToken cancellationToken = default)
+		{
+			if(string.IsNullOrEmpty(cipherText))
 			{
 				return null;
 			}
 
-			if (passPhrase == null)
-			{
-				passPhrase = options.DefaultPassPhrase;
-			}
-
-			if (salt == null)
-			{
-				salt = options.DefaultSalt;
-			}
+			passPhrase ??= this.options.DefaultPassPhrase;
+			salt ??= this.options.DefaultSalt;
 
 			byte[] cipherTextBytes = Convert.FromBase64String(cipherText);
-			using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, salt))
+			using(Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, salt, 1000, HashAlgorithmName.SHA256))
 			{
-				byte[] keyBytes = password.GetBytes(options.KeySize / 8);
-				using (Aes symmetricKey = Aes.Create())
+				byte[] keyBytes = password.GetBytes(this.options.KeySize / 8);
+				using(Aes symmetricKey = Aes.Create())
 				{
 					symmetricKey.Mode = CipherMode.CBC;
-					using (ICryptoTransform cryptoTransform =
-						symmetricKey.CreateDecryptor(keyBytes, options.InitVectorBytes))
+					using(ICryptoTransform cryptoTransform = symmetricKey.CreateDecryptor(keyBytes, this.options.InitVectorBytes))
 					{
-						using (MemoryStream memoryStream = new MemoryStream(cipherTextBytes))
+						using(MemoryStream memoryStream = new MemoryStream(cipherTextBytes))
 						{
-							using (CryptoStream cryptoStream =
-								new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Read))
+							await using(CryptoStream cryptoStream = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Read))
 							{
 								byte[] plainTextBytes = new byte[cipherTextBytes.Length];
-								int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+								int decryptedByteCount = await cryptoStream.ReadAsync(plainTextBytes, 0, plainTextBytes.Length, cancellationToken);
 								return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
 							}
 						}

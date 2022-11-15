@@ -19,7 +19,7 @@ namespace Fluxera.Extensions.Http.UnitTests
 			});
 
 			services.AddHttpClientService<ITestHttpClientService, TestHttpClientService>(
-				(context, serviceProvider) => new TestHttpClientService(context.Name, context.HttpClient, context.Options));
+				(context, _) => new TestHttpClientService(context.Name, context.HttpClient, context.Options));
 
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 

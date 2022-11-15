@@ -1,4 +1,8 @@
-﻿namespace Fluxera.Extensions.DependencyInjection.UnitTests
+﻿// ReSharper disable PossibleMultipleEnumeration
+
+// ReSharper disable LocalVariableHidesMember
+
+namespace Fluxera.Extensions.DependencyInjection.UnitTests
 {
 	using System;
 	using System.Collections.Generic;
@@ -147,7 +151,7 @@
 			// Act
 			Action action = () =>
 			{
-				IAnotherTestService testService = this.serviceProvider.GetObject<IAnotherTestService>();
+				this.serviceProvider.GetObject<IAnotherTestService>();
 			};
 
 			action.Should().Throw<InvalidOperationException>();
@@ -159,7 +163,7 @@
 			// Act
 			Action action = () =>
 			{
-				IAnotherTestService testService = this.services.GetObject<IAnotherTestService>();
+				this.services.GetObject<IAnotherTestService>();
 			};
 
 			action.Should().Throw<InvalidOperationException>();

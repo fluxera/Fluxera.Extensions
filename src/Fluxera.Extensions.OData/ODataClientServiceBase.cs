@@ -69,6 +69,8 @@
 		protected async Task<TResult> ExecuteFunctionScalarAsync<TResult>(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string functionName = null)
 			where TResult : struct, IConvertible
 		{
+			functionName = Guard.Against.NullOrWhiteSpace(functionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Function(functionName);
@@ -90,6 +92,8 @@
 		/// <returns></returns>
 		protected async Task<T> ExecuteFunctionSingleAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string functionName = null)
 		{
+			functionName = Guard.Against.NullOrWhiteSpace(functionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Function(functionName);
@@ -111,6 +115,8 @@
 		/// <returns></returns>
 		protected async Task<IReadOnlyCollection<T>> ExecuteFunctionEnumerableAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string functionName = null)
 		{
+			functionName = Guard.Against.NullOrWhiteSpace(functionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Function(functionName);
@@ -133,6 +139,8 @@
 		/// <returns></returns>
 		protected async Task ExecuteActionAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
+			actionName = Guard.Against.NullOrWhiteSpace(actionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
@@ -154,6 +162,8 @@
 		/// <returns></returns>
 		protected async Task ExecuteActionAsync(T instance, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
+			actionName = Guard.Against.NullOrWhiteSpace(actionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Key(instance.ID)
@@ -171,6 +181,8 @@
 		/// <returns></returns>
 		protected async Task<T> ExecuteActionSingleAsync(T instance, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
+			actionName = Guard.Against.NullOrWhiteSpace(actionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Key(instance.ID)
@@ -190,6 +202,8 @@
 		protected async Task<TResult> ExecuteActionScalar<TResult>(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 			where TResult : struct, IConvertible
 		{
+			actionName = Guard.Against.NullOrWhiteSpace(actionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
@@ -211,6 +225,8 @@
 		/// <returns></returns>
 		protected async Task<T> ExecuteActionSingleAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
+			actionName = Guard.Against.NullOrWhiteSpace(actionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);
@@ -232,6 +248,8 @@
 		/// <returns></returns>
 		protected async Task<IReadOnlyCollection<T>> ExecuteActionEnumerableAsync(object parameters = null, CancellationToken cancellationToken = default, [CallerMemberName] string actionName = null)
 		{
+			actionName = Guard.Against.NullOrWhiteSpace(actionName);
+
 			IBoundClient<T> boundClient = this.ODataClient
 				.For<T>(this.CollectionName)
 				.Action(actionName);

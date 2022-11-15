@@ -11,13 +11,13 @@
 	{
 		private static readonly char[] PwdCharArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!$+-".ToCharArray();
 
-		private readonly RNGCryptoServiceProvider rng;
+		private readonly RandomNumberGenerator rng;
 
 		public PasswordGenerator()
 		{
 			this.ConsecutiveCharacters = false;
 			this.RepeatCharacters = true;
-			this.rng = new RNGCryptoServiceProvider();
+			this.rng = RandomNumberGenerator.Create();
 		}
 
 		private bool RepeatCharacters { get; }

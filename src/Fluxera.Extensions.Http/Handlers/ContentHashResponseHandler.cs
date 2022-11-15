@@ -20,7 +20,7 @@
 		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 		{
 			HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
-			if(!response.IsSuccessStatusCode || (response.Content == null))
+			if(!response.IsSuccessStatusCode)
 			{
 				return response;
 			}

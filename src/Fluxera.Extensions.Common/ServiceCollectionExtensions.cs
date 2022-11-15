@@ -5,6 +5,7 @@
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
+	using Microsoft.Extensions.Options;
 
 	/// <summary>
 	///     Extension methods for the <see cref="IServiceCollection" /> type.
@@ -165,17 +166,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddStringEncryptionService(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
-
-			// Add logging infrastructure.
-			services.AddLogging();
-
-			// Add options infrastructure.
-			services.AddOptions();
-
-			services.AddTransient<IStringEncryptionService, StringEncryptionService>();
-
-			return services;
+			return services.AddStringEncryptionService(null);
 		}
 
 		/// <summary>
@@ -195,7 +186,12 @@
 			// Add options infrastructure.
 			services.AddOptions();
 
-			services.Configure(configureOptions);
+			if(configureOptions is not null)
+			{
+				services.Configure(configureOptions);
+			}
+
+			services.AddSingleton<IValidateOptions<StringEncryptionOptions>, StringEncryptionOptionsValidator>();
 
 			services.AddTransient<IStringEncryptionService, StringEncryptionService>();
 

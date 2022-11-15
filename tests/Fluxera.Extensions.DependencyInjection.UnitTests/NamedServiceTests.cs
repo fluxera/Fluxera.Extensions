@@ -1,4 +1,6 @@
-﻿namespace Fluxera.Extensions.DependencyInjection.UnitTests
+﻿// ReSharper disable PossibleMultipleEnumeration
+
+namespace Fluxera.Extensions.DependencyInjection.UnitTests
 {
 	using System;
 	using System.Collections.Generic;

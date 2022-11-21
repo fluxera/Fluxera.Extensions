@@ -121,5 +121,5 @@ services.AddValidation(builder =>
 [Steve Collins](https://stevetalkscode.co.uk/)
 
 - [Named Dependencies Part 1](https://stevetalkscode.co.uk/named-dependencies-part-1)
-- [Named Dependencies Part 1](https://stevetalkscode.co.uk/named-dependencies-part-2)
+- [Named Dependencies Part 2](https://stevetalkscode.co.uk/named-dependencies-part-2)
 

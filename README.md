@@ -23,7 +23,7 @@ This extension contains several custom services:
 
 ### ```Fluxera.Extensions.DataManagement```
 
-This extension contains an infrastructure for insertng seed data to databases.
+This extension contains an infrastructure for inserting seed data into databases.
 
 ### ```Fluxera.Extensions.DependencyInjection```
  

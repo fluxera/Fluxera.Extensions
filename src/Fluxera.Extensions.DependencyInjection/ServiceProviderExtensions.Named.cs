@@ -16,11 +16,14 @@
 		/// <returns>The service instance.</returns>
 		public static TService GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
 		{
-			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
+			Guard.Against.Null(serviceProvider);
 
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();
 			Type implementationType = namedServiceMapper.GetImplementationType(name);
-			return (TService)serviceProvider.GetService(implementationType);
+
+			return implementationType is not null
+				? (TService)serviceProvider.GetService(implementationType)
+				: default;
 		}
 
 		/// <summary>
@@ -32,7 +35,7 @@
 		/// <returns>The service instance.</returns>
 		public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider serviceProvider, string name)
 		{
-			Guard.Against.Null(serviceProvider, nameof(serviceProvider));
+			Guard.Against.Null(serviceProvider);
 
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();
 			IEnumerable<Type> implementationTypes = namedServiceMapper.GetImplementationTypes(name);
@@ -56,8 +59,16 @@
 		public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
 			where TService : notnull
 		{
+			Guard.Against.Null(serviceProvider);
+
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();
 			Type implementationType = namedServiceMapper.GetImplementationType(name);
+
+			if(implementationType is null)
+			{
+				throw new InvalidOperationException($"No named service implementation registered for name '{name}'.");
+			}
+
 			return (TService)serviceProvider.GetRequiredService(implementationType);
 		}
 	}

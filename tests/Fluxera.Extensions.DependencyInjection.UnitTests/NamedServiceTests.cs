@@ -92,5 +92,40 @@ namespace Fluxera.Extensions.DependencyInjection.UnitTests
 			service3.Should().NotBeNull();
 			service3.Should().BeOfType<TestService>();
 		}
+
+		[Test]
+		public void ShouldThrowOnRequiredNamedServiceNotRegistered()
+		{
+			IServiceProvider serviceProvider = BuildServiceProvider(services =>
+			{
+				services.AddNamedTransient<ITestService>(builder =>
+				{
+					builder
+						.AddNameFor<TestService>("One")
+						.AddNameFor<TestService>("Two");
+				});
+			});
+
+			Action action = () => serviceProvider.GetRequiredNamedService<ITestService>("Three");
+
+			action.Should().Throw<InvalidOperationException>();
+		}
+
+		[Test]
+		public void ShouldNotThrowOnNamedServiceNotRegistered()
+		{
+			IServiceProvider serviceProvider = BuildServiceProvider(services =>
+			{
+				services.AddNamedTransient<ITestService>(builder =>
+				{
+					builder
+						.AddNameFor<TestService>("One")
+						.AddNameFor<TestService>("Two");
+				});
+			});
+
+			ITestService service = serviceProvider.GetNamedService<ITestService>("Three");
+			service.Should().BeNull();
+		}
 	}
 }

@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/fluxera/Foundation/_apis/build/status/GitHub/fluxera.Fluxera.Extensions?branchName=main)](https://dev.azure.com/fluxera/Foundation/_build/latest?definitionId=65&branchName=main)
+[![Build Status](https://dev.azure.com/fluxera/Foundation/_apis/build/status/GitHub/fluxera.Fluxera.Extensions?branchName=main&stageName=BuildAndTest)](https://dev.azure.com/fluxera/Foundation/_build/latest?definitionId=85&branchName=main)
 
 # Fluxera.Extensions
 A library that extends the Microsoft.Extensions.* libraries with custom functionality and also provices custom extensions.

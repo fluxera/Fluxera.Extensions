@@ -22,6 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Fluxera.Enumeration.SystemTextJson" Version="7.0.7" />
+		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="7.0.5" />
+		<PackageReference Include="Fluxera.ValueObject.SystemTextJson" Version="7.0.5" />
 		<PackageReference Include="GitVersion.MsBuild" Version="5.11.1">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

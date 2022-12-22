@@ -1,12 +1,16 @@
 ﻿namespace Fluxera.Extensions.Http
 {
+	using System;
 	using System.IO;
 	using System.Net.Http;
 	using System.Net.Http.Headers;
 	using System.Text.Json;
 	using System.Text.Json.Serialization;
 	using System.Threading.Tasks;
+	using Fluxera.Enumeration.SystemTextJson;
+	using Fluxera.StronglyTypedId.SystemTextJson;
 	using Fluxera.Utilities.Extensions;
+	using Fluxera.ValueObject.SystemTextJson;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -21,34 +25,29 @@
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="content"></param>
+		/// <param name="configureOptions"></param>
 		/// <returns></returns>
-		public static async Task<T> ReadAsAsync<T>(this HttpContent content) where T : class
+		public static async Task<T> ReadAsAsync<T>(this HttpContent content, Action<JsonSerializerOptions> configureOptions = null) where T : class
 		{
-			T obj = null;
-
-			try
+			await using(Stream contentStream = await content.ReadAsStreamAsync())
 			{
-				await using(Stream contentStream = await content.ReadAsStreamAsync())
+				JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
 				{
-					JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+					DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+					Converters =
 					{
-						DefaultIgnoreCondition = JsonIgnoreCondition.Always,
-						PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-						DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-						Converters =
-						{
-							new JsonStringEnumConverter()
-						}
-					};
-					obj = await JsonSerializer.DeserializeAsync<T>(contentStream, jsonSerializerOptions);
-				}
-			}
-			catch
-			{
-				// Note: Intentionally left blank.
-			}
+						new JsonStringEnumConverter()
+					}
+				};
+				jsonSerializerOptions.UseEnumeration();
+				jsonSerializerOptions.UsePrimitiveValueObject();
+				jsonSerializerOptions.UseStronglyTypedId();
 
-			return obj;
+				configureOptions?.Invoke(jsonSerializerOptions);
+
+				return await JsonSerializer.DeserializeAsync<T>(contentStream, jsonSerializerOptions);
+			}
 		}
 
 		/// <summary>
@@ -56,15 +55,15 @@
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
+		/// <param name="configureOptions"></param>
 		/// <returns></returns>
-		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj) where T : class
+		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj, Action<JsonSerializerOptions> configureOptions = null) where T : class
 		{
 			// https://johnthiriet.com/efficient-post-calls/
 			MemoryStream memoryStream = new MemoryStream();
 
 			JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
 			{
-				DefaultIgnoreCondition = JsonIgnoreCondition.Always,
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 				DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
 				Converters =
@@ -72,6 +71,12 @@
 					new JsonStringEnumConverter()
 				}
 			};
+			jsonSerializerOptions.UseEnumeration();
+			jsonSerializerOptions.UsePrimitiveValueObject();
+			jsonSerializerOptions.UseStronglyTypedId();
+
+			configureOptions?.Invoke(jsonSerializerOptions);
+
 			await JsonSerializer.SerializeAsync(memoryStream, obj, jsonSerializerOptions);
 
 			memoryStream.Rewind();

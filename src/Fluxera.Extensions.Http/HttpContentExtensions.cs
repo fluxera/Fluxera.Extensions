@@ -19,50 +19,9 @@
 	[PublicAPI]
 	public static class HttpContentExtensions
 	{
-		/// <summary>
-		///     Reads the <see cref="HttpContent" /> as <typeparamref name="T" /> by deserializing it using the
-		///     <see cref="JsonSerializer" />.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="content"></param>
-		/// <param name="configureOptions"></param>
-		/// <returns></returns>
-		public static async Task<T> ReadAsAsync<T>(this HttpContent content, Action<JsonSerializerOptions> configureOptions = null) where T : class
+		private static Lazy<JsonSerializerOptions> jsonSerializerOptions = new Lazy<JsonSerializerOptions>(() =>
 		{
-			await using(Stream contentStream = await content.ReadAsStreamAsync())
-			{
-				JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
-				{
-					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-					DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-					Converters =
-					{
-						new JsonStringEnumConverter()
-					}
-				};
-				jsonSerializerOptions.UseEnumeration();
-				jsonSerializerOptions.UsePrimitiveValueObject();
-				jsonSerializerOptions.UseStronglyTypedId();
-
-				configureOptions?.Invoke(jsonSerializerOptions);
-
-				return await JsonSerializer.DeserializeAsync<T>(contentStream, jsonSerializerOptions);
-			}
-		}
-
-		/// <summary>
-		///     Creates a JSON <see cref="HttpContent" /> instance from the given object using the <see cref="JsonSerializer" />.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="obj"></param>
-		/// <param name="configureOptions"></param>
-		/// <returns></returns>
-		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj, Action<JsonSerializerOptions> configureOptions = null) where T : class
-		{
-			// https://johnthiriet.com/efficient-post-calls/
-			MemoryStream memoryStream = new MemoryStream();
-
-			JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+			JsonSerializerOptions options = new JsonSerializerOptions
 			{
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 				DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
@@ -71,13 +30,44 @@
 					new JsonStringEnumConverter()
 				}
 			};
-			jsonSerializerOptions.UseEnumeration();
-			jsonSerializerOptions.UsePrimitiveValueObject();
-			jsonSerializerOptions.UseStronglyTypedId();
+			options.UseEnumeration();
+			options.UsePrimitiveValueObject();
+			options.UseStronglyTypedId();
 
-			configureOptions?.Invoke(jsonSerializerOptions);
+			return options;
+		});
 
-			await JsonSerializer.SerializeAsync(memoryStream, obj, jsonSerializerOptions);
+		/// <summary>
+		///     Reads the <see cref="HttpContent" /> as <typeparamref name="T" /> by deserializing it using the
+		///     <see cref="JsonSerializer" />.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="content"></param>
+		/// <param name="options"></param>
+		/// <returns></returns>
+		public static async Task<T> ReadAsAsync<T>(this HttpContent content, JsonSerializerOptions options = null) where T : class
+		{
+			await using(Stream contentStream = await content.ReadAsStreamAsync())
+			{
+				options ??= jsonSerializerOptions.Value;
+				return await JsonSerializer.DeserializeAsync<T>(contentStream, options);
+			}
+		}
+
+		/// <summary>
+		///     Creates a JSON <see cref="HttpContent" /> instance from the given object using the <see cref="JsonSerializer" />.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj"></param>
+		/// <param name="options"></param>
+		/// <returns></returns>
+		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj, JsonSerializerOptions options = null) where T : class
+		{
+			// https://johnthiriet.com/efficient-post-calls/
+			MemoryStream memoryStream = new MemoryStream();
+
+			options ??= jsonSerializerOptions.Value;
+			await JsonSerializer.SerializeAsync(memoryStream, obj, options);
 
 			memoryStream.Rewind();
 			HttpContent httpContent = new StreamContent(memoryStream);

@@ -1,15 +1,14 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System;
-	using System.IO;
 	using System.Net.Http;
 	using System.Net.Http.Headers;
+	using System.Net.Http.Json;
 	using System.Text.Json;
 	using System.Text.Json.Serialization;
 	using System.Threading.Tasks;
 	using Fluxera.Enumeration.SystemTextJson;
 	using Fluxera.StronglyTypedId.SystemTextJson;
-	using Fluxera.Utilities.Extensions;
 	using Fluxera.ValueObject.SystemTextJson;
 	using JetBrains.Annotations;
 
@@ -47,11 +46,7 @@
 		/// <returns></returns>
 		public static async Task<T> ReadAsAsync<T>(this HttpContent content, JsonSerializerOptions options = null) where T : class
 		{
-			await using(Stream contentStream = await content.ReadAsStreamAsync())
-			{
-				options ??= jsonSerializerOptions.Value;
-				return await JsonSerializer.DeserializeAsync<T>(contentStream, options);
-			}
+			return await content.ReadFromJsonAsync<T>(options ?? jsonSerializerOptions.Value);
 		}
 
 		/// <summary>
@@ -61,22 +56,14 @@
 		/// <param name="obj"></param>
 		/// <param name="options"></param>
 		/// <returns></returns>
-		public static async Task<HttpContent> AsJsonContentAsync<T>(this T obj, JsonSerializerOptions options = null) where T : class
+		public static HttpContent AsJsonContent<T>(this T obj, JsonSerializerOptions options = null) where T : class
 		{
-			// https://johnthiriet.com/efficient-post-calls/
-			MemoryStream memoryStream = new MemoryStream();
-
-			options ??= jsonSerializerOptions.Value;
-			await JsonSerializer.SerializeAsync(memoryStream, obj, options);
-
-			memoryStream.Rewind();
-			HttpContent httpContent = new StreamContent(memoryStream);
-			httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json")
+			MediaTypeHeaderValue mediaTypeHeaderValue = new MediaTypeHeaderValue("application/json")
 			{
 				CharSet = "utf-8"
 			};
 
-			return httpContent;
+			return JsonContent.Create(obj, typeof(T), mediaTypeHeaderValue, options ?? jsonSerializerOptions.Value);
 		}
 	}
 }

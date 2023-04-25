@@ -18,13 +18,9 @@
 		/// <param name="options"></param>
 		protected HttpClientServiceBase(string name, HttpClient httpClient, RemoteService options)
 		{
-			Guard.Against.Null(name, nameof(name));
-			Guard.Against.Null(httpClient, nameof(httpClient));
-			Guard.Against.Null(options, nameof(options));
-
-			this.Name = name;
-			this.HttpClient = httpClient;
-			this.Options = options;
+			this.Name = Guard.Against.Null(name);
+			this.HttpClient = Guard.Against.Null(httpClient);
+			this.Options = Guard.Against.Null(options);
 		}
 
 		/// <summary>

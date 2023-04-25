@@ -64,7 +64,7 @@
 		public static IHttpClientBuilder AddHttpMessageHandlerScoped<TDelegatingHandler>(this IHttpClientBuilder httpClientBuilder)
 			where TDelegatingHandler : DelegatingHandler
 		{
-			Guard.Against.Null(httpClientBuilder, nameof(httpClientBuilder));
+			Guard.Against.Null(httpClientBuilder);
 
 			// Register the handler in services.
 			httpClientBuilder.Services.TryAddScoped<TDelegatingHandler>();
@@ -72,33 +72,5 @@
 			// Add the handler to the http client.
 			return httpClientBuilder.AddHttpMessageHandler<TDelegatingHandler>();
 		}
-
-		//public static HttpClientBuilderList AddIdempotentPostRequestHandler(this HttpClientBuilderList httpClientBuilderList)
-		//{
-		//	return httpClientBuilderList.AddHttpMessageHandlerScoped<IdempotentPostRequestHandler>();
-		//}
-
-		//public static HttpClientBuilderList AddContentHashRequestHandler(this HttpClientBuilderList httpClientBuilderList)
-		//{
-		//	return httpClientBuilderList.AddHttpMessageHandlerScoped<ContentHashRequestHandler>();
-		//}
-
-		//public static HttpClientBuilderList AddContentHashResponseHandler(this HttpClientBuilderList httpClientBuilderList)
-		//{
-		//	return httpClientBuilderList.AddHttpMessageHandlerScoped<ContentHashResponseHandler>();
-		//}
-
-		//public static HttpClientBuilderList AddHttpMessageHandlerScoped<T>(this HttpClientBuilderList httpClientBuilderList)
-		//	where T : DelegatingHandler
-		//{
-		//	Guard.Against.Null(httpClientBuilderList, nameof(httpClientBuilderList));
-
-		//	foreach(IHttpClientBuilder httpClientBuilder in httpClientBuilderList)
-		//	{
-		//		httpClientBuilder.AddHttpMessageHandler<T>();
-		//	}
-
-		//	return httpClientBuilderList;
-		//}
 	}
 }

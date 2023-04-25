@@ -1,6 +1,7 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System.Net.Http;
+	using Fluxera.Guards;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -17,9 +18,9 @@
 		/// <param name="options"></param>
 		public HttpClientServiceConfigurationContext(string name, HttpClient httpClient, RemoteService options)
 		{
-			this.Name = name;
-			this.HttpClient = httpClient;
-			this.Options = options;
+			this.Name = Guard.Against.Null(name);
+			this.HttpClient = Guard.Against.Null(httpClient);
+			this.Options = Guard.Against.Null(options);
 		}
 
 		/// <summary>

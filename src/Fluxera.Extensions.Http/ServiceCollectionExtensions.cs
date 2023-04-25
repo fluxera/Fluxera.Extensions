@@ -1,6 +1,7 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System;
+	using System.Runtime.InteropServices;
 	using Fluxera.Extensions.Common;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;
@@ -57,9 +58,9 @@
 			where TService : class
 			where TImplementation : class, TService, IHttpClientService
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.NullOrWhiteSpace(remoteServiceName, nameof(remoteServiceName));
-			Guard.Against.Null(factory, nameof(factory));
+			Guard.Against.Null(services);
+			Guard.Against.NullOrWhiteSpace(remoteServiceName);
+			Guard.Against.Null(factory);
 
 			services.AddOptions();
 			services.AddHttpClient();

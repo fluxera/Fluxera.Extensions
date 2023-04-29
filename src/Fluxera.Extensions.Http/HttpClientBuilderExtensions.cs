@@ -20,7 +20,7 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddIdempotentPostRequestHandler(this IHttpClientBuilder httpClientBuilder)
 		{
-			return httpClientBuilder.AddHttpMessageHandlerScoped<IdempotentPostRequestHandler>();
+			return httpClientBuilder.AddHttpMessageHandlerTransient<IdempotentPostRequestHandler>();
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddContentHashRequestHandler(this IHttpClientBuilder httpClientBuilder)
 		{
-			return httpClientBuilder.AddHttpMessageHandlerScoped<ContentHashRequestHandler>();
+			return httpClientBuilder.AddHttpMessageHandlerTransient<ContentHashRequestHandler>();
 		}
 
 		/// <summary>
@@ -40,7 +40,7 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddContentHashResponseHandler(this IHttpClientBuilder httpClientBuilder)
 		{
-			return httpClientBuilder.AddHttpMessageHandlerScoped<ContentHashResponseHandler>();
+			return httpClientBuilder.AddHttpMessageHandlerTransient<ContentHashResponseHandler>();
 		}
 
 		/// <summary>
@@ -50,7 +50,7 @@
 		/// <returns></returns>
 		public static IHttpClientBuilder AddAuthenticateRequestHandler(this IHttpClientBuilder httpClientBuilder)
 		{
-			return httpClientBuilder.AddHttpMessageHandlerScoped<AuthenticateRequestHandler>();
+			return httpClientBuilder.AddHttpMessageHandlerTransient<AuthenticateRequestHandler>();
 		}
 
 		/// <summary>
@@ -61,13 +61,13 @@
 		/// <typeparam name="TDelegatingHandler"></typeparam>
 		/// <param name="httpClientBuilder"></param>
 		/// <returns></returns>
-		public static IHttpClientBuilder AddHttpMessageHandlerScoped<TDelegatingHandler>(this IHttpClientBuilder httpClientBuilder)
+		public static IHttpClientBuilder AddHttpMessageHandlerTransient<TDelegatingHandler>(this IHttpClientBuilder httpClientBuilder)
 			where TDelegatingHandler : DelegatingHandler
 		{
 			Guard.Against.Null(httpClientBuilder);
 
 			// Register the handler in services.
-			httpClientBuilder.Services.TryAddScoped<TDelegatingHandler>();
+			httpClientBuilder.Services.TryAddTransient<TDelegatingHandler>();
 
 			// Add the handler to the http client.
 			return httpClientBuilder.AddHttpMessageHandler<TDelegatingHandler>();

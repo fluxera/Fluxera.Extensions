@@ -22,9 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Enumeration.SystemTextJson" Version="7.1.5" />
-		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="7.1.6" />
-		<PackageReference Include="Fluxera.ValueObject.SystemTextJson" Version="7.1.5" />
+		<PackageReference Include="Fluxera.Enumeration.SystemTextJson" Version="7.1.6" />
+		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="7.1.7" />
+		<PackageReference Include="Fluxera.ValueObject.SystemTextJson" Version="7.1.6" />
 		<PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

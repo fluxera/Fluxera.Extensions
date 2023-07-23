@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System;
-	using System.Runtime.InteropServices;
 	using Fluxera.Extensions.Common;
 	using Fluxera.Guards;
 	using JetBrains.Annotations;

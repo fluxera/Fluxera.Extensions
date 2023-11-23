@@ -8,16 +8,6 @@
 	[UsedImplicitly]
 	internal sealed class JitterCalculator : IJitterCalculator
 	{
-		private readonly Random random;
-
-		/// <summary>
-		///		Initializes a new instance of the <see cref="JitterCalculator"/> class.
-		/// </summary>
-		public JitterCalculator()
-		{
-			random = new Random();
-		}
-
 		/// <inheritdoc />
 		public int Apply(int input, int percentage = 25)
 		{
@@ -27,7 +17,7 @@
 			int lowerBoundary = input * (100 - percentage) / 100;
 			int upperBoundary = input * (100 + percentage) / 100;
 
-			return random.Next(lowerBoundary, upperBoundary);
+			return Random.Shared.Next(lowerBoundary, upperBoundary);
 		}
 
 		/// <inheritdoc />
@@ -39,7 +29,7 @@
 			double lowerBoundary = input * (100 - percentage) / 100;
 			double upperBoundary = input * (100 + percentage) / 100;
 
-			return lowerBoundary + (upperBoundary - lowerBoundary) * random.NextDouble();
+			return lowerBoundary + (upperBoundary - lowerBoundary) * Random.Shared.NextDouble();
 		}
 
 		/// <inheritdoc />

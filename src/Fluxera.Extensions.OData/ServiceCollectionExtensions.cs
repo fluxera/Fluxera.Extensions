@@ -32,10 +32,10 @@
 			where TService : class
 			where TImplementation : class, TService, IODataClientService
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.NullOrWhiteSpace(remoteServiceName, nameof(remoteServiceName));
-			Guard.Against.NullOrWhiteSpace(collectionName, nameof(collectionName));
-			Guard.Against.Null(factory, nameof(factory));
+			Guard.Against.Null(services);
+			Guard.Against.NullOrWhiteSpace(remoteServiceName);
+			Guard.Against.NullOrWhiteSpace(collectionName);
+			Guard.Against.Null(factory);
 
 			services.AddOptions();
 			services.AddHttpClient();
@@ -58,7 +58,7 @@
 					IODataClientFactory oDataClientFactory = serviceProvider.GetRequiredService<IODataClientFactory>();
 					IODataClient oDataClient = oDataClientFactory.CreateClient(remoteServiceName, oDataClientSettings);
 
-					ODataClientServiceConfigurationContext context = new ODataClientServiceConfigurationContext(remoteServiceName, collectionName, oDataClient, options);
+					ODataClientServiceConfigurationContext context = new ODataClientServiceConfigurationContext(remoteServiceName, collectionName, httpClient, oDataClient, options);
 					return factory.Invoke(context, serviceProvider);
 				});
 		}

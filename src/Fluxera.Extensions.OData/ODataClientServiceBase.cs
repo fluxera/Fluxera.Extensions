@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Net.Http;
 	using System.Runtime.CompilerServices;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -15,7 +16,7 @@
 	///     An abstract base class for named OData clients.
 	/// </summary>
 	[PublicAPI]
-	public abstract class ODataClientServiceBase<T, TKey> : IODataClientService
+	public abstract class ODataClientServiceBase<T, TKey> : HttpClientServiceBase, IODataClientService
 		where T : class, IODataEntity<TKey>
 	{
 		/// <summary>
@@ -23,19 +24,19 @@
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="collectionName"></param>
+		/// <param name="httpClient"></param>
 		/// <param name="oDataClient"></param>
 		/// <param name="options"></param>
-		protected ODataClientServiceBase(string name, string collectionName, IODataClient oDataClient, RemoteService options)
+		protected ODataClientServiceBase(string name, string collectionName, HttpClient httpClient, IODataClient oDataClient, RemoteService options)
+			: base(name, httpClient, options)
 		{
-			Guard.Against.Null(name, nameof(name));
-			Guard.Against.NullOrWhiteSpace(collectionName, nameof(collectionName));
-			Guard.Against.Null(oDataClient, nameof(oDataClient));
-			Guard.Against.Null(options, nameof(options));
+			Guard.Against.Null(name);
+			Guard.Against.NullOrWhiteSpace(collectionName);
+			Guard.Against.Null(oDataClient);
+			Guard.Against.Null(options);
 
-			this.Name = name;
 			this.CollectionName = collectionName;
 			this.ODataClient = oDataClient;
-			this.Options = options;
 
 			V4Adapter.Reference();
 		}
@@ -49,14 +50,6 @@
 		///     Gets the OData client.
 		/// </summary>
 		protected IODataClient ODataClient { get; }
-
-		/// <summary>
-		///     Gets the remote service options.
-		/// </summary>
-		protected RemoteService Options { get; }
-
-		/// <inheritdoc />
-		public string Name { get; }
 
 		/// <summary>
 		///     Execute a scalar function.

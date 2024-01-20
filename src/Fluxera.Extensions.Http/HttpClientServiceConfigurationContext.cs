@@ -8,7 +8,7 @@
 	///     The configuration context for named http client services.
 	/// </summary>
 	[PublicAPI]
-	public sealed class HttpClientServiceConfigurationContext
+	public class HttpClientServiceConfigurationContext
 	{
 		/// <summary>
 		///     Creates a new instance of the <see cref="HttpClientServiceConfigurationContext" /> type.

@@ -6,6 +6,7 @@
 	using System.Net.Http.Json;
 	using System.Text.Json;
 	using System.Text.Json.Serialization;
+	using System.Threading;
 	using System.Threading.Tasks;
 	using Fluxera.Enumeration.SystemTextJson;
 	using Fluxera.StronglyTypedId.SystemTextJson;
@@ -18,7 +19,7 @@
 	[PublicAPI]
 	public static class HttpContentExtensions
 	{
-		private static Lazy<JsonSerializerOptions> jsonSerializerOptions = new Lazy<JsonSerializerOptions>(() =>
+		private static readonly Lazy<JsonSerializerOptions> jsonSerializerOptions = new Lazy<JsonSerializerOptions>(() =>
 		{
 			JsonSerializerOptions options = new JsonSerializerOptions
 			{
@@ -43,10 +44,11 @@
 		/// <typeparam name="T"></typeparam>
 		/// <param name="content"></param>
 		/// <param name="options"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public static async Task<T> ReadAsAsync<T>(this HttpContent content, JsonSerializerOptions options = null) where T : class
+		public static async Task<T> ReadAsAsync<T>(this HttpContent content, JsonSerializerOptions options = null, CancellationToken cancellationToken = default) where T : class
 		{
-			return await content.ReadFromJsonAsync<T>(options ?? jsonSerializerOptions.Value);
+			return await content.ReadFromJsonAsync<T>(options ?? jsonSerializerOptions.Value, cancellationToken: cancellationToken);
 		}
 
 		/// <summary>

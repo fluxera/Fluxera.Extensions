@@ -9,7 +9,9 @@
 	[UsedImplicitly]
 	internal sealed class PasswordGenerator : IPasswordGenerator
 	{
+		// ReSharper disable StringLiteralTypo
 		private static readonly char[] PwdCharArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!$+-".ToCharArray();
+		// ReSharper restore StringLiteralTypo
 
 		private readonly RandomNumberGenerator rng;
 

@@ -8,8 +8,8 @@
 	{
 		public byte[] ComputeHash(byte[] input, HashAlgorithm algorithm)
 		{
-			Guard.Against.Null(input, nameof(input));
-			Guard.Against.Null(algorithm, nameof(algorithm));
+			Guard.Against.Null(input);
+			Guard.Against.Null(algorithm);
 
 			using(algorithm)
 			{
@@ -20,7 +20,7 @@
 		/// <inheritdoc />
 		public string ComputeHash(string input, HashAlgorithm algorithm = null)
 		{
-			Guard.Against.Null(input, nameof(input));
+			Guard.Against.Null(input);
 
 			return this.ComputeHash(input, Encoding.UTF8, algorithm);
 		}
@@ -28,8 +28,8 @@
 		/// <inheritdoc />
 		public string ComputeHash(string input, Encoding encoding, HashAlgorithm algorithm = null)
 		{
-			Guard.Against.Null(input, nameof(input));
-			Guard.Against.Null(encoding, nameof(encoding));
+			Guard.Against.Null(input);
+			Guard.Against.Null(encoding);
 
 			// Step 1, calculate hash from input.
 			algorithm ??= MD5.Create();

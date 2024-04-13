@@ -8,8 +8,6 @@
 	{
 		/// <summary>
 		///     Adds the service implementations configured in the configure action for the <typeparamref name="TService" />.
-		///     type
-		///     transient.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <param name="services">The service collection.</param>

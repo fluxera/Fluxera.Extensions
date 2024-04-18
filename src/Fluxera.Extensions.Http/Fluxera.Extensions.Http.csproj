@@ -23,7 +23,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Fluxera.Enumeration.SystemTextJson" Version="8.0.6" />
-		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="8.0.6" />
+		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="8.0.7" />
 		<PackageReference Include="Fluxera.ValueObject.SystemTextJson" Version="8.0.6" />
 		<PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
 		  <PrivateAssets>all</PrivateAssets>

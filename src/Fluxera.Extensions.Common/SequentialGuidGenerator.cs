@@ -16,7 +16,7 @@
 	[UsedImplicitly]
 	internal sealed class SequentialGuidGenerator : IGuidGenerator
 	{
-		private static readonly RandomNumberGenerator RandomNumberGenerator = RandomNumberGenerator.Create();
+		private static readonly RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
 		private readonly SequentialGuidGeneratorOptions options;
 
 		public SequentialGuidGenerator(IOptions<SequentialGuidGeneratorOptions> options)
@@ -33,7 +33,7 @@
 		{
 			// We start with 16 bytes of cryptographically strong random data.
 			byte[] randomBytes = new byte[10];
-			RandomNumberGenerator.Locking(r => r.GetBytes(randomBytes));
+			randomNumberGenerator.Locking(r => r.GetBytes(randomBytes));
 
 			// An alternate method: use a normally-created GUID to get our initial
 			// random data:

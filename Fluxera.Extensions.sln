@@ -34,10 +34,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Validati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Validation", "src\Fluxera.Extensions.Validation\Fluxera.Extensions.Validation.csproj", "{526898A1-8CD5-4147-B4F6-E74EF5E2BDAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Validation.DataAnnotations", "src\Fluxera.Extensions.Validation.DataAnnotations\Fluxera.Extensions.Validation.DataAnnotations.csproj", "{1B927213-5DDF-4B4C-89A6-86CFE549AEDE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Validation.FluentValidation", "src\Fluxera.Extensions.Validation.FluentValidation\Fluxera.Extensions.Validation.FluentValidation.csproj", "{66F586A4-592B-4B58-8505-AE9976D790FB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.Validation.UnitTests", "tests\Fluxera.Extensions.Validation.UnitTests\Fluxera.Extensions.Validation.UnitTests.csproj", "{FA880AC2-D0AE-4485-BABE-2FE180CA08C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxera.Extensions.DependencyInjection.Abstractions", "src\Fluxera.Extensions.DependencyInjection.Abstractions\Fluxera.Extensions.DependencyInjection.Abstractions.csproj", "{0C7DBBD9-B259-4C03-A125-500F9B669A4D}"
@@ -96,14 +92,6 @@ Global
 		{526898A1-8CD5-4147-B4F6-E74EF5E2BDAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{526898A1-8CD5-4147-B4F6-E74EF5E2BDAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{526898A1-8CD5-4147-B4F6-E74EF5E2BDAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B927213-5DDF-4B4C-89A6-86CFE549AEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B927213-5DDF-4B4C-89A6-86CFE549AEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B927213-5DDF-4B4C-89A6-86CFE549AEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B927213-5DDF-4B4C-89A6-86CFE549AEDE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66F586A4-592B-4B58-8505-AE9976D790FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66F586A4-592B-4B58-8505-AE9976D790FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66F586A4-592B-4B58-8505-AE9976D790FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66F586A4-592B-4B58-8505-AE9976D790FB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA880AC2-D0AE-4485-BABE-2FE180CA08C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA880AC2-D0AE-4485-BABE-2FE180CA08C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA880AC2-D0AE-4485-BABE-2FE180CA08C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -178,8 +166,6 @@ Global
 		{98862534-1126-413F-8B0E-469BBD0640DB} = {F18D2D58-282C-4D93-8D9A-3A76CF98F018}
 		{FA970A0C-20A1-480B-95C2-E2ADD0AE0C35} = {DF28D730-99B3-4811-AAC7-725A73B3F668}
 		{526898A1-8CD5-4147-B4F6-E74EF5E2BDAF} = {DF28D730-99B3-4811-AAC7-725A73B3F668}
-		{1B927213-5DDF-4B4C-89A6-86CFE549AEDE} = {DF28D730-99B3-4811-AAC7-725A73B3F668}
-		{66F586A4-592B-4B58-8505-AE9976D790FB} = {DF28D730-99B3-4811-AAC7-725A73B3F668}
 		{FA880AC2-D0AE-4485-BABE-2FE180CA08C8} = {F18D2D58-282C-4D93-8D9A-3A76CF98F018}
 		{0C7DBBD9-B259-4C03-A125-500F9B669A4D} = {DF28D730-99B3-4811-AAC7-725A73B3F668}
 		{F3AB84F0-8174-4C13-AD3B-E4E57D31EB66} = {DF28D730-99B3-4811-AAC7-725A73B3F668}

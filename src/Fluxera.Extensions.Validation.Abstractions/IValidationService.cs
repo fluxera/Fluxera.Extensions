@@ -1,6 +1,9 @@
 ﻿namespace Fluxera.Extensions.Validation
 {
+	using System.Threading;
 	using System.Threading.Tasks;
+	using FluentValidation;
+	using FluentValidation.Results;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -10,20 +13,37 @@
 	public interface IValidationService
 	{
 		/// <summary>
-		///     Validates the given object and returns a <see cref="ValidationResult" /> instance.
-		/// </summary>
-		/// <typeparam name="T">The type.</typeparam>
-		/// <param name="item">The instance to validate.</param>
-		/// <returns>The validation result.</returns>
-		Task<ValidationResult> ValidateAsync<T>(T item) where T : class;
-
-		/// <summary>
-		///     Validates the given object and throws a <see cref="ValidationException" /> if the validation failed.
+		///		Validates the given object and returns a <see cref="ValidationResult" /> instance.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="item"></param>
 		/// <returns></returns>
+		public ValidationResult Validate<T>(T item);
+
+		/// <summary>
+		///		Validates the given object and throws a <see cref="ValidationException" /> if invalid.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="item"></param>
 		/// <exception cref="ValidationException"></exception>
-		Task ThrowOnValidateAsync<T>(T item) where T : class;
+		public void ValidateAndThrow<T>(T item);
+
+		///  <summary>
+		/// 		Validates the given object and returns a <see cref="ValidationResult" /> instance.
+		///  </summary>
+		///  <typeparam name="T"></typeparam>
+		///  <param name="item"></param>
+		///  <param name="cancellationToken"></param>
+		///  <returns></returns>
+		public Task<ValidationResult> ValidateAsync<T>(T item, CancellationToken cancellationToken = default);
+
+		///  <summary>
+		/// 		Validates the given object and throws a <see cref="ValidationException" /> if invalid.
+		///  </summary>
+		///  <typeparam name="T"></typeparam>
+		///  <param name="item"></param>
+		///  <param name="cancellationToken"></param>
+		///  <exception cref="ValidationException"></exception>
+		public Task ValidateAndThrowAsync<T>(T item, CancellationToken cancellationToken = default);
 	}
 }

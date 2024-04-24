@@ -8,7 +8,7 @@
 	public interface IAccessTokenProvider
 	{
 		/// <summary>
-		///     Gets the access token to use in a HTTP client.
+		///     Gets the access token to use in an HTTP client.
 		/// </summary>
 		/// <returns></returns>
 		Task<string> GetAccessTokenAsync();

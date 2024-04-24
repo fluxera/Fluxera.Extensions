@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Fluxera.Extensions.Validation.Abstractions\Fluxera.Extensions.Validation.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\Fluxera.Extensions.Validation.DataAnnotations\Fluxera.Extensions.Validation.DataAnnotations.csproj" />
-    <ProjectReference Include="..\..\src\Fluxera.Extensions.Validation.FluentValidation\Fluxera.Extensions.Validation.FluentValidation.csproj" />
     <ProjectReference Include="..\..\src\Fluxera.Extensions.Validation\Fluxera.Extensions.Validation.csproj" />
   </ItemGroup>
 

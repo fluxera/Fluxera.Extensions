@@ -5,8 +5,8 @@
 	using System.Threading.Tasks;
 	using FluentAssertions;
 	using FluentAssertions.Specialized;
-	using Fluxera.Extensions.Validation.DataAnnotations;
-	using Fluxera.Extensions.Validation.FluentValidation;
+	using FluentValidation;
+	using FluentValidation.Results;
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
 
@@ -18,16 +18,8 @@
 		{
 			IServiceCollection services = new ServiceCollection();
 
-			services.AddValidation(builder =>
-			{
-				builder
-					.AddDataAnnotations()
-					.AddFluentValidation(registration =>
-					{
-						registration.AddValidator<PersonValidator>();
-					});
-			});
-
+			services.AddValidation();
+				
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 			this.validationService = serviceProvider.GetRequiredService<IValidationService>();
 		}
@@ -35,20 +27,33 @@
 		private IValidationService validationService;
 
 		[Test]
-		public async Task ShouldThrowValidationExceptionForInvalidInstance()
+		public async Task ShouldThrowValidationExceptionForInvalidInstanceAsync()
 		{
 			Person person = new Person
 			{
 				Name = null
 			};
 
-			Func<Task> func = async () => await this.validationService.ThrowOnValidateAsync(person);
+			Func<Task> func = async () => await this.validationService.ValidateAndThrowAsync(person);
 			ExceptionAssertions<ValidationException> assertions = await func.Should().ThrowAsync<ValidationException>();
-			assertions.Subject.First().Errors.Count.Should().Be(2);
+			assertions.Subject.First().Errors.Count().Should().Be(1);
 		}
 
 		[Test]
-		public async Task ShouldValidate_InvalidInstance()
+		public void ShouldThrowValidationExceptionForInvalidInstance()
+		{
+			Person person = new Person
+			{
+				Name = null
+			};
+
+			Action action = () => this.validationService.ValidateAndThrow(person);
+			ExceptionAssertions<ValidationException> assertions = action.Should().Throw<ValidationException>();
+			assertions.Subject.First().Errors.Count().Should().Be(1);
+		}
+
+		[Test]
+		public async Task ShouldValidateInvalidInstanceAsync()
 		{
 			Person person = new Person
 			{
@@ -59,11 +64,26 @@
 
 			result.Should().NotBeNull();
 			result.IsValid.Should().BeFalse();
-			result.ValidationErrors.Count.Should().Be(2);
+			result.Errors.Count.Should().Be(1);
 		}
 
 		[Test]
-		public async Task ShouldValidate_ValidInstance()
+		public void ShouldValidateInvalidInstance()
+		{
+			Person person = new Person
+			{
+				Name = null
+			};
+
+			ValidationResult result = this.validationService.Validate(person);
+
+			result.Should().NotBeNull();
+			result.IsValid.Should().BeFalse();
+			result.Errors.Count.Should().Be(1);
+		}
+
+		[Test]
+		public async Task ShouldValidateValidInstanceAsync()
 		{
 			Person person = new Person
 			{
@@ -77,7 +97,21 @@
 		}
 
 		[Test]
-		public async Task ShouldValidate_ValidInstanceWithoutAnyValidations()
+		public void ShouldValidateValidInstance()
+		{
+			Person person = new Person
+			{
+				Name = "Tester"
+			};
+
+			ValidationResult result = this.validationService.Validate(person);
+
+			result.Should().NotBeNull();
+			result.IsValid.Should().BeTrue();
+		}
+
+		[Test]
+		public async Task ShouldValidateValidInstanceWithoutAnyValidationsAsync()
 		{
 			Company company = new Company
 			{
@@ -85,6 +119,20 @@
 			};
 
 			ValidationResult result = await this.validationService.ValidateAsync(company);
+
+			result.Should().NotBeNull();
+			result.IsValid.Should().BeTrue();
+		}
+
+		[Test]
+		public void ShouldValidateValidInstanceWithoutAnyValidations()
+		{
+			Company company = new Company
+			{
+				Name = "Test Inc."
+			};
+
+			ValidationResult result = this.validationService.Validate(company);
 
 			result.Should().NotBeNull();
 			result.IsValid.Should().BeTrue();

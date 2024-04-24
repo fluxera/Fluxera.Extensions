@@ -10,7 +10,7 @@
 	internal sealed class PasswordGenerator : IPasswordGenerator
 	{
 		// ReSharper disable StringLiteralTypo
-		private static readonly char[] PwdCharArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!$+-".ToCharArray();
+		private static readonly char[] pwdCharArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!$+-".ToCharArray();
 		// ReSharper restore StringLiteralTypo
 
 		private readonly RandomNumberGenerator rng;
@@ -95,9 +95,9 @@
 
 		private char GetRandomCharacter()
 		{
-			int randomCharPosition = this.GetCryptographicRandomNumber(0, PwdCharArray.Length - 1);
+			int randomCharPosition = this.GetCryptographicRandomNumber(0, pwdCharArray.Length - 1);
 
-			char randomChar = PwdCharArray[randomCharPosition];
+			char randomChar = pwdCharArray[randomCharPosition];
 
 			return randomChar;
 		}

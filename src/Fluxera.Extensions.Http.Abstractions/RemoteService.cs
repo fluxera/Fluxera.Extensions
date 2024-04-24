@@ -5,7 +5,7 @@
 	using JetBrains.Annotations;
 
 	/// <summary>
-	///     the remote service options.
+	///     The remote service options.
 	/// </summary>
 	[PublicAPI]
 	public sealed class RemoteService : Dictionary<string, string>

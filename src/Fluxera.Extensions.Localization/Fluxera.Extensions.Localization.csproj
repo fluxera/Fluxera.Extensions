@@ -22,20 +22,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Guards" Version="8.0.2" />
+		<PackageReference Include="Fluxera.Guards" Version="8.0.*" />
 		<PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="All" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.4" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.*" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Fluxera.Extensions.Localization.Abstractions\Fluxera.Extensions.Localization.Abstractions.csproj" />
+		<ProjectReference Include="..\Fluxera.Extensions.Localization.Abstractions\Fluxera.Extensions.Localization.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -22,24 +22,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Fluxera.Enumeration.SystemTextJson" Version="8.0.6" />
-		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="8.0.7" />
-		<PackageReference Include="Fluxera.ValueObject.SystemTextJson" Version="8.0.7" />
+		<PackageReference Include="Fluxera.Enumeration.SystemTextJson" Version="8.0.*" />
+		<PackageReference Include="Fluxera.StronglyTypedId.SystemTextJson" Version="8.0.*" />
+		<PackageReference Include="Fluxera.ValueObject.SystemTextJson" Version="8.0.*" />
 		<PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="All" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.4" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.*" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.*" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Fluxera.Extensions.Common\Fluxera.Extensions.Common.csproj" />
-	  <ProjectReference Include="..\Fluxera.Extensions.Http.Abstractions\Fluxera.Extensions.Http.Abstractions.csproj" />
+		<ProjectReference Include="..\Fluxera.Extensions.Common\Fluxera.Extensions.Common.csproj" />
+		<ProjectReference Include="..\Fluxera.Extensions.Http.Abstractions\Fluxera.Extensions.Http.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

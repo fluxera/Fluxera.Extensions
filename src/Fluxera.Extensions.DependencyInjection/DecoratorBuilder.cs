@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
@@ -16,8 +15,8 @@
 
 		internal DecoratorBuilder(IServiceCollection services, Type serviceType)
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.Null(serviceType, nameof(serviceType));
+			Guard.ThrowIfNull(services);
+			Guard.ThrowIfNull(serviceType);
 
 			this.services = services;
 			this.serviceType = serviceType;
@@ -30,7 +29,7 @@
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder With(Type decoratorType)
 		{
-			Guard.Against.Null(decoratorType, nameof(decoratorType));
+			Guard.ThrowIfNull(decoratorType);
 
 			if(this.serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
 			{
@@ -49,7 +48,7 @@
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder With(Func<object, IServiceProvider, object> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			this.services.DecorateDescriptors(this.serviceType, descriptor => descriptor.Decorate(decorator));
 			return this;
@@ -62,7 +61,7 @@
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder With(Func<object, object> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			this.services.DecorateDescriptors(this.serviceType, descriptor => descriptor.Decorate(decorator));
 			return this;
@@ -79,7 +78,7 @@
 
 		internal DecoratorBuilder(IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			this.services = services;
 		}
@@ -101,7 +100,7 @@
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder<TService> With(Func<TService, IServiceProvider, TService> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(decorator));
 			return this;
@@ -113,7 +112,7 @@
 		/// <returns>The builder.</returns>
 		public DecoratorBuilder<TService> With(Func<TService, TService> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			this.services.DecorateDescriptors(typeof(TService), descriptor => descriptor.Decorate(decorator));
 			return this;

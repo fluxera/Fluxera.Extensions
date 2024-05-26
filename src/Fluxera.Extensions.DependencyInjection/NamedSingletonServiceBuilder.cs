@@ -1,12 +1,11 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
 	/// <summary>
-	///     A builder that helps configuring named singletons.
+	///     A builder that helps to configure named singletons.
 	/// </summary>
 	/// <typeparam name="TService"></typeparam>
 	[PublicAPI]
@@ -27,7 +26,7 @@
 		public NamedSingletonServiceBuilder<TService> AddNameFor<TImplementation>(string name)
 			where TImplementation : class, TService
 		{
-			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
 			this.Services.TryAddSingleton<TService, TImplementation>();
 			this.Services.TryAddSingleton<TImplementation>();

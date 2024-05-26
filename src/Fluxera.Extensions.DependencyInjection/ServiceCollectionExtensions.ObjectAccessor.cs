@@ -3,7 +3,6 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using Fluxera.Guards;
 	using Microsoft.Extensions.DependencyInjection;
 
 	public static partial class ServiceCollectionExtensions
@@ -18,7 +17,7 @@
 		public static IServiceCollection AddObjectAccessor<T>(this IServiceCollection services)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.AddObjectAccessorInstance(new ObjectAccessor<T>());
 		}
@@ -34,7 +33,7 @@
 		public static IServiceCollection AddObjectAccessor<T>(this IServiceCollection services, ObjectAccessorContext context)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.AddObjectAccessorInstance(new ObjectAccessor<T>(context));
 		}
@@ -50,7 +49,7 @@
 		public static IServiceCollection AddObjectAccessor<T>(this IServiceCollection services, T value)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.AddObjectAccessorInstance(new ObjectAccessor<T>(value));
 		}
@@ -67,7 +66,7 @@
 		public static IServiceCollection AddObjectAccessor<T>(this IServiceCollection services, T value, ObjectAccessorContext context)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.AddObjectAccessorInstance(new ObjectAccessor<T>(value, context));
 		}
@@ -81,7 +80,7 @@
 		public static bool TryAddObjectAccessor<T>(this IServiceCollection services)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.TryAddObjectAccessorInstance(new ObjectAccessor<T>());
 		}
@@ -96,7 +95,7 @@
 		public static bool TryAddObjectAccessor<T>(this IServiceCollection services, ObjectAccessorContext context)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.TryAddObjectAccessorInstance(new ObjectAccessor<T>(context));
 		}
@@ -111,7 +110,7 @@
 		public static bool TryAddObjectAccessor<T>(this IServiceCollection services, T value)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.TryAddObjectAccessorInstance(new ObjectAccessor<T>(value));
 		}
@@ -127,7 +126,7 @@
 		public static bool TryAddObjectAccessor<T>(this IServiceCollection services, T value, ObjectAccessorContext context)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.TryAddObjectAccessorInstance(new ObjectAccessor<T>(value, context));
 		}
@@ -142,7 +141,7 @@
 		public static IObjectAccessor<T> GetObjectAccessor<T>(this IServiceCollection services)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			IObjectAccessor<T> accessor = services.GetSingletonInstance<IObjectAccessor<T>>();
 			return accessor;
@@ -158,7 +157,7 @@
 		public static bool TryGetObjectAccessor<T>(this IServiceCollection services, out IObjectAccessor<T> objectAccessor)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.TryGetSingletonInstance(out objectAccessor);
 		}
@@ -173,7 +172,7 @@
 		public static T GetObjectOrDefault<T>(this IServiceCollection services)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			services.TryGetObjectAccessor(out IObjectAccessor<T> objectAccessor);
 			return objectAccessor?.Value;
@@ -189,7 +188,7 @@
 		public static T GetObject<T>(this IServiceCollection services)
 			where T : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.GetObjectOrDefault<T>()
 				?? throw new InvalidOperationException($"Could not find an instance of type {typeof(T).Name}. Be sure that you have used AddObjectAccessor before.");
@@ -202,7 +201,7 @@
 		/// <returns>The object accessors.</returns>
 		public static IEnumerable<IObjectAccessor> GetObjectAccessors(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			IEnumerable<ServiceDescriptor> descriptors = services.Where(d => d.ServiceType == typeof(IObjectAccessor));
 			foreach(ServiceDescriptor descriptor in descriptors)

@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
@@ -16,8 +15,8 @@
 
 		internal TryDecoratorBuilder(IServiceCollection services, Type serviceType)
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.Null(serviceType, nameof(serviceType));
+			Guard.ThrowIfNull(services);
+			Guard.ThrowIfNull(serviceType);
 
 			this.services = services;
 			this.serviceType = serviceType;
@@ -30,7 +29,7 @@
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
 		public bool With(Type decoratorType)
 		{
-			Guard.Against.Null(decoratorType, nameof(decoratorType));
+			Guard.ThrowIfNull(decoratorType);
 
 			if(this.serviceType.IsOpenGeneric() && decoratorType.IsOpenGeneric())
 			{
@@ -47,7 +46,7 @@
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
 		public bool With(Func<object, IServiceProvider, object> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			return this.services.TryDecorateDescriptors(this.serviceType, out _, descriptor => descriptor.Decorate(decorator));
 		}
@@ -59,7 +58,7 @@
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
 		public bool With(Func<object, object> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			return this.services.TryDecorateDescriptors(this.serviceType, out _, descriptor => descriptor.Decorate(decorator));
 		}
@@ -76,7 +75,7 @@
 
 		internal TryDecoratorBuilder(IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			this.services = services;
 		}
@@ -98,7 +97,7 @@
 		/// <returns>True, if the decorator was added; false otherwise.</returns>
 		public bool With(Func<TService, IServiceProvider, TService> decorator)
 		{
-			Guard.Against.Null(decorator, nameof(decorator));
+			Guard.ThrowIfNull(decorator);
 
 			return this.services.TryDecorateDescriptors(typeof(TService), out _, descriptor => descriptor.Decorate(decorator));
 		}

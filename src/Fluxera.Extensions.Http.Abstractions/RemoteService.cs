@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System.Collections.Generic;
-	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -33,7 +32,7 @@
 		/// </summary>
 		public string BaseAddress
 		{
-			get => this.GetOrDefault(nameof(this.BaseAddress));
+			get => this.GetValueOrDefault(nameof(this.BaseAddress));
 			set => this[nameof(this.BaseAddress)] = value;
 		}
 
@@ -42,7 +41,7 @@
 		/// </summary>
 		public string Version
 		{
-			get => this.GetOrDefault(nameof(this.Version));
+			get => this.GetValueOrDefault(nameof(this.Version));
 			set => this[nameof(this.Version)] = value;
 		}
 	}

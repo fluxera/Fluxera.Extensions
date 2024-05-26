@@ -2,7 +2,6 @@
 {
 	using System.Net.Http;
 	using Fluxera.Extensions.Http.Handlers;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -64,7 +63,7 @@
 		public static IHttpClientBuilder AddHttpMessageHandlerTransient<TDelegatingHandler>(this IHttpClientBuilder httpClientBuilder)
 			where TDelegatingHandler : DelegatingHandler
 		{
-			Guard.Against.Null(httpClientBuilder);
+			Guard.ThrowIfNull(httpClientBuilder);
 
 			// Register the handler in services.
 			httpClientBuilder.Services.TryAddTransient<TDelegatingHandler>();

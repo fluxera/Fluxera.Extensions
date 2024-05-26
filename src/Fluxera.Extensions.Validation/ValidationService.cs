@@ -7,7 +7,6 @@
 	using System.Threading.Tasks;
 	using FluentValidation;
 	using FluentValidation.Results;
-	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
@@ -48,7 +47,7 @@
 		/// <inheritdoc />
 		public async Task<ValidationResult> ValidateAsync<T>(T item, CancellationToken cancellationToken = default)
 		{
-			IList<ValidationFailure> validationFailures = new List<ValidationFailure>();
+			List<ValidationFailure> validationFailures = new List<ValidationFailure>();
 
 			IEnumerable<IValidator<T>> validators = this.serviceProvider.GetServices<IValidator<T>>();
 			foreach(IValidator<T> validator in validators)

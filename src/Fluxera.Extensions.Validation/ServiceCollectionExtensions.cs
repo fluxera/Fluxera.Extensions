@@ -2,7 +2,6 @@
 {
 	using System.Collections.Generic;
 	using FluentValidation;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,7 +20,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddValidation(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			Assembly callingAssembly = Assembly.GetCallingAssembly();
 			return services.AddValidation(callingAssembly);
@@ -35,8 +34,8 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddValidation(this IServiceCollection services, Assembly validatorsAssembly)
 		{
-			Guard.Against.Null(services);
-			Guard.Against.Null(validatorsAssembly);
+			Guard.ThrowIfNull(services);
+			Guard.ThrowIfNull(validatorsAssembly);
 
 			return services.AddValidation([validatorsAssembly]);
 		}
@@ -49,7 +48,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddValidation(this IServiceCollection services, params Assembly[] validatorsAssemblies)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			return services.AddValidation((IEnumerable<Assembly>)validatorsAssemblies);
 		}
@@ -62,8 +61,8 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddValidation(this IServiceCollection services, IEnumerable<Assembly> validatorsAssemblies)
 		{
-			Guard.Against.Null(services);
-			validatorsAssemblies = Guard.Against.NullOrEmpty(validatorsAssemblies);
+			Guard.ThrowIfNull(services);
+			validatorsAssemblies = Guard.ThrowIfNullOrEmpty(validatorsAssemblies);
 
 			// Register the validation service.
 			services.TryAddTransient<IValidationService, ValidationService>();

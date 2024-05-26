@@ -4,7 +4,6 @@
 	using System.Collections.Concurrent;
 	using System.Collections.Generic;
 	using System.Linq;
-	using Fluxera.Guards;
 
 	// ReSharper disable once UnusedTypeParameter
 	internal sealed class NamedServiceMapper<TService>
@@ -13,7 +12,7 @@
 
 		public NamedServiceMapper(IDictionary<string, IList<Type>> implementationTypeMap)
 		{
-			Guard.Against.Null(implementationTypeMap, nameof(implementationTypeMap));
+			Guard.ThrowIfNull(implementationTypeMap);
 
 			this.implementationTypeMap = new ConcurrentDictionary<string, IList<Type>>(implementationTypeMap);
 		}

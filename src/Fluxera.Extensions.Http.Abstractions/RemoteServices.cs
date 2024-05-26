@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.Http
 {
 	using System.Collections.Generic;
-	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -20,7 +19,7 @@
 		/// </summary>
 		public RemoteService Default
 		{
-			get => this.GetOrDefault(DefaultRemoteServiceName);
+			get => this.GetValueOrDefault(DefaultRemoteServiceName);
 			set => this[DefaultRemoteServiceName] = value;
 		}
 	}

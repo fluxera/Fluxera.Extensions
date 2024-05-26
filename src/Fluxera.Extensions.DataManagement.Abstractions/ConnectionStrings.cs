@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -22,7 +21,7 @@
 		/// </summary>
 		public string Default
 		{
-			get => this.GetOrDefault(DefaultConnectionStringName);
+			get => this.GetValueOrDefault(DefaultConnectionStringName);
 			set => this[DefaultConnectionStringName] = value;
 		}
 	}

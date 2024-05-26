@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.Common
 {
 	using System;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 
 	/// <inheritdoc />
@@ -23,16 +22,16 @@
 			int maximumNumberOfSlotsWhenTruncated = 16,
 			int jitterPercentage = 25)
 		{
-			Guard.Against.False(numberOfAttempt >= 1, nameof(numberOfAttempt),
+			Guard.ThrowIfFalse(numberOfAttempt >= 1, nameof(numberOfAttempt),
 				"The number of attempt per slot needs to be 1 or larger.");
 
-			Guard.Against.False(millisecondsPerSlot >= 1, nameof(millisecondsPerSlot),
+			Guard.ThrowIfFalse(millisecondsPerSlot >= 1, nameof(millisecondsPerSlot),
 				"The milliseconds per slot needs to be 1 or larger.");
 
-			Guard.Against.False(maximumNumberOfSlotsWhenTruncated >= 1, nameof(maximumNumberOfSlotsWhenTruncated),
+			Guard.ThrowIfFalse(maximumNumberOfSlotsWhenTruncated >= 1, nameof(maximumNumberOfSlotsWhenTruncated),
 				"The maximum number of slots when truncated needs to be 1 or larger.");
 
-			Guard.Against.False(jitterPercentage >= 0 && jitterPercentage <= 100, nameof(jitterPercentage),
+			Guard.ThrowIfFalse(jitterPercentage >= 0 && jitterPercentage <= 100, nameof(jitterPercentage),
 				"The percentage should be larger than 0 and smaller than 100.");
 
 			// Binary exponential back-off.

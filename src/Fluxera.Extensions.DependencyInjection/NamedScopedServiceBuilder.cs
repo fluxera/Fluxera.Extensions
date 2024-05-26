@@ -1,6 +1,5 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -19,7 +18,7 @@
 		}
 
 		/// <summary>
-		///     A the named implementation of the <typeparamref name="TService" /> type.
+		///     Add the named implementation of the <typeparamref name="TService" /> type.
 		/// </summary>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <param name="name"></param>
@@ -27,7 +26,7 @@
 		public NamedScopedServiceBuilder<TService> AddNameFor<TImplementation>(string name)
 			where TImplementation : class, TService
 		{
-			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.ThrowIfNullOrWhiteSpace(name);
 
 			this.Services.TryAddScoped<TService, TImplementation>();
 			this.Services.TryAddScoped<TImplementation>();

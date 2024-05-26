@@ -1,7 +1,7 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
+	using System;
 
 	/// <summary>
 	///     A context that is passed down along with a registered <see cref="IObjectAccessor{T}" /> instance.
@@ -20,7 +20,12 @@
 		/// <param name="name"></param>
 		public ObjectAccessorContext(string name)
 		{
-			this.Name = Guard.Against.NullOrWhiteSpace(name);
+			if(string.IsNullOrWhiteSpace(name))
+			{
+				throw new ArgumentException("Value cannot be whitespace-only.", nameof(name));
+			}
+
+			this.Name = name;
 		}
 
 		/// <summary>

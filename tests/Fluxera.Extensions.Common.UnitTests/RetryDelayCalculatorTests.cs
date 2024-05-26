@@ -3,7 +3,6 @@
 	using System;
 	using FluentAssertions;
 	using Fluxera.Extensions.Common;
-	using Fluxera.Utilities.Extensions;
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
 
@@ -25,14 +24,14 @@
 		public void Should_Calculate_Exponential_Delay()
 		{
 			// Act
-			5.Times(i =>
+			for(int i = 0; i < 5; i++)
 			{
 				// Assert
 				TimeSpan delay = this.retryDelayCalculator.CalculateDelay(++i,
 					4096,
 					maximumNumberOfSlotsWhenTruncated: 32);
 				Console.WriteLine($"{delay}");
-			});
+			}
 		}
 
 		[Test]

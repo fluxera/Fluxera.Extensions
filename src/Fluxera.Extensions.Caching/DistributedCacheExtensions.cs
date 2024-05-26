@@ -5,7 +5,6 @@
 	using System.Text;
 	using System.Text.Json;
 	using System.Threading.Tasks;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Caching.Distributed;
 
@@ -25,8 +24,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<bool?> GetBooleanAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -51,8 +50,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<char?> GetCharAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -77,8 +76,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<decimal?> GetDecimalAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -103,8 +102,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<double?> GetDoubleAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -129,8 +128,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<short?> GetShortAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -155,8 +154,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<int?> GetIntAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -181,8 +180,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<long?> GetLongAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -207,8 +206,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<float?> GetFloatAsync(this IDistributedCache cache, string key)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			byte[] bytes = await cache.GetAsync(key).ConfigureAwait(false);
 			if(bytes == null)
@@ -234,8 +233,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<string> GetStringAsync(this IDistributedCache cache, string key, Encoding encoding = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			encoding ??= Encoding.UTF8;
 
@@ -255,8 +254,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static async Task<T> GetAsJsonAsync<T>(this IDistributedCache cache, string key, Encoding encoding = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			encoding ??= Encoding.UTF8;
 
@@ -275,8 +274,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, bool value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -302,8 +301,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, char value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -329,8 +328,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, decimal value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -356,8 +355,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, double value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -383,8 +382,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, short value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -410,8 +409,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, int value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -437,8 +436,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, long value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -464,8 +463,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, float value, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			options ??= new DistributedCacheEntryOptions();
 
@@ -506,8 +505,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsync(this IDistributedCache cache, string key, string value, Encoding encoding = null, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			encoding ??= Encoding.UTF8;
 
@@ -547,8 +546,8 @@
 		/// <exception cref="ArgumentNullException"><paramref name="cache" /> or <paramref name="key" /> is <c>null</c>.</exception>
 		public static Task SetAsJsonAsync<T>(this IDistributedCache cache, string key, T value, Encoding encoding = null, DistributedCacheEntryOptions options = null)
 		{
-			Guard.Against.Null(cache, nameof(cache));
-			Guard.Against.Null(key, nameof(key));
+			Guard.ThrowIfNull(cache);
+			Guard.ThrowIfNull(key);
 
 			encoding ??= Encoding.UTF8;
 

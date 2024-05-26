@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.Common
 {
 	using System;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -20,7 +19,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddDateTimeProvider(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -40,7 +39,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddDateTimeOffsetProvider(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -60,7 +59,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddPasswordGenerator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -80,7 +79,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddHashCalculator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -100,7 +99,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddJitterCalculator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -120,7 +119,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddRetryDelayCalculator(this IServiceCollection services)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			services.AddJitterCalculator();
 
@@ -138,7 +137,7 @@
 		public static IServiceCollection AddGuidGenerator(this IServiceCollection services,
 			Action<SequentialGuidGeneratorOptions> configureOptions = null)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();
@@ -178,7 +177,7 @@
 		public static IServiceCollection AddStringEncryptionService(this IServiceCollection services,
 			Action<StringEncryptionOptions> configureOptions)
 		{
-			Guard.Against.Null(services);
+			Guard.ThrowIfNull(services);
 
 			// Add logging infrastructure.
 			services.AddLogging();

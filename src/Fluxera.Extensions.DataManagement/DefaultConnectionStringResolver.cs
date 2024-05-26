@@ -1,6 +1,6 @@
 ﻿namespace Fluxera.Extensions.DataManagement
 {
-	using Fluxera.Utilities.Extensions;
+	using System.Collections.Generic;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Options;
 
@@ -29,9 +29,9 @@
 		public string ResolveConnectionString(string name)
 		{
 			// Get module specific value if provided.
-			if(!name.IsNullOrEmpty())
+			if(!string.IsNullOrEmpty(name))
 			{
-				string connectionString = this.Options.GetOrDefault(name);
+				string connectionString = this.Options.GetValueOrDefault(name);
 				if(!string.IsNullOrWhiteSpace(connectionString))
 				{
 					return connectionString;

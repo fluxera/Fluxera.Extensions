@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using Fluxera.Guards;
 	using Microsoft.Extensions.DependencyInjection;
 
 	public static partial class ServiceProviderExtensions
@@ -16,7 +15,7 @@
 		/// <returns>The service instance.</returns>
 		public static TService GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();
 			Type implementationType = namedServiceMapper.GetImplementationType(name);
@@ -35,7 +34,7 @@
 		/// <returns>The service instance.</returns>
 		public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider serviceProvider, string name)
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();
 			IEnumerable<Type> implementationTypes = namedServiceMapper.GetImplementationTypes(name);
@@ -59,7 +58,7 @@
 		public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
 			where TService : notnull
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			NamedServiceMapper<TService> namedServiceMapper = serviceProvider.GetRequiredService<NamedServiceMapper<TService>>();
 			Type implementationType = namedServiceMapper.GetImplementationType(name);

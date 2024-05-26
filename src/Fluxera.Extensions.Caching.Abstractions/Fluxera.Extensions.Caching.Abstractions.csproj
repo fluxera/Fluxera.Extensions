@@ -28,11 +28,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="All" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.*" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Fluxera.Extensions.DataManagement.Abstractions\Fluxera.Extensions.DataManagement.Abstractions.csproj" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 
 </Project>

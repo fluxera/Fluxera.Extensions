@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using Fluxera.Guards;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -14,7 +13,7 @@
 		/// <returns>The service collection.</returns>
 		public static IServiceCollection AddLazy(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			services.TryAddTransient(typeof(Lazy<>), typeof(LazyService<>));
 

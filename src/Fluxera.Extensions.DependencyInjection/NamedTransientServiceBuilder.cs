@@ -1,12 +1,11 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
 	/// <summary>
-	///     A builder that helps configuring transient named services.
+	///     A builder that helps to configure transient named services.
 	/// </summary>
 	/// <typeparam name="TService"></typeparam>
 	[PublicAPI]
@@ -27,7 +26,7 @@
 		public NamedTransientServiceBuilder<TService> AddNameFor<TImplementation>(string name)
 			where TImplementation : class, TService
 		{
-			Guard.Against.NullOrWhiteSpace(name, nameof(name));
+			Guard.ThrowIfNullOrWhiteSpace(name);
 
 			this.Services.TryAddTransient<TService, TImplementation>();
 			this.Services.TryAddTransient<TImplementation>();

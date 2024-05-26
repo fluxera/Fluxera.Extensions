@@ -1,6 +1,5 @@
 ﻿namespace Fluxera.Extensions.DataManagement
 {
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Configuration;
 
@@ -16,7 +15,7 @@
 		/// <param name="configuration"></param>
 		public static ConnectionStrings GetConnectionStrings(this IConfiguration configuration)
 		{
-			Guard.Against.Null(configuration, nameof(configuration));
+			Guard.ThrowIfNull(configuration);
 
 			IConfigurationSection connectionStringsSection = configuration.GetSection("ConnectionStrings");
 			ConnectionStrings connectionStrings = connectionStringsSection.Get<ConnectionStrings>();

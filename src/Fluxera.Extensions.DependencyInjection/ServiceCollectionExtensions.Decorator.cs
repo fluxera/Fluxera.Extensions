@@ -4,7 +4,6 @@
 	using System.Collections.Generic;
 	using System.Diagnostics.CodeAnalysis;
 	using System.Linq;
-	using Fluxera.Guards;
 	using Microsoft.Extensions.DependencyInjection;
 
 	public static partial class ServiceCollectionExtensions
@@ -17,7 +16,7 @@
 		/// <returns>The builder.</returns>
 		public static DecoratorBuilder<TService> Decorate<TService>(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return new DecoratorBuilder<TService>(services);
 		}
@@ -30,7 +29,7 @@
 		/// <returns>The builder.</returns>
 		public static TryDecoratorBuilder<TService> TryDecorate<TService>(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return new TryDecoratorBuilder<TService>(services);
 		}
@@ -43,7 +42,7 @@
 		/// <returns>The builder.</returns>
 		public static DecoratorBuilder Decorate(this IServiceCollection services, Type serviceType)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return new DecoratorBuilder(services, serviceType);
 		}
@@ -56,7 +55,7 @@
 		/// <returns>The builder.</returns>
 		public static TryDecoratorBuilder TryDecorate(this IServiceCollection services, Type serviceType)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return new TryDecoratorBuilder(services, serviceType);
 		}

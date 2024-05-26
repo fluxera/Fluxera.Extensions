@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using Fluxera.Guards;
 	using Microsoft.Extensions.DependencyInjection;
 
 	public static partial class ServiceCollectionExtensions
@@ -16,8 +15,8 @@
 		public static IServiceCollection AddNamedTransient<TService>(this IServiceCollection services, Action<NamedTransientServiceBuilder<TService>> configure)
 			where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.Null(configure, nameof(configure));
+			Guard.ThrowIfNull(services);
+			Guard.ThrowIfNull(configure);
 
 			NamedServiceMapper<TService> serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedTransientServiceBuilder<TService> builder = new NamedTransientServiceBuilder<TService>(services);
@@ -38,8 +37,8 @@
 		public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services, Action<NamedSingletonServiceBuilder<TService>> configure)
 			where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.Null(configure, nameof(configure));
+			Guard.ThrowIfNull(services);
+			Guard.ThrowIfNull(configure);
 
 			NamedServiceMapper<TService> serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedSingletonServiceBuilder<TService> builder = new NamedSingletonServiceBuilder<TService>(services);
@@ -60,8 +59,8 @@
 		public static IServiceCollection AddNamedScoped<TService>(this IServiceCollection services, Action<NamedScopedServiceBuilder<TService>> configure)
 			where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
-			Guard.Against.Null(configure, nameof(configure));
+			Guard.ThrowIfNull(services); 
+			Guard.ThrowIfNull(configure);
 
 			NamedServiceMapper<TService> serviceMapper = services.GetSingletonInstanceOrDefault<NamedServiceMapper<TService>>();
 			NamedScopedServiceBuilder<TService> builder = new NamedScopedServiceBuilder<TService>(services);

@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Linq;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,7 +20,7 @@
 		/// <returns>True, if the service was registered; false otherwise.</returns>
 		public static bool IsRegistered<TService>(this IServiceCollection services)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.IsRegistered(typeof(TService));
 		}
@@ -34,7 +33,7 @@
 		/// <returns>True, if the service was registered; false otherwise.</returns>
 		public static bool IsRegistered(this IServiceCollection services, Type serviceType)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.Any(x => x.ServiceType == serviceType);
 		}
@@ -50,7 +49,7 @@
 			where TService : class
 			where TImplementation : class, TService
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.Replace<TService, TImplementation>(ServiceLifetime.Singleton);
 		}
@@ -65,7 +64,7 @@
 		public static IServiceCollection ReplaceSingleton<TService>(this IServiceCollection services, TService instance)
 			where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			ServiceDescriptor descriptor = ServiceDescriptor.Singleton(instance);
 			return services.Replace(descriptor);
@@ -82,7 +81,7 @@
 			where TService : class
 			where TImplementation : class, TService
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.Replace<TService, TImplementation>(ServiceLifetime.Transient);
 		}
@@ -97,7 +96,7 @@
 		public static IServiceCollection ReplaceTransient(this IServiceCollection services,
 			Type service, Type implementation)
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.Replace(service, implementation, ServiceLifetime.Transient);
 		}
@@ -113,7 +112,7 @@
 			where TService : class
 			where TImplementation : class, TService
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			return services.Replace<TService, TImplementation>(ServiceLifetime.Scoped);
 		}
@@ -127,7 +126,7 @@
 		public static IServiceCollection RemoveSingleton<TService>(this IServiceCollection services)
 			where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			ServiceDescriptor serviceDescriptor = services.First(s => s.ServiceType == typeof(TService));
 			services.Remove(serviceDescriptor);
@@ -144,7 +143,7 @@
 		public static TService GetSingletonInstanceOrDefault<TService>(this IServiceCollection services)
 			where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			ServiceDescriptor serviceDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(TService));
 			return serviceDescriptor?.ImplementationInstance as TService;
@@ -159,7 +158,7 @@
 		/// <returns>True, if the service was found; false otherwise.</returns>
 		public static bool TryGetSingletonInstance<TService>(this IServiceCollection services, out TService result) where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			result = services.GetSingletonInstanceOrDefault<TService>();
 			return result != null;
@@ -174,7 +173,7 @@
 		/// <exception cref="InvalidOperationException">Thrown, if the singleton instance was not available.</exception>
 		public static TService GetSingletonInstance<TService>(this IServiceCollection services) where TService : class
 		{
-			Guard.Against.Null(services, nameof(services));
+			Guard.ThrowIfNull(services);
 
 			TService service = services.GetSingletonInstanceOrDefault<TService>();
 			if(service == null)

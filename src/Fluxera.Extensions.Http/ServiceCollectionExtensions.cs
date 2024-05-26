@@ -2,7 +2,6 @@
 {
 	using System;
 	using Fluxera.Extensions.Common;
-	using Fluxera.Guards;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -57,9 +56,9 @@
 			where TService : class
 			where TImplementation : class, TService, IHttpClientService
 		{
-			Guard.Against.Null(services);
-			Guard.Against.NullOrWhiteSpace(remoteServiceName);
-			Guard.Against.Null(factory);
+			Guard.ThrowIfNull(services);
+			Guard.ThrowIfNullOrWhiteSpace(remoteServiceName);
+			Guard.ThrowIfNull(factory);
 
 			services.AddOptions();
 			services.AddHttpClient();

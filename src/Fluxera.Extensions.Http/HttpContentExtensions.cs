@@ -5,12 +5,8 @@
 	using System.Net.Http.Headers;
 	using System.Net.Http.Json;
 	using System.Text.Json;
-	using System.Text.Json.Serialization;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using Fluxera.Enumeration.SystemTextJson;
-	using Fluxera.StronglyTypedId.SystemTextJson;
-	using Fluxera.ValueObject.SystemTextJson;
 	using JetBrains.Annotations;
 
 	/// <summary>
@@ -19,24 +15,6 @@
 	[PublicAPI]
 	public static class HttpContentExtensions
 	{
-		private static readonly Lazy<JsonSerializerOptions> jsonSerializerOptions = new Lazy<JsonSerializerOptions>(() =>
-		{
-			JsonSerializerOptions options = new JsonSerializerOptions
-			{
-				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-				DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-				Converters =
-				{
-					new JsonStringEnumConverter()
-				}
-			};
-			options.UseEnumeration();
-			options.UsePrimitiveValueObject();
-			options.UseStronglyTypedId();
-
-			return options;
-		});
-
 		/// <summary>
 		///     Reads the <see cref="HttpContent" /> as <typeparamref name="T" /> by deserializing it using the
 		///     <see cref="JsonSerializer" />.
@@ -46,9 +24,10 @@
 		/// <param name="options"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
+		[Obsolete("Use built-in ReadFromJsonAsync method.")]
 		public static async Task<T> ReadAsAsync<T>(this HttpContent content, JsonSerializerOptions options = null, CancellationToken cancellationToken = default) where T : class
 		{
-			return await content.ReadFromJsonAsync<T>(options ?? jsonSerializerOptions.Value, cancellationToken: cancellationToken);
+			return await content.ReadFromJsonAsync<T>(options, cancellationToken: cancellationToken);
 		}
 
 		/// <summary>
@@ -65,7 +44,7 @@
 				CharSet = "utf-8"
 			};
 
-			return JsonContent.Create(obj, typeof(T), mediaTypeHeaderValue, options ?? jsonSerializerOptions.Value);
+			return JsonContent.Create(obj, typeof(T), mediaTypeHeaderValue, options);
 		}
 	}
 }

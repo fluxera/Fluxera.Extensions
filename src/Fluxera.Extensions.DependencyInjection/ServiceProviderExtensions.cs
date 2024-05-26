@@ -1,7 +1,6 @@
 ﻿namespace Fluxera.Extensions.DependencyInjection
 {
 	using System;
-	using Fluxera.Guards;
 
 	/// <summary>
 	///     Extensions for the <see cref="IServiceProvider" /> type.
@@ -13,11 +12,11 @@
 		/// </summary>
 		/// <typeparam name="T">The service type.</typeparam>
 		/// <param name="serviceProvider">The service provider.</param>
-		/// <param name="result">Outputs the service instance if is is registered.</param>
+		/// <param name="result">Outputs the service instance if it is registered.</param>
 		/// <returns>True, if the service was registered; false otherwise.</returns>
 		public static bool IsRegistered<T>(this IServiceProvider serviceProvider, out T result) where T : class
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			bool isRegistered = serviceProvider.IsRegistered(typeof(T), out object instance);
 			result = (T)instance;
@@ -32,7 +31,7 @@
 		/// <returns>True, if the service was registered; false otherwise.</returns>
 		public static bool IsRegistered<T>(this IServiceProvider serviceProvider) where T : class
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			bool isRegistered = serviceProvider.IsRegistered(typeof(T), out _);
 			return isRegistered;
@@ -43,11 +42,11 @@
 		/// </summary>
 		/// <param name="serviceProvider">The service provider.</param>
 		/// <param name="serviceType">The service type.</param>
-		/// <param name="result">Outputs the service instance if is is registered.</param>
+		/// <param name="result">Outputs the service instance if it is registered.</param>
 		/// <returns>True, if the service was registered; false otherwise.</returns>
 		public static bool IsRegistered(this IServiceProvider serviceProvider, Type serviceType, out object result)
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			result = serviceProvider.GetService(serviceType);
 			return result != null;
@@ -61,7 +60,7 @@
 		/// <returns>True, if the service was registered; false otherwise.</returns>
 		public static bool IsRegistered(this IServiceProvider serviceProvider, Type serviceType)
 		{
-			Guard.Against.Null(serviceProvider);
+			Guard.ThrowIfNull(serviceProvider);
 
 			object result = serviceProvider.GetService(serviceType);
 			return result != null;

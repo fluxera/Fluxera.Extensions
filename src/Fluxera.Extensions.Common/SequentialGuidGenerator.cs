@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Security.Cryptography;
-	using Fluxera.Utilities.Extensions;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.Options;
 
